@@ -36,7 +36,7 @@ public class MovementStateManager : MonoBehaviour
     public Transform RightHand;
 
     BoxCollider colliderWeapon; // 무기들의 collider
-    SphereCollider colliderHand; // 주먹 collider
+    BoxCollider colliderHand; // 주먹 collider
     public Weapon objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
     public string Armed; // 현재 장착중인 무기 타입
     ///////Attack
@@ -66,8 +66,8 @@ public class MovementStateManager : MonoBehaviour
         SwitchState(Idle);
 
         objWeapon = RightHand.GetChild(1).gameObject.GetComponent<Weapon>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
-        colliderHand = RightHand.GetChild(1).gameObject.GetComponent<SphereCollider>();
-        colliderHand.enabled = false; // 기본적으로는 collider 꺼둠
+        colliderHand = RightHand.GetChild(1).GetComponent<BoxCollider>();
+        //colliderHand.enabled = false; // 기본적으로는 collider 꺼둠
     }
 
     void Update()
@@ -138,10 +138,12 @@ public class MovementStateManager : MonoBehaviour
 
     // 무기 장착 시와 비 장착시 공격 시작(collider on)
     public void AttackStart(){
+        
         if(Armed != "") {
             colliderWeapon.enabled = true;
         }
         else {
+            Debug.Log("HandColl On");
             colliderHand.enabled = true;
         }
     }
@@ -171,7 +173,6 @@ public class MovementStateManager : MonoBehaviour
     void SwapOut(){
         isSwap = false;
         anim.SetTrigger("SwapOut");
-        
     }
 
     void Swap(){
@@ -239,13 +240,16 @@ public class MovementStateManager : MonoBehaviour
         }
     }
 
+    void hitOut(){
+        anim.SetTrigger("HitOut");
+    }
     public void OnDamaged()
     {   
-        // 여기에 HP감소 넣기
         Debug.Log("doDamaged");
 
         //animation
         anim.SetTrigger("doDamaged");
+        Invoke("hitOut", 0.1f);
     }
 
     // void OnCollisionEnter(Collision collision)

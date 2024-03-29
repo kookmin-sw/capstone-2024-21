@@ -27,7 +27,11 @@ public class WeaponManager : MonoBehaviour
             //Weapon objWeapon = player.objWeapon;
             MovementStateManager movement = GetComponent<MovementStateManager>();
 
-            movement.OnDamaged();
+            if (movement != null) {
+                movement.AttackEnd();
+                movement.OnDamaged();
+            }
+
             
             Debug.Log("Hit : " + damage);
             hpManager.OnDamage(damage);
