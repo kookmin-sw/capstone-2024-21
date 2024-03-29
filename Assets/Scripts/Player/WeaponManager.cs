@@ -25,6 +25,9 @@ public class WeaponManager : MonoBehaviour
             HpManager hpManager = other.GetComponent<HpManager>();
             //MovementStateManager player = GetComponent<MovementStateManager>();
             //Weapon objWeapon = player.objWeapon;
+            MovementStateManager movement = GetComponent<MovementStateManager>();
+
+            movement.OnDamaged();
             
             Debug.Log("Hit : " + damage);
             hpManager.OnDamage(damage);

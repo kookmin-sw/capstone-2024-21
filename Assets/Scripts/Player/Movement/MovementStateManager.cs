@@ -239,23 +239,13 @@ public class MovementStateManager : MonoBehaviour
         }
     }
 
-    void OnDamaged(Vector3 targetPos)
-    {
-        //player  damaged
-        gameObject.layer = 1;
-        
+    public void OnDamaged()
+    {   
         // 여기에 HP감소 넣기
-        Debug.Log("Hit");
+        Debug.Log("doDamaged");
 
         //animation
         anim.SetTrigger("doDamaged");
-
-        Invoke("OffDamaged", 2);
-    }
-
-    void OffDamaged()
-    {
-        gameObject.layer = 0;
     }
 
     // void OnCollisionEnter(Collision collision)
