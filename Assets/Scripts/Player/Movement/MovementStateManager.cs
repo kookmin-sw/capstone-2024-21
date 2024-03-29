@@ -56,6 +56,7 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public Animator anim;
 
     private PhotonView pv;
+    private HpManager hpManager;
 
     void Start()
     {
@@ -63,6 +64,7 @@ public class MovementStateManager : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
         quickSlot = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
+        hpManager = GetComponent<HpManager>();
         SwitchState(Idle);
 
         objWeapon = RightHand.GetChild(1).gameObject.GetComponent<Weapon>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
@@ -84,7 +86,6 @@ public class MovementStateManager : MonoBehaviour
 
             Attack();   
             Swap();
-            //if(controller.isGrounded) Debug.Log("COnGROD");
         }
     }
 
@@ -273,8 +274,11 @@ public class MovementStateManager : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //적에게 닿았을때
-        if(collision.gameObject.tag == "Weapon") // tag변경 필요
-            OnDamaged(collision.transform.position);
+        if(collision.gameObject.tag == "Weapon"){
+            GameObject it = collision.gameObject.GetComponent<ItemData>;
+            hpManager.OnDamage(collision.gameObject.GetComponent<ItemData>.Itemdata.itemDamage);    
+        } // tag변경 필요
+            
     }
     
     // private void OnDrawGizmos()

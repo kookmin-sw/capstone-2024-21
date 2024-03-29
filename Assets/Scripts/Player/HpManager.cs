@@ -18,7 +18,6 @@ public class HpManager : MonoBehaviour
     [SerializeField] private TMP_Text healthPointCount;
     [SerializeField] private UIManager uiManager;
 
-
     // 죽었을 때 작동할 함수들을 저장하는 변수
     // onDeath += 함수이름; 이렇게 이벤트 등록 가능
     // 함수 이름에 () 안붙여야함
