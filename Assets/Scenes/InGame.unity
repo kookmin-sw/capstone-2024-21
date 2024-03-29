@@ -7507,6 +7507,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 179128870354995441, guid: 821d38170f3a79347acb3eb1e9863d69, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1153132585871983324, guid: 821d38170f3a79347acb3eb1e9863d69, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7558,6 +7562,10 @@ PrefabInstance:
     - target: {fileID: 6459082373209626997, guid: 821d38170f3a79347acb3eb1e9863d69, type: 3}
       propertyPath: m_Name
       value: sandbag
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459082373209626997, guid: 821d38170f3a79347acb3eb1e9863d69, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

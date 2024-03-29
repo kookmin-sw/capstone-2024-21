@@ -35,9 +35,9 @@ public class MovementStateManager : MonoBehaviour
     public bool isAttack; // 공격 상태
     public Transform RightHand;
 
-    MeshCollider colliderWeapon; // 무기들의 collider
+    BoxCollider colliderWeapon; // 무기들의 collider
     SphereCollider colliderHand; // 주먹 collider
-    Weapon objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
+    public Weapon objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
     public string Armed; // 현재 장착중인 무기 타입
     ///////Attack
     float fireDelay;
@@ -56,7 +56,6 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public Animator anim;
 
     private PhotonView pv;
-    private HpManager hpManager;
 
     void Start()
     {
@@ -64,7 +63,6 @@ public class MovementStateManager : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
         quickSlot = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
-        hpManager = GetComponent<HpManager>();
         SwitchState(Idle);
 
         objWeapon = RightHand.GetChild(1).gameObject.GetComponent<Weapon>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
@@ -132,8 +130,7 @@ public class MovementStateManager : MonoBehaviour
     // 공격
     public void Attack(){ 
         if (Input.GetMouseButton(0))
-            {
-                Debug.Log("aTtatack");
+            {   
                 anim.SetBool("Attack", true);
             }
         else anim.SetBool("Attack", false);
@@ -141,13 +138,10 @@ public class MovementStateManager : MonoBehaviour
 
     // 무기 장착 시와 비 장착시 공격 시작(collider on)
     public void AttackStart(){
-        Debug.Log("Collider On");
         if(Armed != "") {
-            Debug.Log("Weaponcoll On");
             colliderWeapon.enabled = true;
         }
         else {
-            Debug.Log("Handcoll on");
             colliderHand.enabled = true;
         }
     }
@@ -157,23 +151,19 @@ public class MovementStateManager : MonoBehaviour
         Debug.Log("coll Off");
         if(Armed != "") {
             colliderWeapon.enabled = false;
-            Debug.Log("Weaponcoll Off");
         }
         else {
             colliderHand.enabled = false;
-            Debug.Log("Handcoll Off");
         }
     }
 
     // 공격 시작
     public void AttackIn(){
-        Debug.Log("bbabsd");
         isAttack = true;
     }
 
     // 공격 끝
     public void AttackOut(){
-        Debug.Log("ASaaaaaa");
         isAttack = false;   
     }   
 
@@ -193,7 +183,7 @@ public class MovementStateManager : MonoBehaviour
         //     return;
         if(isAttack) return; // 공격 중에는 스왑 불가
 
-        int weaponIndex = -1;
+        int     weaponIndex = -1;
         if(Input.GetButtonDown("Swap1")) weaponIndex = 0;
         if(Input.GetButtonDown("Swap2")) weaponIndex = 1;
         if(Input.GetButtonDown("Swap3")) weaponIndex = 2;
@@ -220,22 +210,19 @@ public class MovementStateManager : MonoBehaviour
                         break;
                     }   
                 }
-                Debug.Log("swap" + 11231);
             objWeapon = weapons[equipWeaponIndex].GetComponent<Weapon>();
             
 
             // 무기 들었을 때 애니메이션 변경
             if(objWeapon.GetComponent<ItemData>().itemData.ItemType <= 10){
-                colliderWeapon = objWeapon.GetComponent<MeshCollider>();
+                colliderWeapon = objWeapon.GetComponent<BoxCollider>();
                 if(objWeapon.GetComponent<ItemData>().itemData.ItemType <= 3) {
                     anim.SetBool(Armed, false);
-                    Debug.Log("OtoT");
                     Armed = "THW";
                     anim.SetBool(Armed, true);
                 }
                 else {
                     anim.SetBool(Armed, false);
-                    Debug.Log("TtoO");
                     Armed = "OHW";
                     anim.SetBool(Armed, true);
                 }
@@ -271,15 +258,17 @@ public class MovementStateManager : MonoBehaviour
         gameObject.layer = 0;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        //적에게 닿았을때
-        if(collision.gameObject.tag == "Weapon"){
-            GameObject it = collision.gameObject.GetComponent<ItemData>;
-            hpManager.OnDamage(collision.gameObject.GetComponent<ItemData>.Itemdata.itemDamage);    
-        } // tag변경 필요
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     //적에게 닿았을때
+    //     if(collision.gameObject.tag == "Weapon"){
+    //         GameObject it = collision.gameObject.GetComponent<ItemData>;
+    //         hpManager.OnDamage(collision.gameObject.GetComponent<ItemData>.Itemdata.itemDamage);    
+    //     } // tag변경 필요
             
-    }
+    // }
+
+    
     
     // private void OnDrawGizmos()
     // {
