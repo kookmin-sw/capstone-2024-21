@@ -140,6 +140,7 @@ public class MovementStateManager : MonoBehaviour
     public void AttackStart(){
         
         if(Armed != "") {
+            Debug.Log("WeapColl On");
             colliderWeapon.enabled = true;
         }
         else {
