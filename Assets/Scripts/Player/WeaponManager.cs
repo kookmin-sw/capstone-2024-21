@@ -11,27 +11,10 @@ public class WeaponManager : MonoBehaviour
     public BoxCollider meleeArea;
     public TrailRenderer trailEffect;
 
-    // public void Use(){
-    //     if(type == Type.Melee){
-    //         StopCoroutine("Swing");
-    //         StartCoroutine("Swing");
-    //     }
-    // }
-
-    void OnTriggerEnter(Collider other){
-        Debug.Log("collision");
-        Debug.Log(other.gameObject.name);
-        if(other.gameObject.tag == "Player"){
-            HpManager hpManager = other.GetComponent<HpManager>();
-            MovementStateManager Enemy = other.GetComponent<MovementStateManager>();
-
-            if (Enemy != null) {
-                Enemy.AttackEnd();
-                Enemy.OnDamaged();
-            }
-
-            Debug.Log("Hit : " + damage);
-            hpManager.OnDamage(damage);
+    public void Use(){
+        if(type == Type.Melee){
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
         }
     }
 

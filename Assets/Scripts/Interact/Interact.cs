@@ -43,7 +43,7 @@ public class Interact : MonoBehaviour
                 // 나중에 f 말고 떄리는 기능 구현하면 삭제해야함
                 if (selectedTarget.CompareTag("tmp"))
                 {
-                    hit.collider.gameObject.GetComponent<HpManager>().OnDamage(10f);
+                    hit.collider.gameObject.GetComponent<HpManager>().OnDamage();
                 }
 
                 if (selectedTarget.CompareTag("door"))
