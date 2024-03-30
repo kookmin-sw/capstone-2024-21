@@ -23,16 +23,13 @@ public class WeaponManager : MonoBehaviour
         Debug.Log(other.gameObject.name);
         if(other.gameObject.tag == "Player"){
             HpManager hpManager = other.GetComponent<HpManager>();
-            //MovementStateManager player = GetComponent<MovementStateManager>();
-            //Weapon objWeapon = player.objWeapon;
-            MovementStateManager movement = GetComponent<MovementStateManager>();
+            MovementStateManager Enemy = other.GetComponent<MovementStateManager>();
 
-            if (movement != null) {
-                movement.AttackEnd();
-                movement.OnDamaged();
+            if (Enemy != null) {
+                Enemy.AttackEnd();
+                Enemy.OnDamaged();
             }
 
-            
             Debug.Log("Hit : " + damage);
             hpManager.OnDamage(damage);
         }

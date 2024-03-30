@@ -1314,23 +1314,26 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Attack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: OHW
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: THW
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: doSwap
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: SwapOut
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Idle
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: doDamaged
+  - Type: 9
+    SynchronizeType: 1
+    Name: HitOut
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1340,11 +1343,11 @@ MonoBehaviour:
     LayerIndex: 2
   - SynchronizeType: 1
     LayerIndex: 3
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 4
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 5
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 6
 --- !u!114 &9175286052800968851
 MonoBehaviour:

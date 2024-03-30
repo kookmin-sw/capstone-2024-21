@@ -83,7 +83,7 @@ public class MovementStateManager : MonoBehaviour
             currentState.UpdateState(this);
 
             Attack();   
-            Swap();
+            RpcSwap();
         }
     }
 
@@ -175,6 +175,7 @@ public class MovementStateManager : MonoBehaviour
         anim.SetTrigger("SwapOut");
     }
 
+    [PunRPC]
     void Swap(){
         // if(sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
         //     return;
@@ -182,62 +183,87 @@ public class MovementStateManager : MonoBehaviour
         //     return;
         // if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
         //     return;
-        if(isAttack) return; // 공격 중에는 스왑 불가
+        if(pv.IsMine)
+        {
+            if (isAttack) return; // 공격 중에는 스왑 불가
 
-        int     weaponIndex = -1;
-        if(Input.GetButtonDown("Swap1")) weaponIndex = 0;
-        if(Input.GetButtonDown("Swap2")) weaponIndex = 1;
-        if(Input.GetButtonDown("Swap3")) weaponIndex = 2;
-        if(Input.GetButtonDown("Swap4")) weaponIndex = 3;
-        if(Input.GetButtonDown("Swap5")) weaponIndex = 4;
+            int weaponIndex = -1;
+            if (Input.GetButtonDown("Swap1")) weaponIndex = 0;
+            if (Input.GetButtonDown("Swap2")) weaponIndex = 1;
+            if (Input.GetButtonDown("Swap3")) weaponIndex = 2;
+            if (Input.GetButtonDown("Swap4")) weaponIndex = 3;
+            if (Input.GetButtonDown("Swap5")) weaponIndex = 4;
 
-        if(Input.GetKeyDown(KeyCode.G)) { // G는 버리는 키라서 인벤토리에서도 빼기
-            weaponIndex = -1;
-            equipWeapon.SetActive(false);
-            anim.SetTrigger("doSwap");
-            anim.SetBool(Armed, false);
-            Armed = "";
-            return;
-        }
-        // 버튼을 입력 받으면 
-        if((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
-            || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5"))){
-            if(equipWeapon != null)
+            if (Input.GetKeyDown(KeyCode.G))
+            { // G는 버리는 키라서 인벤토리에서도 빼기
+                weaponIndex = -1;
                 equipWeapon.SetActive(false);
-
-            for(int i = 0 ; i< weapons.Length; i++){
-                    if(quickSlot.items[weaponIndex].ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType){
-                        equipWeaponIndex= i;        
-                        break;
-                    }   
-                }
-            objWeapon = weapons[equipWeaponIndex].GetComponent<Weapon>();
-            
-
-            // 무기 들었을 때 애니메이션 변경
-            if(objWeapon.GetComponent<ItemData>().itemData.ItemType <= 10){
-                colliderWeapon = objWeapon.GetComponent<BoxCollider>();
-                if(objWeapon.GetComponent<ItemData>().itemData.ItemType <= 3) {
-                    anim.SetBool(Armed, false);
-                    Armed = "THW";
-                    anim.SetBool(Armed, true);
-                }
-                else {
-                    anim.SetBool(Armed, false);
-                    Armed = "OHW";
-                    anim.SetBool(Armed, true);
-                }
+                anim.SetTrigger("doSwap");
+                anim.SetBool(Armed, false);
+                Armed = "";
+                return;
             }
-            
-            equipWeapon = weapons[equipWeaponIndex];
-            equipWeapon.SetActive(true);
-            
-            anim.SetTrigger("doSwap");
-            
-            isSwap = true;
+            // 버튼을 입력 받으면 
+            if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
+                || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5")))
+            {
+                if (equipWeapon != null)
+                    equipWeapon.SetActive(false);
 
-            Invoke("SwapOut", 0.3f);  // swap 애니메이션 넣으면 사용
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    if (quickSlot.items[weaponIndex].ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType)
+                    {
+                        equipWeaponIndex = i;
+                        break;
+                    }
+                }
+                objWeapon = weapons[equipWeaponIndex].GetComponent<Weapon>();
+
+
+                // 무기 들었을 때 애니메이션 변경
+                if (objWeapon.GetComponent<ItemData>().itemData.ItemType <= 10)
+                {
+                    colliderWeapon = objWeapon.GetComponent<BoxCollider>();
+                    if (objWeapon.GetComponent<ItemData>().itemData.ItemType <= 3)
+                    {
+                        anim.SetBool(Armed, false);
+                        Armed = "THW";
+                        anim.SetBool(Armed, true);
+                    }
+                    else
+                    {
+                        anim.SetBool(Armed, false);
+                        Armed = "OHW";
+                        anim.SetBool(Armed, true);
+                    }
+                }
+
+                RpcEquip(equipWeaponIndex);
+                
+                anim.SetTrigger("doSwap");
+
+                isSwap = true;
+
+                Invoke("SwapOut", 0.3f);  // swap 애니메이션 넣으면 사용
+            }
         }
+        
+    }
+
+    [PunRPC]
+    void RPCWeaponEquip(int RpcEquipWeaponIndex){
+        equipWeapon = weapons[RpcEquipWeaponIndex];
+        equipWeapon.SetActive(true);
+    }
+
+    void RpcEquip(int RpcEquipWeaponIndex){
+        pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+    }
+
+    void RpcSwap()
+    {
+        pv.RPC("Swap", RpcTarget.All);
     }
 
     void hitOut(){
