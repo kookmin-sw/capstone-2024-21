@@ -253,6 +253,8 @@ public class MovementStateManager : MonoBehaviour
 
     [PunRPC]
     void RPCWeaponEquip(int RpcEquipWeaponIndex){
+        if(equipWeapon != null)
+            equipWeapon.SetActive(false);
         equipWeapon = weapons[RpcEquipWeaponIndex];
         equipWeapon.SetActive(true);
     }
