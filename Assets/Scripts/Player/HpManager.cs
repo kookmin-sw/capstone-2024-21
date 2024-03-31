@@ -18,7 +18,6 @@ public class HpManager : MonoBehaviour
     [SerializeField] private TMP_Text healthPointCount;
     [SerializeField] private UIManager uiManager;
 
-
     // 죽었을 때 작동할 함수들을 저장하는 변수
     // onDeath += 함수이름; 이렇게 이벤트 등록 가능
     // 함수 이름에 () 안붙여야함
@@ -36,36 +35,33 @@ public class HpManager : MonoBehaviour
 
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
-    {
-        if (pv.IsMine)
-        {
-            hp = maxHp;
-            healthPointBar.value = hp;
-            healthPointCount.text = hp.ToString();
-            isDead = false;
-        }
+    {   
+        Debug.Log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+        hp = maxHp;
+        healthPointBar.value = hp;
+        healthPointCount.text = hp.ToString();
+        isDead = false;
     }
 
-    [PunRPC]
-    public void ApplyUpdatedHp(float newHp, bool newIsDead)
-    {
-        hp = newHp;
-        isDead = newIsDead;
-    }
+    // [PunRPC]
+    // public void ApplyUpdatedHp(float newHp, bool newIsDead)
+    // {
+    //     hp = newHp;
+    //     isDead = newIsDead;
+    // }
 
     // 데미지 처리하는 함수
     [PunRPC]
     public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
-        if (pv.IsMine)
-        {
+    {   
+        if(pv.IsMine){
             Debug.Log("데미지 입음");
             hp -= damage;
             healthPointBar.value = hp;
             healthPointCount.text = hp.ToString();
             Debug.Log("남은 hp: " + hp);
 
-            pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
+            // pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
 
             // 체력이 0 이하이고 살아있으면 사망
             if (hp <= 0 && !isDead)
@@ -73,50 +69,39 @@ public class HpManager : MonoBehaviour
                 Die();
             }
         }
-
     }
-    public void OnDamage()
-    {
-
-      pv.RPC("OnDamage", RpcTarget.All, 10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
-
+    public void OnDamage(float damage)    {
+        pv.RPC("OnDamage", RpcTarget.Others, damage, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
     }
 
     // 체력 회복 함수
     public void OnRecovery(float recovery)
     {
-        if (pv.IsMine)
+        // 죽었으면 회복 x
+        if (!isDead)
         {
-            // 죽었으면 회복 x
-            if (!isDead)
+            hp += recovery;
+            healthPointBar.value = hp;
+            healthPointCount.text = hp.ToString();
+            if (hp > maxHp)
             {
-                hp += recovery;
-                healthPointBar.value = hp;
-                healthPointCount.text = hp.ToString();
-                if (hp > maxHp)
-                {
-                    hp = maxHp;
-                }
+                hp = maxHp;
             }
         }
-
     }
 
     // 사망 함수
     public void Die()
     {
-        if(pv.IsMine)
+        Debug.Log("사망");
+        // 사망 이벤트 있으면 실행
+        if (onDeath != null)
         {
-            Debug.Log("사망");
-            // 사망 이벤트 있으면 실행
-            if (onDeath != null)
-            {
-                onDeath();
-            }
-            isDead = true;
-            gameObject.SetActive(false);
-            uiManager.isGameOver = true;
-            uiManager.isUIActivate = true;
+            onDeath();
         }
+        isDead = true;
+        gameObject.SetActive(false);
+        uiManager.isGameOver = true;
+        uiManager.isUIActivate = true;
     }
 }
