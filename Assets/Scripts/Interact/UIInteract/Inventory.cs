@@ -7,7 +7,8 @@ public class Inventory : MonoBehaviour
     public List<Item> items ; //아이템을 담을 리스트
 
     //[SerializeField] private Transform slotParent; // Slot의 부모를 담을 곳
-    [SerializeField] private Slot[] slots;  //Iten Quick Slot의 하위에 있는 Slot을 담을 곳
+    public Slot[] slots;  //Iten Quick Slot의 하위에 있는 Slot을 담을 곳
+
 
 #if UNITY_EDITOR
     //OnValidate()의 기능은 유니티 에디터에서 바로 작동을 하는 역할을 함. 
@@ -59,4 +60,5 @@ public class Inventory : MonoBehaviour
             return 0;
         }
     }
+
 }

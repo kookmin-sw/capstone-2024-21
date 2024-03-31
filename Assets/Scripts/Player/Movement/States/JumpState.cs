@@ -16,8 +16,10 @@
         if(movement.jumped == true && movement.IsGrounded())
         {
             movement.jumped = false;
-            if (Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.Run);
-            else if(movement.moveDir.magnitude > 0.1f) movement.SwitchState(movement.Walk);
+            if(movement.moveDir.magnitude > 0.1f){
+              if (Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.Run);
+              else  movement.SwitchState(movement.Walk);
+            }
             else movement.SwitchState(movement.Idle);
         }
      }

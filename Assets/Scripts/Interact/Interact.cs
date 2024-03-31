@@ -6,25 +6,25 @@ public class Interact : MonoBehaviour
 {
 
     public GameObject image_F;
-    public GameObject circleGauge;
+    public GameObject circleGaugeControler;
     public Inventory quicSlot;
 
     public bool isInvetigating = false; //수색중인가?
 
 
     RaycastHit hit;
-    float interactDiastance = 2.0f;
+    float interactDiastance = 4.0f;
     Transform selectedTarget;
 
-    // 레이케스트 시작점을 얼마나 변경할지 결정하는 벡터
-    private Vector3 raycastOffset = new Vector3(0f, -0.5f, -1f);
+    Vector3 raycastOffset = new Vector3(0f, 0f, 1.4f);
 
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.forward * interactDiastance, Color.blue, interactDiastance);
+        Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset);
+
+        Debug.DrawRay(raycastStartingPoint, transform.forward * interactDiastance, Color.blue, interactDiastance);
 
         //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용 
-        Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset);
         if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance, LayerMask.GetMask("Interact")))
         {
             //셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
@@ -49,8 +49,8 @@ public class Interact : MonoBehaviour
                 {
                     Debug.Log("betterySpawner 와 상호작용");
 
-                    circleGauge.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화하고
-                    circleGauge.GetComponent<InteractGaugeControler>().AbleInvestinGaugeUI(); //게이지UI켜고 
+                    circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화하고
+                    circleGaugeControler.GetComponent<InteractGaugeControler>().AbleInvestinGaugeUI(); //게이지UI켜고 
                     isInvetigating = true;//수색시작
                 }
 
@@ -90,14 +90,14 @@ public class Interact : MonoBehaviour
         //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증g
         if (isInvetigating)
         {
-            if (circleGauge.GetComponent<InteractGaugeControler>().FillCircle())
+            if (circleGaugeControler.GetComponent<InteractGaugeControler>().FillCircle())
             {
                 //수색을 성공적으로 마쳤다면 아이템 스폰 
                 selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
 
                 //수색종료
                 isInvetigating = false; 
-                circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
+                circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
             }
         }
 
@@ -109,12 +109,13 @@ public class Interact : MonoBehaviour
     {
         if (selectedTarget == null) return;
 
-        Debug.Log(obj.name + " is unselected");
         removeOutline(obj);
         selectedTarget = null;
+        Debug.Log(obj.name + " is unselected");
+
 
         isInvetigating = false; //수색중이라면 취소하고
-        circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
+        circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
 
     }
 
@@ -151,7 +152,6 @@ public class Interact : MonoBehaviour
         if (obj != null)
         {
             obj.gameObject.GetComponent<Outline>().enabled = false;
-            obj = null;
         }
     }
 
