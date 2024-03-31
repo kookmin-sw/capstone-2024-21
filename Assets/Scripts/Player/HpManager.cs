@@ -37,10 +37,13 @@ public class HpManager : MonoBehaviour
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {
-        hp = maxHp;
-        healthPointBar.value = hp;
-        healthPointCount.text = hp.ToString();
-        isDead = false;
+        if (pv.IsMine)
+        {
+            hp = maxHp;
+            healthPointBar.value = hp;
+            healthPointCount.text = hp.ToString();
+            isDead = false;
+        }
     }
 
     [PunRPC]
@@ -54,39 +57,49 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        Debug.Log("데미지 입음");
-        hp -= damage;
-        healthPointBar.value = hp;
-        healthPointCount.text = hp.ToString();
-        Debug.Log("남은 hp: " + hp);
-
-        pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
-
-        // 체력이 0 이하이고 살아있으면 사망
-        if (hp <= 0 && !isDead)
+        if (pv.IsMine)
         {
-            Die();
+            Debug.Log("데미지 입음");
+            hp -= damage;
+            healthPointBar.value = hp;
+            healthPointCount.text = hp.ToString();
+            Debug.Log("남은 hp: " + hp);
+
+            pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
+
+            // 체력이 0 이하이고 살아있으면 사망
+            if (hp <= 0 && !isDead)
+            {
+                Die();
+            }
         }
+
     }
     public void OnDamage()
     {
-        pv.RPC("OnDamage", RpcTarget.All, 10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
+
+      pv.RPC("OnDamage", RpcTarget.All, 10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
+
     }
 
     // 체력 회복 함수
     public void OnRecovery(float recovery)
     {
-        // 죽었으면 회복 x
-        if (!isDead)
+        if (pv.IsMine)
         {
-            hp += recovery;
-            healthPointBar.value = hp;
-            healthPointCount.text = hp.ToString();
-            if (hp > maxHp)
+            // 죽었으면 회복 x
+            if (!isDead)
             {
-                hp = maxHp;
+                hp += recovery;
+                healthPointBar.value = hp;
+                healthPointCount.text = hp.ToString();
+                if (hp > maxHp)
+                {
+                    hp = maxHp;
+                }
             }
         }
+
     }
 
     // 사망 함수
