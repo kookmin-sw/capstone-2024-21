@@ -69,7 +69,9 @@ public class HpManager : MonoBehaviour
                 Die();
             }
         }
+
     }
+    
     public void OnDamage(float damage)    {
         pv.RPC("OnDamage", RpcTarget.Others, damage, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
     }
@@ -77,31 +79,38 @@ public class HpManager : MonoBehaviour
     // 체력 회복 함수
     public void OnRecovery(float recovery)
     {
-        // 죽었으면 회복 x
-        if (!isDead)
+        if (pv.IsMine)
         {
-            hp += recovery;
-            healthPointBar.value = hp;
-            healthPointCount.text = hp.ToString();
-            if (hp > maxHp)
+            // 죽었으면 회복 x
+            if (!isDead)
             {
-                hp = maxHp;
+                hp += recovery;
+                healthPointBar.value = hp;
+                healthPointCount.text = hp.ToString();
+                if (hp > maxHp)
+                {
+                    hp = maxHp;
+                }
             }
         }
+
     }
 
     // 사망 함수
     public void Die()
     {
-        Debug.Log("사망");
-        // 사망 이벤트 있으면 실행
-        if (onDeath != null)
+        if(pv.IsMine)
         {
-            onDeath();
+            Debug.Log("사망");
+            // 사망 이벤트 있으면 실행
+            if (onDeath != null)
+            {
+                onDeath();
+            }
+            isDead = true;
+            gameObject.SetActive(false);
+            uiManager.isGameOver = true;
+            uiManager.isUIActivate = true;
         }
-        isDead = true;
-        gameObject.SetActive(false);
-        uiManager.isGameOver = true;
-        uiManager.isUIActivate = true;
     }
 }
