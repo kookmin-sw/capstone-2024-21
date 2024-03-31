@@ -43,6 +43,8 @@ MonoBehaviour:
   - OnDamage
   - ApplyUpdatedHp
   - ChangeDoorStateRPC
+  - Swap
+  - RPCWeaponEquip
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
