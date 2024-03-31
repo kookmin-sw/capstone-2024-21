@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4921283338362637022}
   - component: {fileID: 8367581236397273591}
   - component: {fileID: 231619739355134958}
-  - component: {fileID: 7863573787626757399}
   m_Layer: 0
   m_Name: Crowbar 01
   m_TagString: Weapon
@@ -116,9 +115,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -136,27 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 6001ab8e5e1e36841b91cedee76e9e9e, type: 2}
---- !u!65 &7863573787626757399
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208502682036536715}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.9494202, y: 1.5148305, z: 0.27307522}
-  m_Center: {x: -0.24028367, y: 1.6470647, z: 0.017803362}
 --- !u!1 &373842833185943468
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,8 +442,6 @@ GameObject:
   - component: {fileID: 200068891573886386}
   - component: {fileID: 7778332652604241343}
   - component: {fileID: 4319717058062126726}
-  - component: {fileID: 146622821581531918}
-  - component: {fileID: 4318709616620877964}
   m_Layer: 3
   m_Name: Baseball Bat 01
   m_TagString: Item
@@ -567,9 +543,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -587,44 +563,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: da1e7137fe9214535abac10ade8bc32b, type: 2}
---- !u!114 &146622821581531918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752030861799889655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  damage: 19
-  rate: 0
-  meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
---- !u!65 &4318709616620877964
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752030861799889655}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.43602952, y: 2.1015298, z: 0.43603054}
-  m_Center: {x: 0.00000046010894, y: 1.6506158, z: 0.0000008813009}
 --- !u!1 &848365171037248235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1006,7 @@ GameObject:
   - component: {fileID: 7949355919441178998}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1208,7 +1146,6 @@ MonoBehaviour:
   quickSlot: {fileID: 0}
   isAttack: 0
   RightHand: {fileID: 8890949234923974251}
-  objWeapon: {fileID: 0}
   Armed: 
   anim: {fileID: 0}
 --- !u!143 &2556255788136102731
@@ -1314,26 +1251,26 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Attack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: OHW
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: THW
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsSwap
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: doSwap
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
+    Name: IsHit
+  - Type: 9
+    SynchronizeType: 0
     Name: SwapOut
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Idle
-  - Type: 9
-    SynchronizeType: 1
-    Name: doDamaged
-  - Type: 9
-    SynchronizeType: 1
-    Name: HitOut
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1343,11 +1280,11 @@ MonoBehaviour:
     LayerIndex: 2
   - SynchronizeType: 1
     LayerIndex: 3
-  - SynchronizeType: 1
+  - SynchronizeType: 0
     LayerIndex: 4
-  - SynchronizeType: 1
+  - SynchronizeType: 0
     LayerIndex: 5
-  - SynchronizeType: 1
+  - SynchronizeType: 0
     LayerIndex: 6
 --- !u!114 &9175286052800968851
 MonoBehaviour:
@@ -1392,7 +1329,6 @@ GameObject:
   - component: {fileID: 3083636289765616050}
   - component: {fileID: 5182446320803567965}
   - component: {fileID: 7172967934577546159}
-  - component: {fileID: 4768138696776386309}
   m_Layer: 0
   m_Name: Heavy Wrench 01
   m_TagString: Weapon
@@ -1494,9 +1430,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -1514,27 +1450,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 1534c28a6a75f33419a1bebcb4ba1353, type: 2}
---- !u!65 &4768138696776386309
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887598421888165992}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.7517124, y: 0.8907965, z: 0.2594621}
-  m_Center: {x: -0.17149952, y: 1.0024598, z: 0.0000026845057}
 --- !u!1 &1958819164286703982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,7 +2002,7 @@ Transform:
   m_GameObject: {fileID: 4149688624307851805}
   serializedVersion: 2
   m_LocalRotation: {x: 0.050891306, y: 3.1006132e-14, z: 2.2924875e-13, w: 0.9987042}
-  m_LocalPosition: {x: 0, y: 0.14525612, z: 0}
+  m_LocalPosition: {x: -0, y: 0.14525612, z: 0.000000007893072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2190,7 +2105,6 @@ GameObject:
   - component: {fileID: 3730183463166316551}
   - component: {fileID: 8728347658088704150}
   - component: {fileID: 6167700062796325019}
-  - component: {fileID: 2555135914719600072}
   m_Layer: 3
   m_Name: Hammer 01
   m_TagString: Item
@@ -2279,9 +2193,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -2299,27 +2213,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 5da90f1ee532cde4bbcca4fe0ac27cae, type: 2}
---- !u!65 &2555135914719600072
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4223646334818493375}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.2557795, y: 0.32973146, z: 0.25864628}
-  m_Center: {x: 0.391042, y: 1.6731102, z: 0.0000074696422}
 --- !u!1 &4502347104383346146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,8 +3217,6 @@ GameObject:
   - component: {fileID: 6314211039619508404}
   - component: {fileID: 6699777444795079815}
   - component: {fileID: 2051173490033064729}
-  - component: {fileID: 5071380312381409707}
-  - component: {fileID: 395900111580591115}
   m_Layer: 3
   m_Name: Fireaxe 01
   m_TagString: Item
@@ -3429,7 +3320,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -3447,44 +3338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 1b586aa55524247c1924e8c0c949f9e9, type: 2}
---- !u!114 &5071380312381409707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5637071283813917363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  damage: 20
-  rate: 0
-  meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
---- !u!65 &395900111580591115
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5637071283813917363}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.21107109, y: 0.86955035, z: 0.27306893}
-  m_Center: {x: -0.7419064, y: 2.037799, z: -0.000009232459}
 --- !u!1 &5671601489979881472
 GameObject:
   m_ObjectHideFlags: 0
@@ -3527,11 +3380,10 @@ GameObject:
   m_Component:
   - component: {fileID: 462346287276667084}
   - component: {fileID: 6800167360690962252}
-  - component: {fileID: 2273339941685104011}
   - component: {fileID: 6422979933983737600}
   m_Layer: 0
   m_Name: mixamorig:RightHandMiddle1
-  m_TagString: Weapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3565,31 +3417,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 5
+  damage: 0
   rate: 0
   meleeArea: {fileID: 0}
   trailEffect: {fileID: 0}
---- !u!65 &2273339941685104011
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5779482475188146858}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.077338, y: 0.05267, z: 0.039482}
-  m_Center: {x: 0.001809, y: 0.016178, z: 0.005778}
 --- !u!135 &6422979933983737600
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3605,9 +3436,9 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.045
   m_Center: {x: 0, y: 0, z: 0}
@@ -3657,7 +3488,6 @@ GameObject:
   - component: {fileID: 3729252745161254089}
   - component: {fileID: 6340442025838943169}
   - component: {fileID: 6475866071904671999}
-  - component: {fileID: 2846289191192343873}
   m_Layer: 0
   m_Name: Tactical Knife 01
   m_TagString: Weapon
@@ -3759,9 +3589,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -3779,27 +3609,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 128baf0668fce66449d78b3363df22ee, type: 2}
---- !u!65 &2846289191192343873
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6182126618674709142}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.43403473, y: 0.9756308, z: 0.11680862}
-  m_Center: {x: 0.040797625, y: 1.0002377, z: -0.00000042852326}
 --- !u!1 &6261871592612885108
 GameObject:
   m_ObjectHideFlags: 0
@@ -4003,7 +3812,6 @@ GameObject:
   - component: {fileID: 6473355815963119438}
   - component: {fileID: 8379536594295453876}
   - component: {fileID: 3686356531892154920}
-  - component: {fileID: 304782119227698064}
   m_Layer: 0
   m_Name: Shovel 01
   m_TagString: Weapon
@@ -4094,9 +3902,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -4114,27 +3922,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: d95d2d437833d764380ed31749533c32, type: 2}
---- !u!65 &304782119227698064
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6907124605842488782}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.8038171, y: 1.1021066, z: 0.18095428}
-  m_Center: {x: -0.0000026455175, y: 2.0178485, z: 0.023037935}
 --- !u!1 &7010811700781108178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4342,8 +4129,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2721367658217680379}
   - {fileID: 4814093265697139655}
+  - {fileID: 2721367658217680379}
   - {fileID: 4948798912793238153}
   m_Father: {fileID: 3524495104482398000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4424,9 +4211,6 @@ GameObject:
   - component: {fileID: 5069270616292411832}
   - component: {fileID: 2982405419464368892}
   - component: {fileID: 8672571521303154147}
-  - component: {fileID: 9095686435473146075}
-  - component: {fileID: 8546982305537051308}
-  - component: {fileID: 1431260362362904659}
   m_Layer: 0
   m_Name: Butcher Knife 01
   m_TagString: Weapon
@@ -4528,9 +4312,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -4548,71 +4332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 053dc8dd1cd3645e19ffb3db5751ef78, type: 2}
---- !u!114 &9095686435473146075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7933831756338349087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  damage: 18
-  rate: 0
-  meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
---- !u!65 &8546982305537051308
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7933831756338349087}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.2271946, y: 1.6529266, z: 0.10231067}
-  m_Center: {x: -0.3039063, y: 0.5356983, z: -0.0000003292497}
---- !u!54 &1431260362362904659
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7933831756338349087}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7951639315145840893
 GameObject:
   m_ObjectHideFlags: 0
@@ -4732,8 +4451,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8327645318887275627}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.54208684, y: -0.44335595, z: 0.5708954, w: 0.42855087}
-  m_LocalPosition: {x: -0.058364734, y: 0.119628266, z: -0.003658164}
+  m_LocalRotation: {x: 0.5420868, y: -0.44335592, z: 0.5708955, w: 0.42855084}
+  m_LocalPosition: {x: -0.05836472, y: 0.119628236, z: -0.003658159}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4901,7 +4620,6 @@ GameObject:
   - component: {fileID: 5632099656190804040}
   - component: {fileID: 1032022982660271143}
   - component: {fileID: 6253729149388683030}
-  - component: {fileID: 4116641222469349720}
   m_Layer: 0
   m_Name: Machete 01
   m_TagString: Weapon
@@ -5003,9 +4721,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -5023,27 +4741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 84cd9df79eb99a143b3818adb292c184, type: 2}
---- !u!65 &4116641222469349720
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8687966117195929296}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.506775, y: 1.4119141, z: 0.1083874}
-  m_Center: {x: -0.07435965, y: 0.9047465, z: 0.0000006862917}
 --- !u!1 &9077003601887944035
 GameObject:
   m_ObjectHideFlags: 0
