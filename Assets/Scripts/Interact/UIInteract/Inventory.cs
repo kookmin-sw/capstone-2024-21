@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//ItemQuickSlots에 들어가 있음
 public class Inventory : MonoBehaviour
 {
     public List<Item> items ; //아이템을 담을 리스트
