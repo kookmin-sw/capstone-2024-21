@@ -45,7 +45,7 @@ public class LoginPagePlayfab : MonoBehaviour
     {
         login.SetActive(false);
         register.SetActive(true);
-        ClearField();    
+        ClearField();
     }
 
     private void OnLoginSuccess(LoginResult result)
