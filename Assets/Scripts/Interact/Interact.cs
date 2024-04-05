@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
 {
 
-    public GameObject image_F;
-    public GameObject circleGaugeControler;
-    public Inventory quicSlot;
+    public GameObject image_F;//껐다 켰다 할 F UI. 직접 할당해줘야함 findObject로 바꿀까 고민중 
+    public GameObject circleGaugeControler; //껐다 켰다 할 게이지  UI. 직접 할당해줘야함
+    public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI. 직접 할당해줘야함
 
-    public bool isInvetigating = false; //수색중인가?
+    public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
 
 
     RaycastHit hit;
@@ -20,20 +21,21 @@ public class Interact : MonoBehaviour
 
     void Update()
     {
-        Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset);
+        Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset); 
+        Debug.DrawRay(raycastStartingPoint, transform.forward * interactDiastance, Color.blue, interactDiastance);//레이캐스트 디버그 
 
-        Debug.DrawRay(raycastStartingPoint, transform.forward * interactDiastance, Color.blue, interactDiastance);
+        //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용
 
-        //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용 
+        //레이캐스트 발사 
         if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance, LayerMask.GetMask("Interact")))
         {
             //셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
             if (selectedTarget == null || selectedTarget != hit.transform)
             {
-                Transform obj = hit.transform;
-                selectTarget(obj);
-                addOutline(obj);
-                image_F.GetComponent<UIpressF>().show_image();
+                Transform obj = hit.transform; 
+                selectTarget(obj); //레이캐스트가 충돌한 물체를 셀렉하고 
+                addOutline(obj); // 아웃라인 추가 
+                image_F.GetComponent<UIpressF>().show_image(); //UI에서 F 이미지 활성화 
             }
 
             //F를 누르면 상호작용 
@@ -86,8 +88,7 @@ public class Interact : MonoBehaviour
 
 
 
-
-        //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증g
+        //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증가 
         if (isInvetigating)
         {
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().FillCircle())
