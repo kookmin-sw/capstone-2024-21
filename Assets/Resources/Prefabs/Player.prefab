@@ -604,6 +604,7 @@ MonoBehaviour:
   rate: 0
   meleeArea: {fileID: 0}
   trailEffect: {fileID: 0}
+  attackManager: {fileID: 0}
 --- !u!65 &4318709616620877964
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1066,6 +1067,7 @@ GameObject:
   - component: {fileID: 7524670358672781770}
   - component: {fileID: 9175286052800968851}
   - component: {fileID: 7949355919441178998}
+  - component: {fileID: 8535452862635203202}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1195,22 +1197,8 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   jumped: 0
-  weapons:
-  - {fileID: 752030861799889655}
-  - {fileID: 7933831756338349087}
-  - {fileID: 208502682036536715}
-  - {fileID: 5637071283813917363}
-  - {fileID: 4223646334818493375}
-  - {fileID: 1887598421888165992}
-  - {fileID: 8687966117195929296}
-  - {fileID: 6907124605842488782}
-  - {fileID: 6182126618674709142}
-  quickSlot: {fileID: 0}
-  isAttack: 0
-  RightHand: {fileID: 8890949234923974251}
-  objWeapon: {fileID: 0}
-  Armed: 
   anim: {fileID: 0}
+  attackManager: {fileID: 0}
 --- !u!143 &2556255788136102731
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1378,6 +1366,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 0}
   staminaBar: {fileID: 0}
+--- !u!114 &8535452862635203202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872948426191403273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac50b9860808904c87ebf75fa234683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 5637071283813917363}
+  - {fileID: 752030861799889655}
+  - {fileID: 208502682036536715}
+  - {fileID: 6907124605842488782}
+  - {fileID: 4223646334818493375}
+  - {fileID: 1887598421888165992}
+  - {fileID: 8687966117195929296}
+  - {fileID: 7933831756338349087}
+  - {fileID: 6182126618674709142}
+  isAttack: 0
+  quickSlot: {fileID: 0}
+  RightHand: {fileID: 8890949234923974251}
+  objWeapon: {fileID: 0}
+  Armed: 
+  movementStateManager: {fileID: 0}
 --- !u!1 &1887598421888165992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,6 +3480,7 @@ MonoBehaviour:
   rate: 0
   meleeArea: {fileID: 0}
   trailEffect: {fileID: 0}
+  attackManager: {fileID: 0}
 --- !u!65 &395900111580591115
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3569,6 +3586,7 @@ MonoBehaviour:
   rate: 0
   meleeArea: {fileID: 0}
   trailEffect: {fileID: 0}
+  attackManager: {fileID: 0}
 --- !u!65 &2273339941685104011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4565,6 +4583,7 @@ MonoBehaviour:
   rate: 0
   meleeArea: {fileID: 0}
   trailEffect: {fileID: 0}
+  attackManager: {fileID: 0}
 --- !u!65 &8546982305537051308
 BoxCollider:
   m_ObjectHideFlags: 0
