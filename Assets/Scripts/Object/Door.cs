@@ -11,12 +11,17 @@ public class Door : MonoBehaviour
 
     public Vector3 doorOpenVector = new Vector3(0, -90f, 0);
 
+    // 문은 초기 각도
+    public Vector3 startAngle;
+
     Quaternion ToDoorAngle;
 
     public PhotonView pv;
 
     private void Start()
     {
+        // 문의 초기 각도 저장
+        startAngle = transform.eulerAngles;
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
     }
@@ -42,12 +47,12 @@ public class Door : MonoBehaviour
     {
         if (open)
         {
-            ToDoorAngle = Quaternion.Euler(transform.eulerAngles + doorOpenVector);
+            ToDoorAngle = Quaternion.Euler(startAngle + doorOpenVector);
 
         }
         else
         {
-            ToDoorAngle = Quaternion.Euler(transform.eulerAngles - doorOpenVector);
+            ToDoorAngle = Quaternion.Euler(startAngle);
         }
 
     }
