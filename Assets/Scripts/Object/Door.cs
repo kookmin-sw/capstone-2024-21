@@ -11,7 +11,8 @@ public class Door : MonoBehaviour
 
     public Vector3 doorOpenVector = new Vector3(0, -90f, 0);
 
-    Quaternion ToDoorAngle;
+    Quaternion ToDoorAngleRight;
+    Quaternion ToDoorAngleLeft;
 
     public PhotonView pv;
 
@@ -23,7 +24,20 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, ToDoorAngle, smoot * Time.deltaTime);
+        if (transform.parent.name.Contains("axis"))
+        {
+            transform.parent.rotation = Quaternion.Slerp(transform.rotation, ToDoorAngleRight, smoot * Time.deltaTime);
+        }
+        else
+        {
+            if(transform.name.Contains("L"))
+            transform.rotation = Quaternion.Slerp(transform.rotation, ToDoorAngleLeft, smoot * Time.deltaTime);
+            else
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, ToDoorAngleRight, smoot * Time.deltaTime);
+            }
+        }
+
     }
 
     [PunRPC]
@@ -42,12 +56,16 @@ public class Door : MonoBehaviour
     {
         if (open)
         {
-            ToDoorAngle = Quaternion.Euler(transform.eulerAngles + doorOpenVector);
+            ToDoorAngleRight = Quaternion.Euler(transform.eulerAngles + doorOpenVector);
+            ToDoorAngleLeft = Quaternion.Euler(transform.eulerAngles - doorOpenVector);
+
 
         }
         else
         {
-            ToDoorAngle = Quaternion.Euler(transform.eulerAngles - doorOpenVector);
+            ToDoorAngleRight = Quaternion.Euler(transform.eulerAngles - doorOpenVector);
+            ToDoorAngleLeft = Quaternion.Euler(transform.eulerAngles + doorOpenVector);
+
         }
 
     }
