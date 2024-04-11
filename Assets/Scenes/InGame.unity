@@ -7821,31 +7821,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8604678489607022100, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 706690143}
-    - targetCorrespondingSourceObject: {fileID: 8605195005540887736, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 324963828}
   m_SourcePrefab: {fileID: 100100000, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
---- !u!1 &324963826 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8605195005540887736, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
-  m_PrefabInstance: {fileID: 210932444}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &324963828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324963826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11e81bc5daa8d4103bb75eedb42b1710, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  open: 0
-  smoot: 2
-  doorOpenVector: {x: 0, y: -90, z: 0}
-  pv: {fileID: 0}
 --- !u!1 &365892462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8604750617792156964, guid: beef3bcde1610f04aa96275436147bb9, type: 3}

@@ -44,7 +44,7 @@ public class ItemSpawner : MonoBehaviour
 
 
     //포물선을 그리며 스폰되도록 하는 함수. 이건 그냥 가져옴..ㅋ 
-    public Vector3 GetVelocity(Vector3 start_pos, Vector3 target_pos, float initialAngle)
+    private Vector3 GetVelocity(Vector3 start_pos, Vector3 target_pos, float initialAngle)
     {
         float gravity = Physics.gravity.magnitude;
         float angle = initialAngle * Mathf.Deg2Rad;

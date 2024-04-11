@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+//UI 아래 GaugeController에 들어있음
 public class InteractGaugeControler : MonoBehaviour
 {
     private Image InteractGuageImage;
