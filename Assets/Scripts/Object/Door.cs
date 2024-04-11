@@ -7,7 +7,7 @@ using Photon.Pun;
 public class Door : MonoBehaviour
 {
     public bool open = false;
-    public float smoot = 0.2f;
+    public float smoot = 0.05f;
 
     private Vector3 doorOpenVector = new Vector3(0, -90f, 0);
     private Vector3 CloseDoorAngle; //초기각도
