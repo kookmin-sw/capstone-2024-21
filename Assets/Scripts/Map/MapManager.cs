@@ -16,7 +16,17 @@ public class MapManager : MonoBehaviour
         {
             if (gameObjs[i].name.Contains("Door") && !gameObjs[i].name.Contains("Frame") && !gameObjs[i].name.Contains("Window"))
             {
-                addDoorScript(gameObjs[i]);
+                Debug.Log("gameObjs[i].name.Length : " + gameObjs[i].name.Length + "idx of L : " + gameObjs[i].name.LastIndexOf("L"));
+                if (gameObjs[i].name.LastIndexOf("L") == gameObjs[i].name.Length-1)
+                {
+                    Debug.Log("hit!");
+                    addDoorLeftScript(gameObjs[i]);
+                }
+                else
+                {
+                    addDoorRightScript(gameObjs[i]);
+                }
+                
                 gameObjs[i].tag = "door";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
                 gameObjs[i].isStatic = false; // 이걸 해줘야 회전함!!
@@ -39,17 +49,34 @@ public class MapManager : MonoBehaviour
         
     }
 
-    void addDoorScript(GameObject obj)
+    void addDoorRightScript(GameObject obj)
     {
         //Door 컴포넌트가 있으면 그냥 활성화
-        if (obj.gameObject.GetComponent<Door>() != null)
+        if (obj.gameObject.GetComponent<DoorRight>() != null)
         {
-            obj.gameObject.GetComponent<Door>().enabled = true;
+            obj.gameObject.GetComponent<DoorRight>().enabled = true;
         }
         else
         {
             //없으면 찾아서 넣어줌
-            Door door = obj.gameObject.AddComponent<Door>();
+            DoorRight door = obj.gameObject.AddComponent<DoorRight>();
+            door.enabled = true;
+            //obj.gameObject.GetComponent<Outline>().OutlineColor = Color.white;
+            //obj.gameObject.GetComponent<Outline>().OutlineWidth = 5.0f;
+        }
+    }
+
+    void addDoorLeftScript(GameObject obj)
+    {
+        //Door 컴포넌트가 있으면 그냥 활성화
+        if (obj.gameObject.GetComponent<DoorLeft>() != null)
+        {
+            obj.gameObject.GetComponent<DoorLeft>().enabled = true;
+        }
+        else
+        {
+            //없으면 찾아서 넣어줌
+            DoorLeft door = obj.gameObject.AddComponent<DoorLeft>();
             door.enabled = true;
             //obj.gameObject.GetComponent<Outline>().OutlineColor = Color.white;
             //obj.gameObject.GetComponent<Outline>().OutlineWidth = 5.0f;
