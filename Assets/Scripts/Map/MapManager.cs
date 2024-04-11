@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour
 
         for(int i = 0; i < gameObjs.Length; i++)
         {
-            if (gameObjs[i].name.Contains("Door") && !gameObjs[i].name.Contains("Frame") )
+            if (gameObjs[i].name.Contains("Door") && !gameObjs[i].name.Contains("Frame") && !gameObjs[i].name.Contains("Window"))
             {
                 addDoorScript(gameObjs[i]);
                 gameObjs[i].tag = "door";
