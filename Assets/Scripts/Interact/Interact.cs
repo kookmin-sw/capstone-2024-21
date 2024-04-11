@@ -44,7 +44,15 @@ public class Interact : MonoBehaviour
                 if (selectedTarget.CompareTag("door"))
                 {
                     Debug.Log("문 상호작용 ");
-                    selectedTarget.GetComponent<Door>().ChangeDoorState();
+                    if (selectedTarget.GetComponent<DoorRight>())
+                    {
+                        selectedTarget.GetComponent<DoorRight>().ChangeDoorState();
+                    }
+                    else
+                    {
+                        selectedTarget.GetComponent<DoorLeft>().ChangeDoorState();
+                    }
+
                 }
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
