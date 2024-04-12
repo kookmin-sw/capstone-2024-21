@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 //Virtual Camera에 들어가 있음 
@@ -9,6 +10,7 @@ public class Interact : MonoBehaviour
     public GameObject image_F;//껐다 켰다 할 F UI. 직접 할당해줘야함 findObject로 바꿀까 고민중 
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지  UI. 직접 할당해줘야함
     public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI. 직접 할당해줘야함
+    public WeaponInventory WeaponQuickslot;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
 
@@ -61,12 +63,22 @@ public class Interact : MonoBehaviour
                     Debug.Log(hit.collider.gameObject.name + " item과 상호작용");
                     ItemData itemdata = hit.collider.gameObject.GetComponent<ItemData>();
                     Item item = itemdata.itemData;
-                    if (quicSlot.AddItem(item) == 1)
+                    if(item.ItemType > 10)
                     {
-                        //아이템 넣기에 성공할때만 디스트로이
+                        if (quicSlot.AddItem(item) == 1)
+                        {
+                            //아이템 넣기에 성공할때만 디스트로이
+                            Destroy(hit.collider.gameObject);
+                            image_F.GetComponent<UIpressF>().remove_image();
+                        }
+                    }
+                    else
+                    {
+                        WeaponQuickslot.AddItem(item);
                         Destroy(hit.collider.gameObject);
                         image_F.GetComponent<UIpressF>().remove_image();
                     }
+                    
                 }
             }
 

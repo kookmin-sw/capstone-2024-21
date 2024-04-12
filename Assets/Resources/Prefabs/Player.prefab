@@ -1205,7 +1205,7 @@ MonoBehaviour:
   - {fileID: 8687966117195929296}
   - {fileID: 6907124605842488782}
   - {fileID: 6182126618674709142}
-  quickSlot: {fileID: 0}
+  weaponQuickSlot: {fileID: 0}
   isAttack: 0
   RightHand: {fileID: 8890949234923974251}
   objWeapon: {fileID: 0}
