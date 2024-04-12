@@ -96,15 +96,15 @@ public class DoorLeft : MonoBehaviour
     }
 
     [PunRPC]
-    public void OpenParentDoorCoroutineRPC()
+    public void OpenParentDoorCoroutineRPC(Transform objTransform)
     {
-        StartCoroutine(OpenDoor(transform.parent));
+        StartCoroutine(OpenDoor(objTransform.parent));
     }
 
     [PunRPC]
-    public void OpenDoorCoroutineRPC()
+    public void OpenDoorCoroutineRPC(Transform objTransform)
     {
-        StartCoroutine(OpenDoor(transform));
+        StartCoroutine(OpenDoor(objTransform));
     }
 
     public void ChangeDoorStateRPC()
