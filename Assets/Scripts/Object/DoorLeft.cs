@@ -73,11 +73,11 @@ public class DoorLeft : MonoBehaviour
         {
             if (transform.parent.name.Contains("axis")) //축이 잘못돼있는 특수한 문들은 parent의 축에 접근해서 열리도록 
             {
-                StartCoroutine(OpenDoor(transform.parent));
+                pv.RPC("OpenDoorParentCoroutineRPC", RpcTarget.All, transform.parent);
             }
             else
             {
-                StartCoroutine(OpenDoor(transform));
+                pv.RPC("OpenDoorCoroutineRPC", RpcTarget.All, transform);
             }
 
         }
@@ -93,6 +93,18 @@ public class DoorLeft : MonoBehaviour
             }
         }
 
+    }
+
+    [PunRPC]
+    public void OpenParentDoorCoroutineRPC()
+    {
+        StartCoroutine(OpenDoor(transform.parent));
+    }
+
+    [PunRPC]
+    public void OpenDoorCoroutineRPC()
+    {
+        StartCoroutine(OpenDoor(transform));
     }
 
     public void ChangeDoorStateRPC()
