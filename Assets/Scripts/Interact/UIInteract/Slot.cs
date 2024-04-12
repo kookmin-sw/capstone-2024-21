@@ -18,7 +18,7 @@ public class Slot : MonoBehaviour
 
 
             //아래부분은 Inventory 스크립트에서 addItem()과 FreshSlot() 함수에서 사용됨
-            if (_item != null && _item.ItemType != 0) 
+            if (_item != null) 
             {
                 //Inventory.cs 의 List<Item> items에 등록된 아이템이 있다면 itemImage를 image에 저장 그리고 Image의 알파 값을 1로 하여 이미지를 표시
                 image.sprite = item.itemImage;
