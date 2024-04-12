@@ -10,23 +10,25 @@ public class WeaponManager : MonoBehaviour
     public float rate;
     public BoxCollider meleeArea;
     public TrailRenderer trailEffect;
+    [HideInInspector] public AttackManager attackManager;
 
-    // public void Use(){
-    //     if(type == Type.Melee){
-    //         StopCoroutine("Swing");
-    //         StartCoroutine("Swing");
-    //     }
-    // }
+    public void Use(){
+        if(type == Type.Melee){
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
+        }
+    }
 
     void OnTriggerEnter(Collider other){
         Debug.Log("collision");
         Debug.Log(other.gameObject.name);
         if(other.gameObject.tag == "Player"){
             HpManager hpManager = other.GetComponent<HpManager>();
-            MovementStateManager Enemy = other.GetComponent<MovementStateManager>();
+            AttackManager Enemy = other.GetComponent<AttackManager>();
+            attackManager = GetComponent<AttackManager>();
 
             if (Enemy != null) {
-                Enemy.AttackEnd();
+                attackManager.AttackEnd();
                 Enemy.OnDamaged();
             }
 

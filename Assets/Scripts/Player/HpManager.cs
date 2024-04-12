@@ -36,7 +36,6 @@ public class HpManager : MonoBehaviour
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {   
-        Debug.Log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         hp = maxHp;
         healthPointBar.value = hp;
         healthPointCount.text = hp.ToString();
