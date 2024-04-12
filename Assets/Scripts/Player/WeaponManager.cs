@@ -12,12 +12,12 @@ public class WeaponManager : MonoBehaviour
     public TrailRenderer trailEffect;
     [HideInInspector] public AttackManager attackManager;
 
-    // public void Use(){
-    //     if(type == Type.Melee){
-    //         StopCoroutine("Swing");
-    //         StartCoroutine("Swing");
-    //     }
-    // }
+    public void Use(){
+        if(type == Type.Melee){
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
+        }
+    }
 
     void OnTriggerEnter(Collider other){
         Debug.Log("collision");

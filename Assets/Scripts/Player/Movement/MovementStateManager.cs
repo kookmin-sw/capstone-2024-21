@@ -113,6 +113,17 @@ public class MovementStateManager : MonoBehaviour
 
     public void Jumped() => jumped = true;
     
+    // void Attack(){
+    //     fireDelay += Time.deltaTime;
+    //     isFireReady = equipWeapon.rate < fireDelayDelay;
+
+    //     if(fDown && isFireReady){
+    //         equipWeapon.Use();
+    //         anim.SetTrigger("Attack");
+    //         fireDelay = 0;
+    //     }
+    // }
+    
     // private void OnDrawGizmos()
     // {
     //     Gizmos.color = Color.red;
