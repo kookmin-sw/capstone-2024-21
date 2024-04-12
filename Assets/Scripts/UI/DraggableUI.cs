@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Transform canvas; //UI가 속한 최상단의 canvas Transform
-    public Transform preTrans; //해당 오브젝트가 직전에 소속되어 있었던 slot Transform
+    public Transform preSlot; //해당 오브젝트가 직전에 소속되어 있었던 slot Transform
     private RectTransform itemIconRect;
     private CanvasGroup itemIcon;
     void Awake()
@@ -24,7 +24,8 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventData)
     {
         //드래그 직전에 소속되어 있던 부모Slot Transform 정보 저장
-        preTrans = transform.parent;
+        preSlot = transform.parent;
+
 
         //현재 드래그 중인 아이콘이 화면의 최상단에 출력되도록
         transform.SetParent(canvas); //부모 오브젝트를 canvas로 설정
@@ -49,8 +50,8 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if(transform.parent == canvas)
         {
             // 마지막에 소속되어있던 slot의 자식으로 설정, 아이콘의 위치를 원래자리로
-            transform.SetParent(preTrans);
-            itemIconRect.position = preTrans.GetComponent<RectTransform>().position;
+            transform.SetParent(preSlot);
+            itemIconRect.position = preSlot.GetComponent<RectTransform>().position;
         }
 
         // 드래그가 끝나면 알파값/ 광선 충돌처리 원래대로

@@ -14,6 +14,11 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     private Color hoverColor;
     private RectTransform slotRect;
 
+    [SerializeField] private RectTransform firstComSlotRect;
+    [SerializeField] private RectTransform secondComSlotRect;
+    [SerializeField] private Slot firstComSlot;
+    [SerializeField] private Slot secondComSlot;
+    [SerializeField] private CraftSlot craftSlot;
     void Awake()
     {
         slotImage = GetComponent<Image>();
@@ -46,11 +51,20 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
             if (transform.childCount > 0)
             {
                 Transform existingIcon = transform.GetChild(0);
-                existingIcon.position = draggedUI.preTrans.position;
-                existingIcon.SetParent(draggedUI.preTrans);
+                existingIcon.position = draggedUI.preSlot.position;
+                existingIcon.SetParent(draggedUI.preSlot);
             }
             eventData.pointerDrag.transform.SetParent(transform);
             eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
+
+            //if (eventData.pointerDrag.GetComponent<RectTransform>().position == firstComSlotRect.position)
+            //{
+            //    craftSlot.items.Add() firstComSlot.item;
+            //}
+            //else if (eventData.pointerDrag.GetComponent<RectTransform>().position == secondComSlotRect.position)
+            //{
+            //    craftSlot.items[1] = secondComSlot.item;
+            //}
 
         }
     }
