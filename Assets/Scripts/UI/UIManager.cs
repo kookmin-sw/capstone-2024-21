@@ -51,7 +51,6 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            isUIActivate = true;
 
         }
         if (Input.GetKeyUp(KeyCode.Tab))
@@ -59,7 +58,6 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            isUIActivate = false;
         }
     }
     void ManageSetting()
