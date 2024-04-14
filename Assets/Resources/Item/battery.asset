@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: battery
   m_EditorClassIdentifier: 
   itemName: battery
-  itemImage: {fileID: 21300000, guid: 54a01754bf4484b14b04721d68c61365, type: 3}
+  itemImage: {fileID: 21300000, guid: 66885ca60c938da49b817b7ef7281f1b, type: 3}
   itemPrefab: {fileID: 5991391873743486956, guid: 03792b525402741388ac000cda3d5575, type: 3}
   ItemType: 11
   ItemDamage: 0
