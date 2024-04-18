@@ -47,11 +47,11 @@ public class Interact : MonoBehaviour
                     Debug.Log("문 상호작용 ");
                     if (selectedTarget.GetComponent<DoorRight>())
                     {
-                        selectedTarget.GetComponent<DoorRight>().ChangeDoorState();
+                        selectedTarget.GetComponent<DoorRight>().ChangeDoorStateRPC();
                     }
                     else
                     {
-                        selectedTarget.GetComponent<DoorLeft>().ChangeDoorState();
+                        selectedTarget.GetComponent<DoorLeft>().ChangeDoorStateRPC();
                     }
 
                 }
