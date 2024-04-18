@@ -62,8 +62,6 @@ public class DoorLeft : MonoBehaviour
         }
     }
 
-
-    //네트워크 계속 오류나서 바꿨는데 되는지 확인 해봐야함 
     [PunRPC]
     public void ChangeDoorState()
     {
@@ -73,11 +71,11 @@ public class DoorLeft : MonoBehaviour
         {
             if (transform.parent.name.Contains("axis")) //축이 잘못돼있는 특수한 문들은 parent의 축에 접근해서 열리도록 
             {
-                pv.RPC("OpenDoorParentCoroutineRPC", RpcTarget.All, transform.parent);
+                StartCoroutine(OpenDoor(transform.parent));
             }
             else
             {
-                pv.RPC("OpenDoorCoroutineRPC", RpcTarget.All, transform);
+                StartCoroutine(OpenDoor(transform));
             }
 
         }
@@ -93,18 +91,6 @@ public class DoorLeft : MonoBehaviour
             }
         }
 
-    }
-
-    [PunRPC]
-    public void OpenParentDoorCoroutineRPC(Transform objTransform)
-    {
-        StartCoroutine(OpenDoor(objTransform.parent));
-    }
-
-    [PunRPC]
-    public void OpenDoorCoroutineRPC(Transform objTransform)
-    {
-        StartCoroutine(OpenDoor(objTransform));
     }
 
     public void ChangeDoorStateRPC()
