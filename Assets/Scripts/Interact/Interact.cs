@@ -18,26 +18,37 @@ public class Interact : MonoBehaviour
     float interactDiastance = 4.0f;
     Transform selectedTarget;
 
-    Vector3 raycastOffset = new Vector3(0f, 0f, 1.4f);
+    Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
     void Update()
     {
         Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset); 
         Debug.DrawRay(raycastStartingPoint, transform.forward * interactDiastance, Color.blue, interactDiastance);//레이캐스트 디버그 
 
-        //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용
-
         //레이캐스트 발사 
-        if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance, LayerMask.GetMask("Interact")))
+        if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance))
         {
-            //셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
-            if (selectedTarget == null || selectedTarget != hit.transform)
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Interact"))
             {
-                Transform obj = hit.transform; 
-                selectTarget(obj); //레이캐스트가 충돌한 물체를 셀렉하고 
-                addOutline(obj); // 아웃라인 추가 
-                image_F.GetComponent<UIpressF>().show_image(); //UI에서 F 이미지 활성화 
+                //충돌한 물체의 레이어가 Interact고, 셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
+                if (selectedTarget == null || selectedTarget != hit.transform)
+                {
+                    Transform obj = hit.transform;
+                    selectTarget(obj); //레이캐스트가 충돌한 물체를 셀렉하고 
+                    addOutline(obj); // 아웃라인 추가 
+                    image_F.GetComponent<UIpressF>().show_image(); //UI에서 F 이미지 활성화 
+                }
             }
+            else
+            {
+                if (selectedTarget)
+                {
+                    removeOutline(selectedTarget);
+                    clearTarget(selectedTarget);
+                    image_F.GetComponent<UIpressF>().remove_image();
+                }
+            }
+
 
             //F를 누르면 상호작용 
             if (selectedTarget != null && Input.GetKeyDown(KeyCode.F))
@@ -89,21 +100,15 @@ public class Interact : MonoBehaviour
             }
 
         }
-        else
+        else  //레이캐스트가 Interactable 오브젝트와 충돌하지 않고 있다면
         {
-            //레이캐스트가 Interactable 오브젝트와 충돌하지 않고 있다면
-
-
-            //셀렉된 타겟이 있다면
-            if (selectedTarget)
+            if (selectedTarget)            //셀렉된 타겟이 있다면
             {
                 removeOutline(selectedTarget);
                 clearTarget(selectedTarget);
                 image_F.GetComponent<UIpressF>().remove_image();
             }
         }
-
-
 
 
         //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증가 
@@ -121,7 +126,6 @@ public class Interact : MonoBehaviour
         }
 
     }
-
 
 
     void clearTarget(Transform obj)
