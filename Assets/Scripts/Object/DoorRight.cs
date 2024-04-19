@@ -63,7 +63,6 @@ public class DoorRight : MonoBehaviour
     }
 
 
-    //네트워크 계속 오류나서 바꿨는데 되는지 확인 해봐야함 
     [PunRPC]
     public void ChangeDoorState()
     {
