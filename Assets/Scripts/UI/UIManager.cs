@@ -36,7 +36,6 @@ public class UIManager : MonoBehaviour
         {
             ManageCombinationSlot();
             ManageSetting();
-            SelectQuickSlot();
         }
         else
         {
@@ -93,7 +92,7 @@ public class UIManager : MonoBehaviour
     }
 
     //퀵슬롯 1,2,3,4,5로 선택
-    void SelectQuickSlot()
+    public void SelectQuickSlot()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeSlot(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeSlot(1);
