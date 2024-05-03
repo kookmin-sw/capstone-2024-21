@@ -105,6 +105,7 @@ public class AttackManager : MonoBehaviour
                 {
                     if (equipWeapon.activeSelf == true)
                     {
+                        weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
                         weaponInventory.weaponSlot.item = null;
 
                         RpcEquip(-1);
@@ -126,6 +127,7 @@ public class AttackManager : MonoBehaviour
                         {
                             if (equipWeapon.activeSelf == true)
                             {
+                                weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
                                 itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
                                 itemQuickSlots.GetComponent<Inventory>().FreshSlot();
                                 RpcEquip(-1);
@@ -268,6 +270,7 @@ public class AttackManager : MonoBehaviour
                 }
                 else if(equipItemIndex == -1 && itemInventory.isItemAdded == false)
                 {
+                    itemInventory.isSlotChanged = false;
                     Debug.Log("아이템 칸 비어있음");
                     if(equipWeapon.activeSelf == true)
                     {
