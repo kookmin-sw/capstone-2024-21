@@ -16,7 +16,6 @@ public class WeaponSlot : MonoBehaviour
         {
             _item = value; //item에 들어오는 정보의 값은 _item에 저장
 
-
             //아래부분은 Inventory 스크립트에서 addItem()과 FreshSlot() 함수에서 사용됨
             if (_item != null && _item.ItemType <= 10)
             {

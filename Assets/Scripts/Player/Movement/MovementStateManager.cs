@@ -44,6 +44,8 @@ public class MovementStateManager : MonoBehaviour
 
     [HideInInspector] public Animator anim;
     [HideInInspector] public AttackManager attackManager;
+    private UIManager uiManager;
+
     private PhotonView pv;
 
     void Start()
@@ -52,7 +54,8 @@ public class MovementStateManager : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
         attackManager = GetComponent<AttackManager>();
-        
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
         SwitchState(Idle);
     }
 
@@ -60,6 +63,10 @@ public class MovementStateManager : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            if (uiManager.isGameOver == false && attackManager.isAttack == false)
+            {
+                uiManager.SelectQuickSlot();
+            }
             GetDirectionAndMove();
             Gravity();
 

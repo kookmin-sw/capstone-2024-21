@@ -10,7 +10,8 @@ public class WeaponInventory : MonoBehaviour
 {
 
     [SerializeField] private GameObject batterySlot;
-    [SerializeField] private WeaponSlot weaponSlot;
+    public WeaponSlot weaponSlot;
+    public bool isWeaponAdded;
     [SerializeField] private CraftGaugeController craftGauge;
     
 
@@ -20,6 +21,7 @@ public class WeaponInventory : MonoBehaviour
     { 
         isCrafted = false;
         weaponSlot.item = null;
+        isWeaponAdded = false;
     }
 
     private void Update()
@@ -47,5 +49,6 @@ public class WeaponInventory : MonoBehaviour
     public void AddItem(Item _item)
     {
         weaponSlot.item = _item;
+        isWeaponAdded = true;
     }
 }

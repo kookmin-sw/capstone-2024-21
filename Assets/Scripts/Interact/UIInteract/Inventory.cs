@@ -10,15 +10,15 @@ public class Inventory : MonoBehaviour
 
     //[SerializeField] private Transform slotParent; // Slot의 부모를 담을 곳
     public Slot[] slots;  //Iten Quick Slot의 하위에 있는 Slot을 담을 곳
+    public bool isItemAdded;
 
-
-//#if UNITY_EDITOR
-//    //OnValidate()의 기능은 유니티 에디터에서 바로 작동을 하는 역할을 함. 
-//    private void OnValidate()
-//    {
-//        slots = GetComponentsInChildren<Slot>();
-//    }
-//#endif
+    //#if UNITY_EDITOR
+    //    //OnValidate()의 기능은 유니티 에디터에서 바로 작동을 하는 역할을 함. 
+    //    private void OnValidate()
+    //    {
+    //        slots = GetComponentsInChildren<Slot>();
+    //    }
+    //#endif
 
     //아이템이 들어오거나 나가면 Slot의 내용을 다시 정리하여 화면에 보여 주는 기능
     public void FreshSlot()
@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         items = new List<Item> { null, null, null, null };
+        isItemAdded = false;
         FreshSlot();
     }
 
@@ -54,6 +55,7 @@ public class Inventory : MonoBehaviour
                 {
                     items[i] = _item;
                     slots[i].item = items[i];
+                    isItemAdded = true;
                     FreshSlot();
                     break;
                 }
