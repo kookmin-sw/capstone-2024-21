@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     //[SerializeField] private Transform slotParent; // Slot의 부모를 담을 곳
     public Slot[] slots;  //Iten Quick Slot의 하위에 있는 Slot을 담을 곳
     public bool isItemAdded;
+    public bool isSlotChanged;
 
     //#if UNITY_EDITOR
     //    //OnValidate()의 기능은 유니티 에디터에서 바로 작동을 하는 역할을 함. 
@@ -41,6 +42,7 @@ public class Inventory : MonoBehaviour
     {
         items = new List<Item> { null, null, null, null };
         isItemAdded = false;
+        isSlotChanged = false;
         FreshSlot();
     }
 

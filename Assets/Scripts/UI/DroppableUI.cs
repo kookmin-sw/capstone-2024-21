@@ -45,56 +45,36 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
         {
             // 슬롯에 아이콘이 있으면 아이콘 교체
             DraggableUI draggedUI = eventData.pointerDrag.GetComponent<DraggableUI>();
-            if (transform.childCount > 0)
+            if (transform.childCount > 0) //드롭한 슬롯이 아이템을 가지고 있으면
             {
                 Transform existingIcon = transform.GetChild(0);
                 existingIcon.SetParent(draggedUI.preSlot);
                 if (existingIcon.transform.parent == batterySlot)
                 {
-                    itemSlots.DeleteItem(existingIcon.GetComponent<Slot>().item);
-                    existingIcon.position = draggedUI.preSlot.position;
+                    itemSlots.DeleteItem(existingIcon.GetComponent<Slot>().item); //옮겨지는 곳이 배터리 슬롯이면 슬롯리스트에서 삭제
+                    existingIcon.position = draggedUI.preSlot.position; //옮겨진 슬롯의 아이템이 옴기는 슬롯의 위치로
+                    itemSlots.isSlotChanged = true;
                 }
-                //else if(existingIcon.GetComponent<DraggableUI>().preSlot == batterySlot) //교체로 옮겨가는 아이템의 전 슬롯이 배터리슬롯이고 아이템슬롯으로 옮겨가면 아이템리스트에 더하기
-                //{
-                //    //itemSlots.AddItem(existingIcon.GetComponent<Slot>().item);
-                //    existingIcon.position = draggedUI.preSlot.position;
-                //    itemSlots.FreshSlot();
-
-                //}
                 else
                 {
                     existingIcon.position = draggedUI.preSlot.position;
                     itemSlots.FreshSlot();
+                    itemSlots.isSlotChanged = true;
                 }
-
             }
             eventData.pointerDrag.transform.SetParent(transform);
-            if(eventData.pointerDrag.transform.parent == batterySlot)
+            if(eventData.pointerDrag.transform.parent == batterySlot) //드롭한 슬롯으로 드래그한 아이템 위치 변경
             {
                 itemSlots.DeleteItem(eventData.pointerDrag.GetComponent<Slot>().item);
                 eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
+                itemSlots.isSlotChanged = true;
             }
-            //else if(eventData.pointerDrag.GetComponent<DraggableUI>().preSlot == batterySlot) // 드롭으로 옮겨 지는 아이템의 전 슬롯이 배터리 슬롯이고 아이템 슬롯으로 옮겨가면 아이템리스트에 더하기
-            //{
-            //    //itemSlots.AddItem(eventData.pointerDrag.GetComponent<Slot>().item);
-            //    eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
-            //    itemSlots.FreshSlot();
-
-            //}
             else
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
                 itemSlots.FreshSlot();
+                itemSlots.isSlotChanged = true;
             }
-
-            //if (eventData.pointerDrag.GetComponent<RectTransform>().position == firstComSlotRect.position)
-            //{
-            //    craftSlot.items.Add() firstComSlot.item;
-            //}
-            //else if (eventData.pointerDrag.GetComponent<RectTransform>().position == secondComSlotRect.position)
-            //{
-            //    craftSlot.items[1] = secondComSlot.item;
-            //}
 
         }
     }

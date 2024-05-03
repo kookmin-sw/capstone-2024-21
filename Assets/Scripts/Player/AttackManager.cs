@@ -93,10 +93,11 @@ public class AttackManager : MonoBehaviour
 
     [PunRPC]
     void Swap(){
-
+        
         if(pv.IsMine)
         {
             if (isAttack) return; // 공격 중에는 스왑 불가
+
 
             if (Input.GetKeyDown(KeyCode.G)) 
             { // G는 버리는 키라서 인벤토리에서도 빼기
@@ -214,16 +215,8 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetBool("OHW", false);
                     movementStateManager.anim.SetBool("THW", false);
                 }
-                // 무기 들었을 때 애니메이션 변경
-                // swap 애니메이션 넣으면 사용
-                //int weaponIndex = -1;
-                //if (Input.GetButtonDown("Swap1")) weaponIndex = 0;
-                //if (Input.GetButtonDown("Swap2")) weaponIndex = 1;
-                //if (Input.GetButtonDown("Swap3")) weaponIndex = 2;
-                //if (Input.GetButtonDown("Swap4")) weaponIndex = 3;
-                //if (Input.GetButtonDown("Swap5")) weaponIndex = 4;
             }
-            else if(Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3") || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5") || itemInventory.isItemAdded == true)
+            else if(Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3") || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5") || itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true)
             {
                 equipItemIndex = -1;
                 bool isFound = false;
@@ -239,6 +232,7 @@ public class AttackManager : MonoBehaviour
                                 {
                                     equipItemIndex = j;
                                     itemInventory.isItemAdded = false;
+                                    itemInventory.isSlotChanged = false;
                                     isFound = true;
                                     break;
                                 }
@@ -253,6 +247,7 @@ public class AttackManager : MonoBehaviour
                 if (equipItemIndex != -1)
                 {
                     objWeapon = weapons[equipItemIndex];
+                    itemInventory.isSlotChanged = false;
                     if (objWeapon.GetComponent<ItemData>().itemData.ItemType > 10)
                     {
                         colliderWeapon = objWeapon.GetComponent<BoxCollider>();
