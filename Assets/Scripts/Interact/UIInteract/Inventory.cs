@@ -71,11 +71,5 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void DeleteItem(Item _item)
-    {
-        int index = items.FindIndex(x => x == _item);
-        items[index] = null;
-        FreshSlot();
-    }
 
 }

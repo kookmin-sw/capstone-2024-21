@@ -21,12 +21,16 @@ public class MovementStateManager : MonoBehaviour
     [SerializeField] float groundYOffset;
     [SerializeField] LayerMask groundMask;
     Vector3 spherePos;
+    Vector3 itemPos;
+
 
     [SerializeField] float jumpForce = 3;
     [SerializeField] float gravity = -9.81f;
     public bool jumped;
     Vector3 velocity;
 
+    //
+    public GameObject DroppedItem;
     
     ///////Attack
     float fireDelay;
@@ -63,6 +67,12 @@ public class MovementStateManager : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
+            {
+                DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
+                DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
+                attackManager.weaponInventory.abandonedItem = null;
+            }
             if (uiManager.isGameOver == false && attackManager.isAttack == false)
             {
                 uiManager.SelectQuickSlot();
@@ -74,8 +84,10 @@ public class MovementStateManager : MonoBehaviour
             anim.SetFloat("zAxis", zAxis);
 
             currentState.UpdateState(this);
-
-            attackManager.Attack();   
+            if(uiManager.isUIActivate == false && uiManager.isComActivate == false)
+            {
+                attackManager.Attack();
+            }
             attackManager.RpcSwap();
         }
     }
