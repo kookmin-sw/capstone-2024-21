@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //Virtual Camera에 들어가 있음 
@@ -92,9 +93,20 @@ public class Interact : MonoBehaviour
                     }
                     else
                     {
-                        WeaponQuickslot.AddItem(item);
-                        Destroy(hit.collider.gameObject);
-                        image_F.GetComponent<UIpressF>().remove_image();
+                        if(hit.collider.gameObject.GetComponent<Weapon>().settedLightning == true) //프리펩이 조합무기면 
+                        {
+                            item.craftCompleted = true; //장착 아이템도 조합무기로
+                        }
+                        else if(hit.collider.gameObject.GetComponent<Weapon>().settedLightning == false) //프리펩이 일반무기로
+                        {
+                            item.craftCompleted = false;  //장착 아이템도 일반무기로
+                        }
+                        if(WeaponQuickslot.AddWeapon(item) == 1)
+                        {
+                            //무기 넣기에 성공할때만 디스트로이
+                            Destroy(hit.collider.gameObject);
+                            image_F.GetComponent<UIpressF>().remove_image();
+                        }
                     }
                 }
             }

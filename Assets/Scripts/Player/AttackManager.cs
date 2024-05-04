@@ -12,7 +12,7 @@ public class AttackManager : MonoBehaviour
 {
     public GameObject[] weapons; // 모든 무기 배열
 
-    GameObject equipWeapon; // 장착 중인 무기
+    public GameObject equipWeapon; // 장착 중인 무기
     GameObject weaponQuickSlot;
     GameObject itemQuickSlots;
     public int equipWeaponIndex; // 장착 중인 무기의 weapons에서의 위치
@@ -40,6 +40,7 @@ public class AttackManager : MonoBehaviour
         objWeapon = RightHand.GetChild(1).gameObject; // 처음 시작할 때 주먹의 sphereCollider 받아옴
         colliderHand = RightHand.GetChild(1).GetComponent<BoxCollider>();
         movementStateManager = GetComponent<MovementStateManager>();
+        equipWeapon = null;
     }
 
     // 공격
@@ -96,8 +97,22 @@ public class AttackManager : MonoBehaviour
         
         if(pv.IsMine)
         {
-            if (isAttack) return; // 공격 중에는 스왑 불가
+            if(equipWeapon != null) // 착용된 장비가 있고
+            {
+                if(equipWeapon.transform.childCount > 0)
+                {
+                    if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+                    {
+                        equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+                    }
+                    else if (weaponInventory.weaponSlot.item.craftCompleted == false)
+                    {
+                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
+                    }
+                }
+            }
 
+            if (isAttack) return; // 공격 중에는 스왑 불가
 
             if (Input.GetKeyDown(KeyCode.G)) 
             { // G는 버리는 키라서 인벤토리에서도 빼기
@@ -105,10 +120,12 @@ public class AttackManager : MonoBehaviour
                 {
                     if (equipWeapon.activeSelf == true)
                     {
+                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
                         weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
                         weaponInventory.weaponSlot.item = null;
 
                         RpcEquip(-1);
+                        equipWeapon = null;
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
                         Invoke("SwapOut", 0.3f);
@@ -147,10 +164,11 @@ public class AttackManager : MonoBehaviour
                 }
 
             }
-            // 버튼을 입력 받으면 
+            // 무기 슬롯 스왑/습득 시 애니메이션 처리 
             if (Input.GetButtonDown("Swap1") || weaponInventory.isWeaponAdded == true)
             {
                 equipWeaponIndex = -1;
+
                 if (weaponInventory.weaponSlot.item != null && weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)
                 {
                     for (int i = 0; i < weapons.Length; i++)
@@ -162,7 +180,6 @@ public class AttackManager : MonoBehaviour
                             break;
                         }
                     }
-                    
                 }
                 if(equipWeaponIndex != -1)
                 {
@@ -217,8 +234,8 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetBool("OHW", false);
                     movementStateManager.anim.SetBool("THW", false);
                 }
-            }
-            else if(Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3") || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5") || itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true)
+            }             // 아이템 슬롯 스왑/습득 시 애니메이션 처리 
+            else if (Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3") || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5") || itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true)
             {
                 equipItemIndex = -1;
                 bool isFound = false;
@@ -306,6 +323,7 @@ public class AttackManager : MonoBehaviour
 
             equipWeapon = weapons[RpcEquipWeaponIndex];
             equipWeapon.SetActive(true);
+
         }
     }
 

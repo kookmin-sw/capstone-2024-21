@@ -11,11 +11,13 @@ public class WeaponInventory : MonoBehaviour
 
     public WeaponSlot weaponSlot;
     public bool isWeaponAdded;
+    public bool isCrafted;
     public Item abandonedItem;
 
+    [SerializeField] private GameObject objWeaponSlot;
     [SerializeField] private CraftGaugeController craftGauge;
     [SerializeField] private GameObject batterySlot;
-    [SerializeField] private bool isCrafted;
+    
 
     void Awake()
     { 
@@ -28,7 +30,7 @@ public class WeaponInventory : MonoBehaviour
 
     private void Update()
     {
-        if (weaponSlot.item != null && batterySlot.transform.childCount > 0)
+        if (weaponSlot.item != null && batterySlot.transform.childCount > 0 && weaponSlot.item.craftCompleted == false)
         {
             if(batterySlot.GetComponentInChildren<Slot>().item != null)
             {
@@ -37,6 +39,7 @@ public class WeaponInventory : MonoBehaviour
                     if (craftGauge.FillBolt())
                     {
                         batterySlot.GetComponentInChildren<Slot>().item = null;
+                        weaponSlot.item.craftCompleted = true;
                         craftGauge.SetGaugeZero();
                     }
                 }
@@ -51,10 +54,18 @@ public class WeaponInventory : MonoBehaviour
             craftGauge.SetGaugeZero();
         }
     }
-    public void AddItem(Item _item)
+    public int AddWeapon(Item _item)
     {
-        abandonedItem = weaponSlot.item;
-        weaponSlot.item = _item;
-        isWeaponAdded = true;
+        if(weaponSlot.item == null)
+        {
+            weaponSlot.item = _item;
+            isWeaponAdded = true;
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 }
