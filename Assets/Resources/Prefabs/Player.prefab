@@ -153,8 +153,7 @@ MonoBehaviour:
   type: 0
   damage: 18
   rate: 0
-  meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
+  meleeArea: {fileID: 2802306697318196697}
   attackManager: {fileID: 0}
 --- !u!65 &2802306697318196697
 BoxCollider:
@@ -672,6 +671,7 @@ MonoBehaviour:
   - {fileID: 174253913874947430}
   - {fileID: 3241901725791907989}
   - {fileID: 2330338559695178232}
+  equipWeapon: {fileID: 0}
   equipWeaponIndex: -1
   equipItemIndex: -1
   isSwap: 0
@@ -680,8 +680,11 @@ MonoBehaviour:
   itemInventory: {fileID: 0}
   RightHand: {fileID: 8498460212626331643}
   colliderWeapon: {fileID: 0}
+  equipWeaponGameobject: {fileID: 0}
   Armed: 
   movementStateManager: {fileID: 0}
+  attackManager: {fileID: 0}
+  weaponManager: {fileID: 0}
 --- !u!1 &875886015034181475
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +699,7 @@ GameObject:
   - component: {fileID: 1257573924970831990}
   - component: {fileID: 2958820722804266014}
   - component: {fileID: 6289934983552463237}
+  - component: {fileID: 3353991321726356946}
   m_Layer: 3
   m_Name: Hammer 01
   m_TagString: Item
@@ -825,6 +829,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2557795, y: 0.32973146, z: 0.25864628}
   m_Center: {x: 0.391042, y: 1.6731102, z: 0.0000074696422}
+--- !u!114 &3353991321726356946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875886015034181475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 16
+  rate: 0
+  meleeArea: {fileID: 6289934983552463237}
+  attackManager: {fileID: 0}
 --- !u!1 &888232504752631324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1106,6 @@ MonoBehaviour:
   damage: 5
   rate: 0
   meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
   attackManager: {fileID: 0}
 --- !u!65 &2946578216449032619
 BoxCollider:
@@ -1574,8 +1594,7 @@ MonoBehaviour:
   type: 0
   damage: 19
   rate: 0
-  meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
+  meleeArea: {fileID: 2991713544889207329}
   attackManager: {fileID: 0}
 --- !u!65 &2991713544889207329
 BoxCollider:
@@ -2129,6 +2148,7 @@ GameObject:
   - component: {fileID: 7994365055628066277}
   - component: {fileID: 8537076547612491514}
   - component: {fileID: 7157665338991564201}
+  - component: {fileID: 5388509046673164641}
   m_Layer: 0
   m_Name: Tactical Knife 01
   m_TagString: Weapon
@@ -2271,6 +2291,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.43403473, y: 0.9756308, z: 0.11680862}
   m_Center: {x: 0.040797625, y: 1.0002377, z: -0.00000042852326}
+--- !u!114 &5388509046673164641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241901725791907989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 12
+  rate: 0
+  meleeArea: {fileID: 7157665338991564201}
+  attackManager: {fileID: 0}
 --- !u!1 &3467642432535039628
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,6 +2323,7 @@ GameObject:
   - component: {fileID: 7816036119926678941}
   - component: {fileID: 7396162372701518160}
   - component: {fileID: 6968511443415926650}
+  - component: {fileID: 8979284665990023053}
   m_Layer: 0
   m_Name: Machete 01
   m_TagString: Weapon
@@ -2428,6 +2466,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.506775, y: 1.4119141, z: 0.1083874}
   m_Center: {x: -0.07435965, y: 0.9047465, z: 0.0000006862917}
+--- !u!114 &8979284665990023053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467642432535039628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 14
+  rate: 0
+  meleeArea: {fileID: 6968511443415926650}
+  attackManager: {fileID: 0}
 --- !u!1 &3469340610463436704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,6 +2883,7 @@ GameObject:
   - component: {fileID: 2516202922961757772}
   - component: {fileID: 3736474387980385323}
   - component: {fileID: 5165840315320042457}
+  - component: {fileID: 5677854242834069409}
   m_Layer: 0
   m_Name: Heavy Wrench 01
   m_TagString: Weapon
@@ -2970,6 +3026,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7517124, y: 0.8907965, z: 0.2594621}
   m_Center: {x: -0.17149952, y: 1.0024598, z: 0.0000026845057}
+--- !u!114 &5677854242834069409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265897927807574081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 15
+  rate: 0
+  meleeArea: {fileID: 5165840315320042457}
+  attackManager: {fileID: 0}
 --- !u!1 &4274347376289795550
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,6 +3330,7 @@ GameObject:
   - component: {fileID: 1154868718732099266}
   - component: {fileID: 6827078013907186080}
   - component: {fileID: 7469037959612084971}
+  - component: {fileID: 5817767460994804628}
   m_Layer: 0
   m_Name: Shovel 01
   m_TagString: Weapon
@@ -3388,6 +3462,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8038171, y: 1.1021066, z: 0.18095428}
   m_Center: {x: -0.0000026455175, y: 2.0178485, z: 0.023037935}
+--- !u!114 &5817767460994804628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5367841664122538743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 13
+  rate: 0
+  meleeArea: {fileID: 7469037959612084971}
+  attackManager: {fileID: 0}
 --- !u!1 &5404586915483419642
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,6 +3494,8 @@ GameObject:
   - component: {fileID: 487097513930076214}
   - component: {fileID: 340111547394840690}
   - component: {fileID: 7822450714877175389}
+  - component: {fileID: 8827960917376062792}
+  - component: {fileID: 5339462842425296032}
   m_Layer: 0
   m_Name: Crowbar 01
   m_TagString: Weapon
@@ -3545,6 +3638,40 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9494202, y: 1.5148305, z: 0.27307522}
   m_Center: {x: -0.24028367, y: 1.6470647, z: 0.017803362}
+--- !u!114 &8827960917376062792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5404586915483419642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd08475b23aa548b7b9d28397d430b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 7
+  height: 3
+  centerOffset: {x: 0, y: 0, z: 0}
+  followOnStart: 0
+  smoothSpeed: 0.125
+--- !u!114 &5339462842425296032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5404586915483419642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 17
+  rate: 0
+  meleeArea: {fileID: 7822450714877175389}
+  attackManager: {fileID: 0}
 --- !u!1 &5500889336257313339
 GameObject:
   m_ObjectHideFlags: 0
@@ -4338,8 +4465,7 @@ MonoBehaviour:
   type: 0
   damage: 20
   rate: 0
-  meleeArea: {fileID: 0}
-  trailEffect: {fileID: 0}
+  meleeArea: {fileID: 7343716262400085189}
   attackManager: {fileID: 0}
 --- !u!65 &7343716262400085189
 BoxCollider:
