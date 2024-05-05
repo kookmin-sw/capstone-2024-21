@@ -21,6 +21,7 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("collision");
         Debug.Log(other.gameObject.name);
         if(other.gameObject.tag == "Player"){
+            Debug.Log("in if");
             HpManager hpManager = other.GetComponent<HpManager>();
             AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
