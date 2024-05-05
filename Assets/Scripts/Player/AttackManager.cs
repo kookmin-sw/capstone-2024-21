@@ -119,7 +119,7 @@ public class AttackManager : MonoBehaviour
             { // G는 버리는 키라서 인벤토리에서도 빼기
                 if(weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
                 {
-                    if (equipWeapon.activeSelf == true)
+                    if (equipWeapon != null)
                     {
                         equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
                         weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
@@ -148,12 +148,13 @@ public class AttackManager : MonoBehaviour
                     {
                         if(itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
                         {
-                            if (equipWeapon.activeSelf == true)
+                            if (equipWeapon != null)
                             {
                                 weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
                                 itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
                                 itemQuickSlots.GetComponent<Inventory>().FreshSlot();
                                 RpcEquip(-1);
+                                equipWeapon = null;
                                 movementStateManager.anim.SetTrigger("doSwap");
                                 isSwap = true;
                                 Invoke("SwapOut", 0.3f);
@@ -228,12 +229,11 @@ public class AttackManager : MonoBehaviour
                 else if (equipWeaponIndex == -1 && weaponInventory.isWeaponAdded == false )
                 {
                     Debug.Log("무기 칸 비어있음");
-                    if (equipWeapon.activeSelf == true)
+                    if (equipWeapon != null)
                     {
                         RpcEquip(equipWeaponIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
-
                         Invoke("SwapOut", 0.3f);
                     }
 
@@ -295,11 +295,12 @@ public class AttackManager : MonoBehaviour
                 else if(equipItemIndex == -1)
                 {
                     Debug.Log("아이템 칸 비어있음");
-                    if(equipWeapon.activeSelf == true)
+                    if(equipWeapon != null)
                     {
                         RpcEquip(equipItemIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
+                        equipWeapon = null;
 
                         Invoke("SwapOut", 0.3f);
                     }

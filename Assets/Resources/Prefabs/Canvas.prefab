@@ -4229,7 +4229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4483099777691278112
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6572,7 +6572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7453602264675058264
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6676,8 +6676,7 @@ MonoBehaviour:
   isWeaponAdded: 0
   isCrafted: 0
   abandonedItem: {fileID: 0}
-  craftCompletedMark: {fileID: 0}
-  objWeaponSlot: {fileID: 0}
+  craftCompletedMark: {fileID: 6183389855833377503}
   craftGauge: {fileID: 4767780737184731447}
   batterySlot: {fileID: 4345263055607128512}
 --- !u!1 &8090481674426104217
