@@ -9,12 +9,10 @@ public class WeaponManager : MonoBehaviour
     public int damage;
     public float rate;
     public BoxCollider meleeArea;
-    public TrailRenderer trailEffect;
     [HideInInspector] public AttackManager attackManager;
 
     public void Use(){
         if(type == Type.Melee){
-            StopCoroutine("Swing");
             StartCoroutine("Swing");
         }
     }
@@ -23,22 +21,34 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("collision");
         Debug.Log(other.gameObject.name);
         if(other.gameObject.tag == "Player"){
+            Debug.Log("in if");
             HpManager hpManager = other.GetComponent<HpManager>();
             AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
-
+            Debug.Log(hpManager);
+            Debug.Log(Enemy);
+            Debug.Log(attackManager);
             if (Enemy != null) {
-                attackManager.AttackEnd();
+                Debug.Log("in if if");
+                //attackManager.AttackEnd();
                 Enemy.OnDamaged();
+                Debug.Log("Hit : " + damage);
+                hpManager.OnDamage(damage);
             }
-
-            Debug.Log("Hit : " + damage);
-            hpManager.OnDamage(damage);
+            Debug.Log("out if");
+           
         }
     }
 
     IEnumerator Swing(){
-        yield return null;
-        yield return new WaitForSeconds(0.1f);
+        while(meleeArea.enabled)
+            yield return null;
+
+        yield return new WaitForSeconds(0.5f); //  15프레임
+        meleeArea.enabled = true;
+
+        yield return new WaitForSeconds(0.83f); //  25프레임
+        meleeArea.enabled = false;
     }
 }
+
