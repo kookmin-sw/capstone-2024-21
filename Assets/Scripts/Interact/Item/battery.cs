@@ -29,6 +29,10 @@ public class Battery : MonoBehaviour
             is_collide = true;
             stop_position = transform.position;
         }
+        else if(collision.gameObject.tag == "Player")
+        {
+            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
+        }
     }
 
     public void Destroy_battery()

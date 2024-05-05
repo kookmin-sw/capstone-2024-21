@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     private int selectSlot = 0;
     [HideInInspector] public bool isGameOver;
     [HideInInspector] public bool isUIActivate;
+    [HideInInspector] public bool isComActivate;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -50,6 +52,7 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
+            isComActivate = true;
 
         }
         if (Input.GetKeyUp(KeyCode.Tab))
@@ -57,6 +60,7 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            isComActivate = false;
         }
     }
     void ManageSetting()
@@ -76,7 +80,6 @@ public class UIManager : MonoBehaviour
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 isUIActivate = false;
-
             }
         }
     }

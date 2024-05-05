@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6231641771014933542}
   - component: {fileID: 5403525968535035369}
   - component: {fileID: 5673650133586123441}
-  - component: {fileID: 6561990181343682451}
   - component: {fileID: 4203580595679846830}
   - component: {fileID: 7174141382692182966}
   - component: {fileID: 4747498442965527725}
@@ -90,19 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6561990181343682451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174253913874947430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 3f5539b522fb8584688e5a9cb80d5154, type: 3}
 --- !u!64 &4203580595679846830
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -479,6 +465,7 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   jumped: 0
+  DroppedItem: {fileID: 0}
   anim: {fileID: 0}
   attackManager: {fileID: 0}
 --- !u!143 &6018348157429843888
@@ -1453,7 +1440,6 @@ GameObject:
   - component: {fileID: 7209855114768357932}
   - component: {fileID: 7728074646748664954}
   - component: {fileID: 2728831101495653248}
-  - component: {fileID: 6778392794025161769}
   - component: {fileID: 8676621810175771310}
   - component: {fileID: 2211144676716929310}
   - component: {fileID: 9116518017068165081}
@@ -1531,19 +1517,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6778392794025161769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2269317523228400157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 51f175d61fdaebb46813033b8c9fbf7d, type: 3}
 --- !u!64 &8676621810175771310
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1631,7 +1604,6 @@ GameObject:
   - component: {fileID: 3742600886084259842}
   - component: {fileID: 5530747819982389855}
   - component: {fileID: 6957215844913135520}
-  - component: {fileID: 8074443233303042291}
   - component: {fileID: 3452431759491502854}
   m_Layer: 3
   m_Name: battery
@@ -1743,19 +1715,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 4f5c97fe37e6049d08995b9c9353c996, type: 2}
---- !u!114 &8074443233303042291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2330338559695178232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 66885ca60c938da49b817b7ef7281f1b, type: 3}
 --- !u!65 &3452431759491502854
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2144,7 +2103,6 @@ GameObject:
   - component: {fileID: 975988820593540177}
   - component: {fileID: 928990169518620530}
   - component: {fileID: 5432557506019194637}
-  - component: {fileID: 9192132562287211634}
   - component: {fileID: 7994365055628066277}
   - component: {fileID: 8537076547612491514}
   - component: {fileID: 7157665338991564201}
@@ -2222,19 +2180,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9192132562287211634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3241901725791907989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 814cee102e4557845b0c9bb0ce088f1e, type: 3}
 --- !u!64 &7994365055628066277
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2319,7 +2264,6 @@ GameObject:
   - component: {fileID: 52256243979959222}
   - component: {fileID: 2862099654270379245}
   - component: {fileID: 8777492774447778472}
-  - component: {fileID: 3573892009484100490}
   - component: {fileID: 7816036119926678941}
   - component: {fileID: 7396162372701518160}
   - component: {fileID: 6968511443415926650}
@@ -2397,19 +2341,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3573892009484100490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3467642432535039628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: c93eb9ff122374c488890aad7cf1dbac, type: 3}
 --- !u!64 &7816036119926678941
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2879,7 +2810,6 @@ GameObject:
   - component: {fileID: 4747880408878707885}
   - component: {fileID: 3515141792797814054}
   - component: {fileID: 8758285953807308843}
-  - component: {fileID: 2240014938924994977}
   - component: {fileID: 2516202922961757772}
   - component: {fileID: 3736474387980385323}
   - component: {fileID: 5165840315320042457}
@@ -2957,19 +2887,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2240014938924994977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4265897927807574081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 9ae0ff07b8883004ab31c5e2a1281963, type: 3}
 --- !u!64 &2516202922961757772
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3490,7 +3407,6 @@ GameObject:
   - component: {fileID: 7335306718159354338}
   - component: {fileID: 6537416476346047448}
   - component: {fileID: 97000096684087154}
-  - component: {fileID: 7217612365762077170}
   - component: {fileID: 487097513930076214}
   - component: {fileID: 340111547394840690}
   - component: {fileID: 7822450714877175389}
@@ -3569,19 +3485,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7217612365762077170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5404586915483419642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 923b3a738a263434f8d2b997fc773b3e, type: 3}
 --- !u!64 &487097513930076214
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4324,7 +4227,6 @@ GameObject:
   - component: {fileID: 1769618222725939906}
   - component: {fileID: 5257430022374742573}
   - component: {fileID: 9001604876086732796}
-  - component: {fileID: 5673152251100754338}
   - component: {fileID: 3971876586249211054}
   - component: {fileID: 76877731172540930}
   - component: {fileID: 7022991715192404861}
@@ -4402,19 +4304,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5673152251100754338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6757792557848526007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fc9194066db764e8f709219c4cceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 5c55224dc3f75a249ac829740720d108, type: 3}
 --- !u!64 &3971876586249211054
 MeshCollider:
   m_ObjectHideFlags: 0
