@@ -21,6 +21,8 @@ public class Interact : MonoBehaviour
 
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
+
+
     void Update()
     {
         Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset); 
