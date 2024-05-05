@@ -40,6 +40,5 @@ public class WeaponManager : MonoBehaviour
     IEnumerator Swing(){
         yield return null;
         yield return new WaitForSeconds(0.1f);
-        
     }
 }

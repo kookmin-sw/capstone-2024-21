@@ -18,3 +18,4 @@ MonoBehaviour:
   ItemType: 7
   ItemDamage: 13
   ItemRange: 0
+  craftCompleted: 0

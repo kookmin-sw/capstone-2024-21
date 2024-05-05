@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public Sprite icon;
     private Rigidbody itemRigidBody;
     private bool isPlayerEnter = false;
+    public bool settedLightning = false;
 
     // Use this for initialization
     void Start()
