@@ -115,11 +115,11 @@ public class AttackManager : MonoBehaviour
 
             if (isAttack) return; // 공격 중에는 스왑 불가
 
-            if (Input.GetKeyDown(KeyCode.G)) 
-            { // G는 버리는 키라서 인벤토리에서도 빼기
+            if (Input.GetKeyDown(KeyCode.G)) // G는 버리는 키
+            { 
                 if(weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
                 {
-                    if (equipWeapon.activeSelf == true)
+                    if (equipWeapon != null)
                     {
                         equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
                         weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
@@ -148,12 +148,13 @@ public class AttackManager : MonoBehaviour
                     {
                         if(itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
                         {
-                            if (equipWeapon.activeSelf == true)
+                            if (equipWeapon != null)
                             {
                                 weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
                                 itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
                                 itemQuickSlots.GetComponent<Inventory>().FreshSlot();
                                 RpcEquip(-1);
+                                equipWeapon = null;
                                 movementStateManager.anim.SetTrigger("doSwap");
                                 isSwap = true;
                                 Invoke("SwapOut", 0.3f);
@@ -177,7 +178,6 @@ public class AttackManager : MonoBehaviour
 
                 if (weaponInventory.weaponSlot.item != null && weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)
                 {
-
                     for (int i = 0; i < weapons.Length; i++)
                     {
                         if (weaponInventory.weaponSlot.item.ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType)
@@ -228,7 +228,7 @@ public class AttackManager : MonoBehaviour
                 else if (equipWeaponIndex == -1 && weaponInventory.isWeaponAdded == false )
                 {
                     Debug.Log("무기 칸 비어있음");
-                    if (equipWeapon.activeSelf == true)
+                    if (equipWeapon != null)
                     {
                         RpcEquip(equipWeaponIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
@@ -246,6 +246,7 @@ public class AttackManager : MonoBehaviour
             else if (Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3") || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5") || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
             {
                 equipItemIndex = -1;
+
                 bool isFound = false;
                 for (int i = 0; i < 4; i++)
                 {
@@ -295,7 +296,7 @@ public class AttackManager : MonoBehaviour
                 else if(equipItemIndex == -1)
                 {
                     Debug.Log("아이템 칸 비어있음");
-                    if(equipWeapon.activeSelf == true)
+                    if(equipWeapon != null)
                     {
                         RpcEquip(equipItemIndex);
                         movementStateManager.anim.SetTrigger("doSwap");

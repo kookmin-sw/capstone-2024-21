@@ -7338,6 +7338,6 @@ MonoBehaviour:
   isWeaponAdded: 0
   isCrafted: 0
   abandonedItem: {fileID: 0}
-  craftCompletedMark: {fileID: 0}
+  craftCompletedMark: {fileID: 1138191856465641952}
   craftGauge: {fileID: 1400654525991056592}
   batterySlot: {fileID: 2722596889467962196}
