@@ -60,8 +60,7 @@ public class AttackManager : MonoBehaviour
     
     void Update(){
         getInput();
-        if(Input.GetKeyDown(KeyCode.Alpha1)) Debug.Log("sDown1");
-        Attack();  
+        if(Input.GetKeyDown(KeyCode.Alpha1)) Debug.Log("sDown1"); 
         RpcSwap();
     }
 
@@ -72,11 +71,11 @@ public class AttackManager : MonoBehaviour
         sDown4 = Input.GetButtonDown("sDown4");
         sDown5 = Input.GetButtonDown("sDown5");
         gDown = Input.GetButtonDown("gDown"); // 아이템 버리기
-        //eDown = Input.GetButtonDown("eDown"); // 아이템 장착
+        eDown = Input.GetButtonDown("eDown"); // 아이템 장착
     }
 
     // 공격
-    void Attack()
+    public void Attack()
     {
         fireDelay += Time.deltaTime;
         isFireReady = equipWeaponGameobject.rate < fireDelay; 
@@ -387,7 +386,6 @@ public class AttackManager : MonoBehaviour
     {   
         Debug.Log("doDamaged");
 
-        //movementStateManager.animation
         movementStateManager.anim.SetTrigger("doDamaged");
         Invoke("hitOut", 0.1f);
     }

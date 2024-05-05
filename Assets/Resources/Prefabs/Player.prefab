@@ -465,6 +465,7 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   jumped: 0
+  DroppedItem: {fileID: 0}
   anim: {fileID: 0}
   attackManager: {fileID: 0}
 --- !u!143 &6018348157429843888
