@@ -5,6 +5,7 @@ using UnityEngine;
 public class SetLightning : MonoBehaviour
 {
     // Start is called before the first frame update
+
     private void OnEnable()
     {
         gameObject.GetComponentsInChildren<ParticleSystem>()[0].Play();

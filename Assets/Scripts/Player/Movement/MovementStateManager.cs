@@ -70,14 +70,18 @@ public class MovementStateManager : MonoBehaviour
             if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
             {
                 DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
-                if(attackManager.weaponInventory.abandonedItem.craftCompleted == true)
+                if(attackManager.weaponInventory.abandonedItem.ItemType < 11)
                 {
-                    DroppedItem.GetComponent<Weapon>().settedLightning = true;
+                    if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
+                    {
+                        DroppedItem.GetComponent<Weapon>().settedLightning = true;
+                    }
+                    else if (attackManager.weaponInventory.abandonedItem.craftCompleted == false)
+                    {
+                        DroppedItem.GetComponent<Weapon>().settedLightning = false;
+                    }
                 }
-                else if(attackManager.weaponInventory.abandonedItem.craftCompleted == false)
-                {
-                    DroppedItem.GetComponent<Weapon>().settedLightning = false;
-                }
+
                 DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
                 attackManager.weaponInventory.abandonedItem = null;
             }

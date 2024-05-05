@@ -13,8 +13,8 @@ public class WeaponInventory : MonoBehaviour
     public bool isWeaponAdded;
     public bool isCrafted;
     public Item abandonedItem;
+    public GameObject craftCompletedMark;
 
-    [SerializeField] private GameObject objWeaponSlot;
     [SerializeField] private CraftGaugeController craftGauge;
     [SerializeField] private GameObject batterySlot;
     
@@ -40,6 +40,8 @@ public class WeaponInventory : MonoBehaviour
                     {
                         batterySlot.GetComponentInChildren<Slot>().item = null;
                         weaponSlot.item.craftCompleted = true;
+                        weaponSlot.item.ItemDamage *= 2;
+                        craftCompletedMark.SetActive(true);
                         craftGauge.SetGaugeZero();
                     }
                 }
