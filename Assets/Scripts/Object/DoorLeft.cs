@@ -95,7 +95,7 @@ public class DoorLeft : MonoBehaviour
 
     public void ChangeDoorStateRPC()
     {
-        pv.RPC("ChangeDoorState", RpcTarget.All);
+        pv.RPC("ChangeDoorState", RpcTarget.AllBuffered);
     }
 
 
