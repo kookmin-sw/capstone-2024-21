@@ -13,26 +13,14 @@ public class Inventory : MonoBehaviour
     public bool isItemAdded;
     public bool isSlotChanged;
 
-    //#if UNITY_EDITOR
-    //    //OnValidate()의 기능은 유니티 에디터에서 바로 작동을 하는 역할을 함. 
-    //    private void OnValidate()
-    //    {
-    //        slots = GetComponentsInChildren<Slot>();
-    //    }
-    //#endif
-
-    //아이템이 들어오거나 나가면 Slot의 내용을 다시 정리하여 화면에 보여 주는 기능
     public void FreshSlot()
     {
         slots = GetComponentsInChildren<Slot>();
         int i = 0; //두 개의 For 문에 같은 i의 값을 사용하기 위해서 외부에 선언
 
-        //items에 들어 있는 수만큼 slots에 차례대로 item을 넣어 줌
-        // i 의 값이 items와 slots 두 개의 값 보다 작아야만 돌아가는 구조->items의 수가 slots 수보다 많으면 안 되니까
         for (; i < items.Count && i < slots.Length; i++)
         {
             items[i] = slots[i].item;
-            //slot에 item이 들어가면 Slot.cs에 선언된 item의 set 안의 내용이 실행되어 해당 슬롯에 이미지를 표시하게 됨 
         }
     }
 
