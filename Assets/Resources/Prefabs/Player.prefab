@@ -465,7 +465,6 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   jumped: 0
-  DroppedItem: {fileID: 0}
   anim: {fileID: 0}
   attackManager: {fileID: 0}
 --- !u!143 &6018348157429843888
@@ -1605,6 +1604,7 @@ GameObject:
   - component: {fileID: 5530747819982389855}
   - component: {fileID: 6957215844913135520}
   - component: {fileID: 3452431759491502854}
+  - component: {fileID: 8051452264050495391}
   m_Layer: 3
   m_Name: battery
   m_TagString: Item
@@ -1736,6 +1736,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.19567837, y: 0.8422893, z: 0.19312426}
   m_Center: {x: 0.0037609062, y: 0.500229, z: -0.004222003}
+--- !u!114 &8051452264050495391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2330338559695178232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 0
+  rate: 0
+  meleeArea: {fileID: 3452431759491502854}
+  attackManager: {fileID: 0}
 --- !u!1 &2331607428652656992
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,7 +60,9 @@ public class AttackManager : MonoBehaviour
     
     void Update(){
         getInput();
+        if(Input.GetKeyDown(KeyCode.Alpha1)) Debug.Log("sDown1");
         Attack();  
+        RpcSwap();
     }
 
     void getInput(){
@@ -70,7 +72,7 @@ public class AttackManager : MonoBehaviour
         sDown4 = Input.GetButtonDown("sDown4");
         sDown5 = Input.GetButtonDown("sDown5");
         gDown = Input.GetButtonDown("gDown"); // 아이템 버리기
-        eDown = Input.GetButtonDown("eDown"); // 아이템 장착
+        //eDown = Input.GetButtonDown("eDown"); // 아이템 장착
     }
 
     // 공격
@@ -134,16 +136,19 @@ public class AttackManager : MonoBehaviour
     void Swap(){
         
         if(pv.IsMine)
-        {
+        {   
+            Debug.Log("swap in");  
             if (isAttack) return; // 공격 중에는 스왑 불가
 
 
             if (Input.GetKeyDown(KeyCode.G)) 
             { // G는 버리는 키라서 인벤토리에서도 빼기
                 if(weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
-                {
+                {   
+                    Debug.Log("1");
                     if (equipWeapon.activeSelf == true)
                     {
+                        Debug.Log("2");
                         weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
                         weaponInventory.weaponSlot.item = null;
 
@@ -189,13 +194,17 @@ public class AttackManager : MonoBehaviour
             // 버튼을 입력 받으면 
             if (sDown1 || weaponInventory.isWeaponAdded == true)
             {
+                Debug.Log("4");
                 equipWeaponIndex = -1;
                 if (weaponInventory.weaponSlot.item != null && weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)
                 {
+                    Debug.Log("5");
                     for (int i = 0; i < weapons.Length; i++)
                     {
+                        Debug.Log("6");
                         if (weaponInventory.weaponSlot.item.ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType)
                         {
+                            Debug.Log("7");
                             equipWeaponIndex = i;
                             weaponInventory.isWeaponAdded = false;
                             break;
@@ -205,13 +214,16 @@ public class AttackManager : MonoBehaviour
                 }
                 if(equipWeaponIndex != -1)
                 {
+                    Debug.Log("8");
                     equipWeaponGameobject = weapons[equipWeaponIndex].GetComponent<WeaponManager>();
 
                     if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 10)
                     {
+                        Debug.Log("9");
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
                         if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 3)
                         {
+                            Debug.Log("10");
                             movementStateManager.anim.SetBool(Armed, false);
                             movementStateManager.anim.SetLayerWeight(1, 0);
 
@@ -222,6 +234,7 @@ public class AttackManager : MonoBehaviour
                         }
                         else
                         {
+                            Debug.Log("11");
                             movementStateManager.anim.SetBool(Armed, false);
                             movementStateManager.anim.SetLayerWeight(2, 0);
                             Armed = "OHW";
@@ -241,6 +254,7 @@ public class AttackManager : MonoBehaviour
                 }
                 else if (equipWeaponIndex == -1 && weaponInventory.isWeaponAdded == false)
                 {
+                    Debug.Log("12");
                     Debug.Log("무기 칸 비어있음");
                     if (equipWeapon.activeSelf == true)
                     {
@@ -259,18 +273,22 @@ public class AttackManager : MonoBehaviour
             }
             else if(sDown2 || sDown3 || sDown4 || sDown5 || itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true)
             {
+                Debug.Log("13");
                 equipItemIndex = -1;
                 bool isFound = false;
                 for (int i = 0; i < 4; i++)
                 {
                     if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
                     {
+                        Debug.Log("14");
                         if(itemQuickSlots.GetComponent<Inventory>().slots[i].item != null)
                         {
+                            Debug.Log("15");
                             for (int j = weapons.Length - 1; j >= 0; j--)
-                            {
+                            {Debug.Log("16");
                                 if (itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemType == weapons[j].GetComponent<ItemData>().itemData.ItemType)
                                 {
+                                    Debug.Log("17");
                                     equipItemIndex = j;
                                     itemInventory.isItemAdded = false;
                                     itemInventory.isSlotChanged = false;
@@ -287,10 +305,12 @@ public class AttackManager : MonoBehaviour
                 }
                 if (equipItemIndex != -1)
                 {
+                    Debug.Log("18");
                     equipWeaponGameobject = weapons[equipItemIndex].GetComponent<WeaponManager>();
                     itemInventory.isSlotChanged = false;
                     if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType > 10)
                     {
+                        Debug.Log("19");
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
 
                         movementStateManager.anim.SetBool(Armed, false);
@@ -309,10 +329,12 @@ public class AttackManager : MonoBehaviour
                 }
                 else if(equipItemIndex == -1 && itemInventory.isItemAdded == false)
                 {
+                    Debug.Log("20");
                     itemInventory.isSlotChanged = false;
                     Debug.Log("아이템 칸 비어있음");
                     if(equipWeapon.activeSelf == true)
                     {
+                        Debug.Log("21");
                         RpcEquip(equipItemIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
@@ -354,6 +376,7 @@ public class AttackManager : MonoBehaviour
 
     public void RpcSwap()
     {
+        Debug.Log("RpcSwap in");
         pv.RPC("Swap", RpcTarget.All);
     }
 
