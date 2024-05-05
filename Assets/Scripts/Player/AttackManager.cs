@@ -233,7 +233,6 @@ public class AttackManager : MonoBehaviour
                         RpcEquip(equipWeaponIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
-
                         Invoke("SwapOut", 0.3f);
                     }
 
@@ -301,6 +300,7 @@ public class AttackManager : MonoBehaviour
                         RpcEquip(equipItemIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
+                        equipWeapon = null;
 
                         Invoke("SwapOut", 0.3f);
                     }
