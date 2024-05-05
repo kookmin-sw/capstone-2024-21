@@ -21,12 +21,16 @@ public class MovementStateManager : MonoBehaviour
     [SerializeField] float groundYOffset;
     [SerializeField] LayerMask groundMask;
     Vector3 spherePos;
+    Vector3 itemPos;
+
 
     [SerializeField] float jumpForce = 3;
     [SerializeField] float gravity = -9.81f;
     public bool jumped;
     Vector3 velocity;
 
+    //
+    public GameObject DroppedItem;
     
     ///////Attack
     float fireDelay;
@@ -63,6 +67,24 @@ public class MovementStateManager : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
+            {
+                DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
+                if(attackManager.weaponInventory.abandonedItem.ItemType < 11)
+                {
+                    if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
+                    {
+                        DroppedItem.GetComponent<Weapon>().settedLightning = true;
+                    }
+                    else if (attackManager.weaponInventory.abandonedItem.craftCompleted == false)
+                    {
+                        DroppedItem.GetComponent<Weapon>().settedLightning = false;
+                    }
+                }
+
+                DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
+                attackManager.weaponInventory.abandonedItem = null;
+            }
             if (uiManager.isGameOver == false && attackManager.isAttack == false)
             {
                 uiManager.SelectQuickSlot();
@@ -74,6 +96,11 @@ public class MovementStateManager : MonoBehaviour
             anim.SetFloat("zAxis", zAxis);
 
             currentState.UpdateState(this);
+            if(uiManager.isUIActivate == false && uiManager.isComActivate == false)
+            {
+                attackManager.Attack();
+            }
+            attackManager.RpcSwap();
         }
     }
 
@@ -116,6 +143,17 @@ public class MovementStateManager : MonoBehaviour
     } 
 
     public void Jumped() => jumped = true;
+    
+    // void Attack(){
+    //     fireDelay += Time.deltaTime;
+    //     isFireReady = equipWeapon.rate < fireDelayDelay;
+
+    //     if(fDown && isFireReady){
+    //         equipWeapon.Use();
+    //         anim.SetTrigger("Attack");
+    //         fireDelay = 0;
+    //     }
+    // }
     
     // private void OnDrawGizmos()
     // {
