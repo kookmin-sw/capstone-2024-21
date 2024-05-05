@@ -25,14 +25,18 @@ public class WeaponManager : MonoBehaviour
             HpManager hpManager = other.GetComponent<HpManager>();
             AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
-
+            Debug.Log(hpManager);
+            Debug.Log(Enemy);
+            Debug.Log(attackManager);
             if (Enemy != null) {
-                attackManager.AttackEnd();
+                Debug.Log("in if if");
+                //attackManager.AttackEnd();
                 Enemy.OnDamaged();
+                Debug.Log("Hit : " + damage);
+                hpManager.OnDamage(damage);
             }
-
-            Debug.Log("Hit : " + damage);
-            hpManager.OnDamage(damage);
+            Debug.Log("out if");
+           
         }
     }
 
