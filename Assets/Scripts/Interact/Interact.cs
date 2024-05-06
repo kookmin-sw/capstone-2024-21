@@ -70,6 +70,20 @@ public class Interact : MonoBehaviour
 
                 }
 
+                if (selectedTarget.CompareTag("Exit"))
+                {
+                    Debug.Log("Exit 문 상호작용 ");
+                    if (selectedTarget.GetComponent<Exit>())
+                    {
+                        selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+                    }
+                    else
+                    {
+                        selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+                    }
+
+                }
+
                 if (selectedTarget.CompareTag("ItemSpawner"))
                 {
                     Debug.Log("betterySpawner 와 상호작용");

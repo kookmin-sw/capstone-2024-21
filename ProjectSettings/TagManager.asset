@@ -12,6 +12,8 @@ TagManager:
   - Bullet
   - Item
   - ItemSpawner
+  - SF_Door
+  - Exit
   layers:
   - Default
   - TransparentFX
