@@ -25,7 +25,7 @@ public class HpManager : MonoBehaviour
 
     private PhotonView pv;
 
-    void Start()
+    void Awake()
     {
         pv = GetComponent<PhotonView>();
         uiManager = FindObjectOfType<UIManager>();

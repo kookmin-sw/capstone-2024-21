@@ -16,7 +16,7 @@ public class IdleState : MovementBaseState
             else ExitState(movement, movement.Walk);
         }
         if(Input.GetKeyDown(KeyCode.C)) ExitState(movement, movement.Crouch);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.staminaBar.value >= movement.staminaManager.jumpValue)
         {
             movement.previousState = this;
             ExitState(movement, movement.Jump);
