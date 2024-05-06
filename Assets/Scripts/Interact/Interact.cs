@@ -6,6 +6,7 @@ using UnityEngine;
 //Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
 {
+    public Transform canvas;
 
     public GameObject image_F;//껐다 켰다 할 F UI. 직접 할당해줘야함 findObject로 바꿀까 고민중 
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지  UI. 직접 할당해줘야함
@@ -21,7 +22,20 @@ public class Interact : MonoBehaviour
 
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
+    //CheckBattery 함수를 위한 변수
+    [SerializeField] int cntBattery;
+    [SerializeField] int needBattery = 3;
 
+    private void Start()
+    {
+        canvas = GameObject.Find("Canvas").transform;
+
+        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
+        image_F = canvas.Find("image_F").gameObject;
+        circleGaugeControler = canvas.Find("GaugeController").gameObject; 
+        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
+        WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+}
 
     void Update()
     {
@@ -73,15 +87,7 @@ public class Interact : MonoBehaviour
                 if (selectedTarget.CompareTag("Exit"))
                 {
                     Debug.Log("Exit 문 상호작용 ");
-                    if (selectedTarget.GetComponent<Exit>())
-                    {
-                        selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
-                    }
-                    else
-                    {
-                        selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
-                    }
-
+                    CheckBattery();
                 }
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
@@ -155,6 +161,55 @@ public class Interact : MonoBehaviour
             }
         }
 
+    }
+
+    void CheckBattery()
+    {
+        //현재 가지고 있는 배터리 갯수 확
+        cntBattery = 0;
+        for (int i = 0; i < quicSlot.items.Count; i++)
+        {
+            Debug.Log("quicSlot.items[i] : "+quicSlot.items[i]);
+            if (quicSlot.items[i] && quicSlot.items[i].itemName == "battery")
+            {
+                cntBattery++;
+            }
+        }
+        Debug.Log("현재 소지한 배터리 갯수 : " + cntBattery);
+
+        //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
+        if (cntBattery >= needBattery)
+        {
+            Debug.Log("배터리 충분. ");
+            if (selectedTarget.GetComponent<Exit>())
+            {
+                selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+            }
+
+            //사용한 배터리 삭제
+            cntBattery = 0;
+            int idx = 0;
+
+            while (cntBattery < needBattery) 
+            {
+                Debug.Log("idx : " + idx);
+                if (quicSlot.items[idx] && quicSlot.items[idx].itemName == "battery")
+                {
+                    Debug.Log("hit");
+                    quicSlot.slots[idx].item =null;
+
+                    cntBattery++;
+                }
+                idx++;
+            }
+            quicSlot.FreshSlot();
+            Debug.Log("배터리를 사용해서 문을 열였습니다.");
+
+        }
+        else
+        {
+            Debug.Log("배터리가 부족합니다.");
+        }
     }
 
 
