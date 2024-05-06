@@ -5146,9 +5146,11 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   jumped: 0
+  isJumpStart: 0
   DroppedItem: {fileID: 0}
   anim: {fileID: 0}
   attackManager: {fileID: 0}
+  staminaManager: {fileID: 0}
 --- !u!143 &8050459515468456632
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5316,6 +5318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 0}
   staminaBar: {fileID: 0}
+  jumpValue: 20
 --- !u!114 &1121426347387241336
 MonoBehaviour:
   m_ObjectHideFlags: 0
