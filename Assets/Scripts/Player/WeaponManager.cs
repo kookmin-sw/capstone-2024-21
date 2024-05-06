@@ -18,25 +18,16 @@ public class WeaponManager : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other){
-        Debug.Log("collision");
-        Debug.Log(other.gameObject.name);
         if(other.gameObject.tag == "Player"){
-            Debug.Log("in if");
             HpManager hpManager = other.GetComponent<HpManager>();
             AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
-            Debug.Log(hpManager);
-            Debug.Log(Enemy);
-            Debug.Log(attackManager);
             if (Enemy != null) {
-                Debug.Log("in if if");
-                //attackManager.AttackEnd();
                 Enemy.OnDamaged();
+
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage);
-            }
-            Debug.Log("out if");
-           
+            }    
         }
     }
 
