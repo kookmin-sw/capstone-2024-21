@@ -12,8 +12,10 @@ public class Interact : MonoBehaviour
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지  UI. 직접 할당해줘야함
     public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI. 직접 할당해줘야함
     public WeaponInventory WeaponQuickslot;
+    public MovementStateManager movementStateManager;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
+    public bool isExiting = false;
 
 
     RaycastHit hit;
@@ -35,6 +37,7 @@ public class Interact : MonoBehaviour
         circleGaugeControler = canvas.Find("GaugeController").gameObject; 
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+        movementStateManager = GetComponent<MovementStateManager>();
 }
 
     void Update()
@@ -74,7 +77,7 @@ public class Interact : MonoBehaviour
                 {
                     Debug.Log("문 상호작용 ");
                     if (selectedTarget.GetComponent<DoorRight>())
-                    {
+                    {   
                         selectedTarget.GetComponent<DoorRight>().ChangeDoorStateRPC();
                     }
                     else
@@ -85,7 +88,7 @@ public class Interact : MonoBehaviour
                 }
 
                 if (selectedTarget.CompareTag("Exit"))
-                {
+                {   
                     Debug.Log("Exit 문 상호작용 ");
                     CheckBattery();
                 }
@@ -157,10 +160,23 @@ public class Interact : MonoBehaviour
 
                 //수색종료
                 isInvetigating = false; 
-                circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
+                circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
+            }
+        }
+        else if (isExiting)
+        {
+            if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
+            {
+                //수색종료
+                isExiting = false; 
+                circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
             }
         }
 
+    }
+
+    bool DoorOpen(){
+        return true;
     }
 
     void CheckBattery()
@@ -180,6 +196,13 @@ public class Interact : MonoBehaviour
         //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
         if (cntBattery >= needBattery)
         {
+            isExiting = true;
+
+            // 애니메이션 실행
+            // 끝나면 배터리 삭제
+            movementStateManager.anim.SetLayerWeight(7,1);
+            Invoke("DoorOpen", 10.0f);
+
             Debug.Log("배터리 충분. ");
             if (selectedTarget.GetComponent<Exit>())
             {
@@ -223,7 +246,7 @@ public class Interact : MonoBehaviour
 
 
         isInvetigating = false; //수색중이라면 취소하고
-        circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
+        circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI(); //게이지UI끄기 
 
     }
 
