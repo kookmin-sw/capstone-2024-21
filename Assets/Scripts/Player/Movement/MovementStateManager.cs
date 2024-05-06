@@ -147,6 +147,14 @@ public class MovementStateManager : MonoBehaviour
         isJumpStart = true;
     } 
 
+    public void OpenExitDoor(){
+        anim.SetLayerWeight(7,1);
+        anim.SetTrigger("Working");
+    }
+    public void EndExitDoor(){
+        anim.SetLayerWeight(7,1);
+    }
+
     public void Jumped() => jumped = true;
     
     // private void OnDrawGizmos()
