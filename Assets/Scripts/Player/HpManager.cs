@@ -52,9 +52,12 @@ public class HpManager : MonoBehaviour
     // 데미지 처리하는 함수
     [PunRPC]
     public void RpcOnDamage(float damage, KillManager killManager)
-    {   
-        if(pv.IsMine){
+    {
+        Debug.Log("RpcOnDamage는 실행됨");
+        if (pv.IsMine){
+            Debug.Log("pv.isMine은 실행됨");
             Debug.Log("데미지 입음");
+            Debug.Log("받은 데미지: " + damage);
             hp -= damage;
             healthPointBar.value = hp;
             healthPointCount.text = hp.ToString();
@@ -72,6 +75,7 @@ public class HpManager : MonoBehaviour
     }
     public void OnDamage(float damage, KillManager killManager)    
     {
+        Debug.Log("OnDamage는 실행됨");
         pv.RPC("RpcOnDamage", RpcTarget.Others, damage, killManager);
     }
 
