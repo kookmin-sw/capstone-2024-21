@@ -35,7 +35,7 @@ public class HpManager : MonoBehaviour
 
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
-    {   
+    {
         hp = maxHp;
         healthPointBar.value = hp;
         healthPointCount.text = hp.ToString();
@@ -51,13 +51,11 @@ public class HpManager : MonoBehaviour
 
     // 데미지 처리하는 함수
     [PunRPC]
-    public void RpcOnDamage(float damage, KillManager killManager)
+    public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        Debug.Log("RpcOnDamage는 실행됨");
-        if (pv.IsMine){
-            Debug.Log("pv.isMine은 실행됨");
+        if (pv.IsMine)
+        {
             Debug.Log("데미지 입음");
-            Debug.Log("받은 데미지: " + damage);
             hp -= damage;
             healthPointBar.value = hp;
             healthPointCount.text = hp.ToString();
@@ -68,15 +66,13 @@ public class HpManager : MonoBehaviour
             // 체력이 0 이하이고 살아있으면 사망
             if (hp <= 0 && !isDead)
             {
-                killManager.AddKillCount();
                 Die();
             }
         }
     }
-    public void OnDamage(float damage, KillManager killManager)
+    public void OnDamage(float damage)
     {
-        Debug.Log("OnDamage는 실행됨");
-        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, killManager);
+        pv.RPC("OnDamage", RpcTarget.Others, damage, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
     }
 
     // 체력 회복 함수
