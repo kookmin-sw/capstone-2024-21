@@ -26,7 +26,7 @@ public class Interact : MonoBehaviour
 
     //CheckBattery 함수를 위한 변수
     [SerializeField] int cntBattery;
-    [SerializeField] int needBattery = 3;
+    [SerializeField] int needBattery = 0;
 
     private void Start()
     {
@@ -90,7 +90,9 @@ public class Interact : MonoBehaviour
                 if (selectedTarget.CompareTag("Exit"))
                 {   
                     Debug.Log("Exit 문 상호작용 ");
-                    CheckBattery();
+                    if (CheckBattery()) {
+                        isExiting = true;
+                    }
                 }
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
@@ -179,7 +181,7 @@ public class Interact : MonoBehaviour
         return true;
     }
 
-    void CheckBattery()
+    bool CheckBattery()
     {
         //현재 가지고 있는 배터리 갯수 확
         cntBattery = 0;
@@ -193,14 +195,25 @@ public class Interact : MonoBehaviour
         }
         Debug.Log("현재 소지한 배터리 갯수 : " + cntBattery);
 
-        //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
         if (cntBattery >= needBattery)
         {
+            return true;
+        }
+        else
+        {   
+            Debug.Log("배터리가 부족합니다.");
+            return false;
+        }
+
+    void tmp()
+    {
+        //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
+
             isExiting = true;
 
             // 애니메이션 실행
             // 끝나면 배터리 삭제
-            movementStateManager.anim.SetLayerWeight(7,1);
+            movementStateManager.anim.SetLayerWeight(7, 1);
             Invoke("DoorOpen", 10.0f);
 
             Debug.Log("배터리 충분. ");
@@ -213,13 +226,13 @@ public class Interact : MonoBehaviour
             cntBattery = 0;
             int idx = 0;
 
-            while (cntBattery < needBattery) 
+            while (cntBattery < needBattery)
             {
                 Debug.Log("idx : " + idx);
                 if (quicSlot.items[idx] && quicSlot.items[idx].itemName == "battery")
                 {
                     Debug.Log("hit");
-                    quicSlot.slots[idx].item =null;
+                    quicSlot.slots[idx].item = null;
 
                     cntBattery++;
                 }
@@ -229,10 +242,7 @@ public class Interact : MonoBehaviour
             Debug.Log("배터리를 사용해서 문을 열였습니다.");
 
         }
-        else
-        {
-            Debug.Log("배터리가 부족합니다.");
-        }
+
     }
 
 
