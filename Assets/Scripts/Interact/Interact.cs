@@ -6,6 +6,7 @@ using UnityEngine;
 //Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
 {
+    public Transform canvas;
 
     public GameObject image_F;//껐다 켰다 할 F UI. 직접 할당해줘야함 findObject로 바꿀까 고민중 
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지  UI. 직접 할당해줘야함
@@ -21,7 +22,19 @@ public class Interact : MonoBehaviour
 
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
+    //CheckBattery 함수를 위한 변수
+    [SerializeField] int cntBattery = 0;
 
+    private void Start()
+    {
+        canvas = transform.Find("Canvas");
+
+        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
+        image_F = canvas.Find("image_F").gameObject;
+        circleGaugeControler = canvas.Find("GaugeController").gameObject; 
+        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
+        WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+}
 
     void Update()
     {
@@ -73,15 +86,7 @@ public class Interact : MonoBehaviour
                 if (selectedTarget.CompareTag("Exit"))
                 {
                     Debug.Log("Exit 문 상호작용 ");
-                    if (selectedTarget.GetComponent<Exit>())
-                    {
-                        selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
-                    }
-                    else
-                    {
-                        selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
-                    }
-
+                    CheckBattery();
                 }
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
@@ -155,6 +160,32 @@ public class Interact : MonoBehaviour
             }
         }
 
+    }
+
+    void CheckBattery()
+    {
+        for (int i = 0; i < quicSlot.items.Count; i++)
+        {
+            if (quicSlot.items[i].itemName == "battery")
+            {
+                cntBattery++;
+            }
+        }
+
+        Debug.Log("현재 소지한 배터리 갯수 : " + cntBattery);
+
+        if (cntBattery >= 3)
+        {
+            Debug.Log("배터리 충분. ");
+            if (selectedTarget.GetComponent<Exit>())
+            {
+                selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+            }
+        }
+        else
+        {
+            Debug.Log("배터리가 부족합니다.");
+        }
     }
 
 
