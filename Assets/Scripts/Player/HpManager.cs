@@ -51,7 +51,7 @@ public class HpManager : MonoBehaviour
 
     // 데미지 처리하는 함수
     [PunRPC]
-    public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public void RpcOnDamage(float damage, KillManager killManager)
     {   
         if(pv.IsMine){
             Debug.Log("데미지 입음");
@@ -65,12 +65,14 @@ public class HpManager : MonoBehaviour
             // 체력이 0 이하이고 살아있으면 사망
             if (hp <= 0 && !isDead)
             {
+                killManager.AddKillCount();
                 Die();
             }
         }
     }
-    public void OnDamage(float damage)    {
-        pv.RPC("OnDamage", RpcTarget.Others, damage, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
+    public void OnDamage(float damage, KillManager killManager)    
+    {
+        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, killManager);
     }
 
     // 체력 회복 함수
