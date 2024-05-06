@@ -1,19 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
-using UnityEditor.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
     public GameObject[] weapons; // 모든 무기 배열
 
-    public GameObject equipWeapon; // 장착 중인 무기
+    [SerializeField]GameObject equipWeapon; // 장착 중인 무기
     GameObject weaponQuickSlot;
     GameObject itemQuickSlots;
     public int equipWeaponIndex; // 장착 중인 무기의 weapons에서의 위치
@@ -23,13 +15,28 @@ public class AttackManager : MonoBehaviour
     public WeaponInventory weaponInventory; // 가지고 있는 무기
     public Inventory itemInventory; //가지고 있는 아이템
     public Transform RightHand;
+    ///////Attack
+    float fireDelay;
+    bool fDown;
+    bool isFireReady;
+    ////// Attack
+    bool sDown1;
+    bool sDown2;
+    bool sDown3;
+    bool sDown4;
+    bool sDown5;
+    bool gDown;
+    bool eDown;
 
     public BoxCollider colliderWeapon; // 무기들의 collider
     BoxCollider colliderHand; // 주먹 collider
-    GameObject objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
+    public WeaponManager equipWeaponGameobject; // 장착중인 무기 gameobject(무기 및 주먹)
+    
     public string Armed; // 현재 장착중인 무기 타입
 
-    public MovementStateManager movementStateManager;    
+    public MovementStateManager movementStateManager;   
+    [HideInInspector] public AttackManager attackManager;
+    [HideInInspector] public WeaponManager weaponManager; 
     private PhotonView pv;
     
     void Start(){
@@ -38,24 +45,46 @@ public class AttackManager : MonoBehaviour
         weaponQuickSlot = GameObject.Find("WeaponSlot");
         itemInventory = itemQuickSlots.GetComponent<Inventory>();
         weaponInventory = weaponQuickSlot.GetComponent<WeaponInventory>();
-        objWeapon = RightHand.GetChild(1).gameObject; // 처음 시작할 때 주먹의 sphereCollider 받아옴
+        equipWeaponGameobject = RightHand.GetChild(1).gameObject.GetComponent<WeaponManager>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
+        equipWeapon = weapons[9];
         colliderHand = RightHand.GetChild(1).GetComponent<BoxCollider>();
         movementStateManager = GetComponent<MovementStateManager>();
-        equipWeapon = null;
+    }
+    
+    void Update(){
+        getInput();
+        RpcSwap();
+    }
+
+    void getInput(){
+        sDown1 = Input.GetButtonDown("sDown1"); // 스왑 1 ~ 5
+        sDown2 = Input.GetButtonDown("sDown2");
+        sDown3 = Input.GetButtonDown("sDown3");
+        sDown4 = Input.GetButtonDown("sDown4");
+        sDown5 = Input.GetButtonDown("sDown5");
+        gDown = Input.GetButtonDown("gDown"); // 아이템 버리기
+        eDown = Input.GetButtonDown("eDown"); // 아이템 장착
     }
 
     // 공격
-    public void Attack(){ 
-        if (Input.GetMouseButton(0))
-            {   
-                movementStateManager.anim.SetBool("Attack", true);
-            }
-        else movementStateManager.anim.SetBool("Attack", false);
+    public void Attack()
+    {
+        fireDelay += Time.deltaTime;
+        isFireReady = equipWeaponGameobject.rate < fireDelay; 
+
+        // 마우스 왼쪽 버튼을 누르고 공격이 가능한 상태이면 실행
+        if (Input.GetMouseButton(0) && isFireReady)
+        {
+            // 무기를 사용하고 애니메이션을 트리거합니다.
+            equipWeaponGameobject.Use(); // 무기 사용
+            movementStateManager.anim.SetBool("Attack", true); // 애니메이션 트리거
+            fireDelay = 0; // 공격 딜레이 초기화
+        }
+        else movementStateManager.anim.SetBool("Attack", false); // 애니메이션 트리거
     }
 
     // 무기 장착 시와 비 장착시 공격 시작(collider on)
-    public void AttackStart(){
-        
+    public void AttackStart(){      
         if(Armed != "") {
             Debug.Log("WeapColl On");
             colliderWeapon.enabled = true;
@@ -95,8 +124,8 @@ public class AttackManager : MonoBehaviour
 
     [PunRPC]
     void Swap(){
-        
-        if(pv.IsMine)
+
+        if (pv.IsMine)
         {
             if (equipWeapon != null) // 착용된 장비가 있고
             {
@@ -115,9 +144,9 @@ public class AttackManager : MonoBehaviour
 
             if (isAttack) return; // 공격 중에는 스왑 불가
 
-            if (Input.GetKeyDown(KeyCode.G)) // G는 버리는 키
-            { 
-                if(weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
+            if (gDown) // G는 버리는 키
+            {
+                if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
                 {
                     if (equipWeapon != null)
                     {
@@ -144,9 +173,9 @@ public class AttackManager : MonoBehaviour
                 }
                 else //아이템 버릴 때
                 {
-                    for(int i = 0; i < 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
-                        if(itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
+                        if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
                         {
                             if (equipWeapon != null)
                             {
@@ -172,7 +201,7 @@ public class AttackManager : MonoBehaviour
 
             }
             // 무기 슬롯 스왑/습득 시 애니메이션 처리 
-            if (Input.GetButtonDown("Swap1") || weaponInventory.isWeaponAdded == true)
+            if (sDown1 || weaponInventory.isWeaponAdded == true)
             {
                 equipWeaponIndex = -1;
 
@@ -191,12 +220,12 @@ public class AttackManager : MonoBehaviour
 
                 if (equipWeaponIndex != -1 && itemInventory.isSlotChanged == false)
                 {
-                    objWeapon = weapons[equipWeaponIndex];
+                    equipWeaponGameobject = weapons[equipWeaponIndex].GetComponent<WeaponManager>();
 
-                    if (objWeapon.GetComponent<ItemData>().itemData.ItemType <= 10)
+                    if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 10)
                     {
-                        colliderWeapon = objWeapon.GetComponent<BoxCollider>();
-                        if (objWeapon.GetComponent<ItemData>().itemData.ItemType <= 3)
+                        colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
+                        if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 3)
                         {
                             movementStateManager.anim.SetBool(Armed, false);
                             movementStateManager.anim.SetLayerWeight(1, 0);
@@ -225,7 +254,7 @@ public class AttackManager : MonoBehaviour
 
                     Invoke("SwapOut", 0.3f);
                 }
-                else if (equipWeaponIndex == -1 && weaponInventory.isWeaponAdded == false )
+                else if (equipWeaponIndex == -1 && weaponInventory.isWeaponAdded == false)
                 {
                     Debug.Log("무기 칸 비어있음");
                     if (equipWeapon != null)
@@ -233,7 +262,6 @@ public class AttackManager : MonoBehaviour
                         RpcEquip(equipWeaponIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
-
                         Invoke("SwapOut", 0.3f);
                     }
 
@@ -243,7 +271,7 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetBool("THW", false);
                 }
             }             // 아이템 슬롯 스왑/습득 시 애니메이션 처리 
-            else if (Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3") || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5") || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
+            else if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
             {
                 equipItemIndex = -1;
 
@@ -252,7 +280,7 @@ public class AttackManager : MonoBehaviour
                 {
                     if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
                     {
-                        if(itemQuickSlots.GetComponent<Inventory>().slots[i].item != null)
+                        if (itemQuickSlots.GetComponent<Inventory>().slots[i].item != null)
                         {
                             for (int j = weapons.Length - 1; j >= 0; j--)
                             {
@@ -264,7 +292,7 @@ public class AttackManager : MonoBehaviour
                                     break;
                                 }
                             }
-                            if(isFound == true)
+                            if (isFound == true)
                             {
                                 break;
                             }
@@ -274,10 +302,10 @@ public class AttackManager : MonoBehaviour
                 itemInventory.isSlotChanged = false;
                 if (equipItemIndex != -1)
                 {
-                    objWeapon = weapons[equipItemIndex];
-                    if (objWeapon.GetComponent<ItemData>().itemData.ItemType > 10)
+                    equipWeaponGameobject = weapons[equipWeaponIndex].GetComponent<WeaponManager>();
+                    if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType > 10)
                     {
-                        colliderWeapon = objWeapon.GetComponent<BoxCollider>();
+                        colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
 
                         movementStateManager.anim.SetBool(Armed, false);
                         movementStateManager.anim.SetLayerWeight(2, 0);
@@ -293,14 +321,15 @@ public class AttackManager : MonoBehaviour
 
                     Invoke("SwapOut", 0.3f);
                 }
-                else if(equipItemIndex == -1)
+                else if (equipItemIndex == -1)
                 {
                     Debug.Log("아이템 칸 비어있음");
-                    if(equipWeapon != null)
+                    if (equipWeapon != null)
                     {
                         RpcEquip(equipItemIndex);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
+                        equipWeapon = null;
 
                         Invoke("SwapOut", 0.3f);
                     }
@@ -329,7 +358,6 @@ public class AttackManager : MonoBehaviour
 
             equipWeapon = weapons[RpcEquipWeaponIndex];
             equipWeapon.SetActive(true);
-
         }
     }
 
@@ -349,7 +377,6 @@ public class AttackManager : MonoBehaviour
     {   
         Debug.Log("doDamaged");
 
-        //movementStateManager.animation
         movementStateManager.anim.SetTrigger("doDamaged");
         Invoke("hitOut", 0.1f);
     }
