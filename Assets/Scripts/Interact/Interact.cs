@@ -24,7 +24,7 @@ public class Interact : MonoBehaviour
 
     //CheckBattery 함수를 위한 변수
     [SerializeField] int cntBattery;
-    [SerializeField] int needBattery = 3;
+    int needBattery = 0;
 
     private void Start()
     {
