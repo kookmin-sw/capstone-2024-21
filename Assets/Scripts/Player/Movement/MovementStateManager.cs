@@ -27,6 +27,7 @@ public class MovementStateManager : MonoBehaviour
     [SerializeField] float jumpForce = 3;
     [SerializeField] float gravity = -9.81f;
     public bool jumped;
+    public bool isJumpStart;
     Vector3 velocity;
 
     //
@@ -48,6 +49,8 @@ public class MovementStateManager : MonoBehaviour
 
     [HideInInspector] public Animator anim;
     [HideInInspector] public AttackManager attackManager;
+    [HideInInspector] public StaminaManager staminaManager;
+
     private UIManager uiManager;
 
     private PhotonView pv;
@@ -58,6 +61,7 @@ public class MovementStateManager : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
         attackManager = GetComponent<AttackManager>();
+        staminaManager = GetComponent<StaminaManager>();
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         SwitchState(Idle);
@@ -140,6 +144,7 @@ public class MovementStateManager : MonoBehaviour
 
     public void JumpForce(){
         velocity.y += jumpForce;
+        isJumpStart = true;
     } 
 
     public void Jumped() => jumped = true;

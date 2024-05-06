@@ -8,10 +8,8 @@ using Photon.Pun;
 public class StaminaManager : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private Slider staminaBar;
-    //[SerializeField] private Slider healthPointBar;
-    //[SerializeField] private TMP_Text healthPointCount;
-
+    public Slider staminaBar;
+    public float jumpValue = 20f;
     private MovementStateManager movement;
     private PhotonView pv;
     void Awake()
@@ -36,11 +34,15 @@ public class StaminaManager : MonoBehaviour
 
     void ManageStaminaBar()
     {
-        
+        if(movement.isJumpStart == true)
+        {
+            staminaBar.value -= jumpValue;
+            movement.isJumpStart = false;
+        }
         if (movement.currentState == movement.Run)
         {
             staminaBar.value -= 15f * Time.deltaTime;
-            if (staminaBar.value == 0)
+            if(staminaBar.value == 0)
             {
                 movement.Run.ExitState(movement, movement.Walk);
                 movement.currentState = movement.Walk;
