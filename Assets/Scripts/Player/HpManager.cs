@@ -73,7 +73,7 @@ public class HpManager : MonoBehaviour
             }
         }
     }
-    public void OnDamage(float damage, KillManager killManager)    
+    public void OnDamage(float damage, KillManager killManager)
     {
         Debug.Log("OnDamage는 실행됨");
         pv.RPC("RpcOnDamage", RpcTarget.Others, damage, killManager);

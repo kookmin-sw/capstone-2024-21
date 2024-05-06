@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.11922146, g: 0.11922146, b: 0.11922146, a: 1}
+  m_IndirectSpecularColor: {r: 0.119178645, g: 0.119178645, b: 0.119178645, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9541,11 +9541,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61b295be850846c390e2e2aaa17688b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   image_F: {fileID: 673319136}
   circleGaugeControler: {fileID: 673319135}
   quicSlot: {fileID: 673319133}
   WeaponQuickslot: {fileID: 673319134}
   isInvetigating: 0
+  cntBattery: 0
+  needBattery: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
