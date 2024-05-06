@@ -28,7 +28,7 @@ public class WeaponManager : MonoBehaviour
                 Enemy.OnDamaged();
 
                 Debug.Log("Hit : " + damage);
-                hpManager.OnDamage(damage);
+                hpManager.OnDamage(damage, killManager);
             }    
         }
     }
