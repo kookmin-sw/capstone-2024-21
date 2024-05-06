@@ -9541,11 +9541,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61b295be850846c390e2e2aaa17688b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   image_F: {fileID: 673319136}
   circleGaugeControler: {fileID: 673319135}
   quicSlot: {fileID: 673319133}
   WeaponQuickslot: {fileID: 673319134}
   isInvetigating: 0
+  isExiting: 0
+  cntBattery: 0
+  needBattery: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

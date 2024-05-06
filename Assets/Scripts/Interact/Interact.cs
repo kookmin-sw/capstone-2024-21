@@ -16,7 +16,7 @@ public class Interact : MonoBehaviour
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
 
-    [HideInInspector] public Animator anim;
+    //[HideInInspector] public Animator anim;
 
 
     RaycastHit hit;
@@ -38,7 +38,7 @@ public class Interact : MonoBehaviour
         circleGaugeControler = canvas.Find("GaugeController").gameObject; 
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
 }
 
     void Update()
@@ -93,8 +93,8 @@ public class Interact : MonoBehaviour
                     Debug.Log("Exit 문 상호작용 ");
                     if (CheckBattery()) {
                         isExiting = true;
-                        anim.SetLayerWeight(7,1); // 애니메이션 실행
-                        anim.SetTrigger("Working");
+                        //anim.SetLayerWeight(7,1); // 애니메이션 실행
+                        //anim.SetTrigger("Working");
                     }
                 }
 
@@ -175,9 +175,9 @@ public class Interact : MonoBehaviour
                 //수색종료
                 Tmp();
                 isExiting = false; 
-                circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
+                //circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
             }
-            anim.SetLayerWeight(7,1);
+            //anim.SetLayerWeight(7,1);
         }
 
     }

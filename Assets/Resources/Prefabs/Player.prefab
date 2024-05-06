@@ -5126,6 +5126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46bc3ae85afe9c749829f736239df019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interact: {fileID: 0}
+  isExiting: 0
   xAxis: 0
   zAxis: 0
   moveDir: {x: 0, y: 0, z: 0}

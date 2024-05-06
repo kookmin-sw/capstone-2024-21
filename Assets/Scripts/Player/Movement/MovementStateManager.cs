@@ -6,6 +6,10 @@ using Photon.Pun.UtilityScripts;
 
 public class MovementStateManager : MonoBehaviour
 {
+    [SerializeField] Interact interact;
+    [SerializeField] bool isExiting = false;
+
+
     [HideInInspector] public float xAxis; // 좌, 우
     [HideInInspector] public float zAxis; // 앞, 뒤
 
@@ -57,6 +61,8 @@ public class MovementStateManager : MonoBehaviour
 
     void Start()
     {
+        interact = GameObject.Find("Virtual Camera").GetComponent<Interact>();
+
         pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
@@ -105,6 +111,12 @@ public class MovementStateManager : MonoBehaviour
                 attackManager.Attack();
             }
             attackManager.RpcSwap();
+
+            if (interact.isExiting)
+            {
+                isExiting = interact.isExiting;
+                anim.SetBool("Exiting", isExiting);
+            }
         }
     }
 
