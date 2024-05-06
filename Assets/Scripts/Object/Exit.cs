@@ -5,71 +5,68 @@ using Photon.Pun;
 
 public class Exit : MonoBehaviour
 {
-    public bool open = false;
-    public float smoot = 0.1f;
-    
-
-    private Vector3 localPositoin = transform.position;
-    private Vector3 offset = new Vector3(0, 5f, 0);
+    [SerializeField] private bool open = false;
+    private Vector3 localPositoin;
+    private float offset = 2f;
+    private float speed = 1.3f;
 
     public PhotonView pv;
 
     private void Start()
     {
+        localPositoin = transform.position;
+
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
     }
 
-    public IEnumerator OpenDoor(Transform obsTransform)
+    private IEnumerator ExitOpenDoor(Transform obsTransform)
     {
         Debug.Log("Exit OpenDoor() 코루틴 실행됨 ");
-        //float timecnt = 0.0f;
 
-        while (open && Quaternion.Angle(obsTransform.rotation, Quaternion.Euler(OpenDoorAngle)) > 0)  //문이 열려야하고 두사이각이 0보다 큰 경우 실행
+
+        Debug.Log("localPositoin :"+ localPositoin);
+        while (transform.position.y < localPositoin.y + offset)
+        {
+            //Debug.Log(transform.position.y);
+            yield return null;
+            obsTransform.Translate( Vector3.forward * speed * Time.deltaTime);
+        }
+        Debug.Log("localPositoin :" + transform.position);
+    }
+
+    private IEnumerator ExitCloseDoor(Transform obsTransform)
+    {
+        Debug.Log("Exit OpenDoor() 코루틴 실행됨 ");
+
+        while (transform.position.y > localPositoin.y)
         {
             yield return null;
-            //Debug.Log("open while문 실행");
-            obsTransform.rotation = Quaternion.Slerp(obsTransform.rotation, Quaternion.Euler(OpenDoorAngle), smoot);
-            //timecnt += Time.deltaTime;
-        }
-
-    }
-
-    public IEnumerator CloseDoor(Transform obsTransform)
-    {
-
-        Debug.Log("Exit CloseDoor() 코루틴 실행됨 ");
-        float timecnt = 0.0f;
-
-        while (!open && Quaternion.Angle(obsTransform.rotation, Quaternion.Euler(CloseDoorAngle)) > 0) //문이 닫혀야 하고 두사이각이 0보다 큰 경우 실행
-        {
-            yield return null; //yield return을 만나는 순간마다 다음 구문이 실행되는 프레임으로 나뉘게 됨 
-            //Debug.Log("Close while문 실행");
-            obsTransform.rotation = Quaternion.Slerp(obsTransform.rotation, Quaternion.Euler(CloseDoorAngle), smoot);
-            timecnt += Time.deltaTime;
+            obsTransform.Translate(Vector3.down * speed * Time.deltaTime);
         }
     }
+
 
 
     [PunRPC]
-    public void ChangeDoorState()
+    public void ChangeExitDoorState()
     {
         open = !open;
 
         if (open)
         {
-            StartCoroutine(OpenDoor(transform));
+            StartCoroutine(ExitOpenDoor(transform));
         }
         else
         {
-            StartCoroutine(CloseDoor(transform));
+            StartCoroutine(ExitCloseDoor(transform));
         }
 
     }
 
-    public void ChangeDoorStateRPC()
+    public void ChangeExitDoorStateRPC()
     {
-        pv.RPC("ChangeDoorState", RpcTarget.AllBuffered);
+        pv.RPC("ChangeExitDoorState", RpcTarget.AllBuffered);
     }
 
 }
