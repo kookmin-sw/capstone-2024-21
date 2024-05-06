@@ -361,7 +361,7 @@ public class AttackManager : MonoBehaviour
     }
 
     public void RpcEquip(int RpcEquipWeaponIndex){
-        pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+        pv.RPC("RPCWeaponEquip", RpcTarget.AllBuffered, RpcEquipWeaponIndex);
     }
 
     public void RpcSwap()
