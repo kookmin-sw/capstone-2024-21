@@ -39,7 +39,7 @@ public class AttackManager : MonoBehaviour
     [HideInInspector] public WeaponManager weaponManager; 
     private PhotonView pv;
     
-    void Start(){
+    void Awake(){
         pv = GetComponent<PhotonView>();
         itemQuickSlots = GameObject.Find("ItemQuickSlots");
         weaponQuickSlot = GameObject.Find("WeaponSlot");
