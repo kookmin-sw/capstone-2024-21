@@ -245,7 +245,6 @@ public class AttackManager : MonoBehaviour
 
                         }
                     }
-
                     RpcEquip(equipWeaponIndex);
 
                     movementStateManager.anim.SetTrigger("doSwap");
@@ -274,18 +273,17 @@ public class AttackManager : MonoBehaviour
             else if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
             {
                 equipItemIndex = -1;
-
                 bool isFound = false;
                 for (int i = 0; i < 4; i++)
                 {
                     if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
-                    {
+                    {   
                         if (itemQuickSlots.GetComponent<Inventory>().slots[i].item != null)
                         {
                             for (int j = weapons.Length - 1; j >= 0; j--)
                             {
                                 if (itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemType == weapons[j].GetComponent<ItemData>().itemData.ItemType)
-                                {
+                                {   
                                     equipItemIndex = j;
                                     itemInventory.isItemAdded = false;
                                     isFound = true;
@@ -302,7 +300,8 @@ public class AttackManager : MonoBehaviour
                 itemInventory.isSlotChanged = false;
                 if (equipItemIndex != -1)
                 {
-                    equipWeaponGameobject = weapons[equipWeaponIndex].GetComponent<WeaponManager>();
+                    equipWeaponGameobject = weapons[equipItemIndex].GetComponent<WeaponManager>();
+                    Debug.Log(equipWeaponGameobject);
                     if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType > 10)
                     {
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
@@ -362,7 +361,7 @@ public class AttackManager : MonoBehaviour
     }
 
     public void RpcEquip(int RpcEquipWeaponIndex){
-        pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+        pv.RPC("RPCWeaponEquip", RpcTarget.AllBuffered, RpcEquipWeaponIndex);
     }
 
     public void RpcSwap()
@@ -372,12 +371,15 @@ public class AttackManager : MonoBehaviour
 
     void hitOut(){
         movementStateManager.anim.SetTrigger("HitOut");
+        movementStateManager.anim.SetLayerWeight(6, 0);
     }
     public void OnDamaged()
     {   
         Debug.Log("doDamaged");
 
+        movementStateManager.anim.SetLayerWeight(6, 1);
         movementStateManager.anim.SetTrigger("doDamaged");
-        Invoke("hitOut", 0.1f);
+        
+        Invoke("hitOut", 1.16f);
     }
 }
