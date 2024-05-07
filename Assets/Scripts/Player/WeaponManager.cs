@@ -8,7 +8,7 @@ public class WeaponManager : MonoBehaviour
     public Type type;
     public int damage;
     public float rate;
-    public BoxCollider meleeArea;
+    [SerializeField] public BoxCollider meleeArea;
     [HideInInspector] public AttackManager attackManager;
 
     public void Use(){
