@@ -188,7 +188,7 @@ public class Interact : MonoBehaviour
 
     bool CheckBattery()
     {
-        //현재 가지고 있는 배터리 갯수 확
+        //현재 가지고 있는 배터리 갯수 확인
         cntBattery = 0;
         for (int i = 0; i < quicSlot.items.Count; i++)
         {

@@ -84,27 +84,27 @@ public class AttackManager : MonoBehaviour
     }
 
     // 무기 장착 시와 비 장착시 공격 시작(collider on)
-    public void AttackStart(){      
-        if(Armed != "") {
-            Debug.Log("WeapColl On");
-            colliderWeapon.enabled = true;
-        }
-        else {
-            Debug.Log("HandColl On");
-            colliderHand.enabled = true;
-        }
-    }
+        // public void AttackStart(){      
+        //     if(Armed != "") {
+        //         Debug.Log("WeapColl On");
+        //         colliderWeapon.enabled = true;
+        //     }
+        //     else {
+        //         Debug.Log("HandColl On");
+        //         colliderHand.enabled = true;
+        //     }
+        // }
 
-    // 무기 장착 시와 비 장착시 공격 끝(collider off)
-    public void AttackEnd(){
-        Debug.Log("coll Off");
-        if(Armed != "") {
-            colliderWeapon.enabled = false;
-        }
-        else {
-            colliderHand.enabled = false;
-        }
-    }
+        // // 무기 장착 시와 비 장착시 공격 끝(collider off)
+        // public void AttackEnd(){
+        //     Debug.Log("coll Off");
+        //     if(Armed != "") {
+        //         colliderWeapon.enabled = false;
+        //     }
+        //     else {
+        //         colliderHand.enabled = false;
+        //     }
+        // }
 
     // 공격 시작
     public void AttackIn(){
@@ -361,7 +361,7 @@ public class AttackManager : MonoBehaviour
     }
 
     public void RpcEquip(int RpcEquipWeaponIndex){
-        pv.RPC("RPCWeaponEquip", RpcTarget.AllBuffered, RpcEquipWeaponIndex);
+        pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
     }
 
     public void RpcSwap()

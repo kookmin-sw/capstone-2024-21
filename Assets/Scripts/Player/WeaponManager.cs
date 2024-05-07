@@ -24,7 +24,8 @@ public class WeaponManager : MonoBehaviour
             attackManager = GetComponent<AttackManager>();
             if (Enemy != null) {
                 Enemy.OnDamaged();
-
+                meleeArea.enabled = false;
+                    
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage);
             }    

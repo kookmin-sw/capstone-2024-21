@@ -116,6 +116,8 @@ public class MovementStateManager : MonoBehaviour
             {
                 isExiting = interact.isExiting;
                 anim.SetBool("Exiting", isExiting);
+                interact.isExiting = false;
+                isExiting = interact.isExiting;
             }
         }
     }
