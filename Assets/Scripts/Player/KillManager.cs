@@ -1,16 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class KillManager : MonoBehaviour
 {
-
+    public string playerId;
     public int killCount { get; set; } = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private PhotonView pv;
 
+    // Start is called before the first frame update
+    void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+
+    private void Start()
+    {
+        if (pv.IsMine)
+        {
+            playerId = GameManager.Instance.UserId;
+        }
     }
 
     public void AddKillCount()
