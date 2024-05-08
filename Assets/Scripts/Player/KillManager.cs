@@ -40,12 +40,12 @@ public class KillManager : MonoBehaviour
     public void RpcAddKillCount()
     {
         killCount += 1;
+        Debug.Log("Kill Count: " + killCount);
     }
 
     public void AddKillCount()
     {
-        pv.RPC("RpcAddKillCount", RpcTarget.All);
-        Debug.Log("Kill Count: " + killCount);
+        pv.RPC("RpcAddKillCount", RpcTarget.Others);
     }
 
     // Update is called once per frame
