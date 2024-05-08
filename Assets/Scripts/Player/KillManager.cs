@@ -21,13 +21,30 @@ public class KillManager : MonoBehaviour
         if (pv.IsMine)
         {
             playerId = GameManager.Instance.UserId;
-            this.name = playerId;
+            Rename(playerId);
         }
+    }
+
+    [PunRPC]
+    public void RpcRename(string playerId)
+    {
+        this.name = playerId;
+    }
+
+    public void Rename(string playerId)
+    {
+        pv.RPC("RpcOnRename", RpcTarget.All, playerId);
+    }
+
+    [PunRPC]
+    public void RpcAddKillCount()
+    {
+        killCount += 1;
     }
 
     public void AddKillCount()
     {
-        killCount += 1;
+        pv.RPC("RpcAddKillCount", RpcTarget.All, playerId);
         Debug.Log("Kill Count: " + killCount);
     }
 
