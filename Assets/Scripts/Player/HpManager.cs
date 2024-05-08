@@ -121,6 +121,9 @@ public class HpManager : MonoBehaviour
     // 사망 함수
     public void Die()
     {
-        pv.RPC("RpcDie", RpcTarget.All);
+        if (pv.IsMine)
+        {
+            pv.RPC("RpcDie", RpcTarget.All);
+        }
     }
 }
