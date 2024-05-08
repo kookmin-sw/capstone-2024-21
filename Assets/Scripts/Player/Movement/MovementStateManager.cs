@@ -6,6 +6,10 @@ using Photon.Pun.UtilityScripts;
 
 public class MovementStateManager : MonoBehaviour
 {
+    [SerializeField] Interact interact;
+    [SerializeField] bool isExiting = false;
+    [SerializeField] bool wasExiting = false;
+
     [HideInInspector] public float xAxis; // 좌, 우
     [HideInInspector] public float zAxis; // 앞, 뒤
 
@@ -50,6 +54,7 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public Animator anim;
     [HideInInspector] public AttackManager attackManager;
     [HideInInspector] public StaminaManager staminaManager;
+    public KillManager killManager;
 
     private UIManager uiManager;
 
@@ -57,6 +62,8 @@ public class MovementStateManager : MonoBehaviour
 
     void Start()
     {
+        interact = GameObject.Find("Virtual Camera").GetComponent<Interact>();
+
         pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
@@ -105,8 +112,29 @@ public class MovementStateManager : MonoBehaviour
                 attackManager.Attack();
             }
             attackManager.RpcSwap();
+
+            ExitState();
         }
     }
+
+    void ExitState(){   
+        if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
+            {   
+                anim.SetLayerWeight(7,1);
+                wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
+                Debug.Log(wasExiting);
+                anim.SetTrigger("Exiting");
+                
+            }
+        else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting)){
+                anim.SetTrigger("Cancel");
+                anim.SetLayerWeight(7,0);
+                wasExiting = false;
+                Debug.Log(wasExiting);
+            }
+        isExiting = interact.isExiting;
+    }
+
 
     public void SwitchState(MovementBaseState state)
     {
@@ -146,6 +174,14 @@ public class MovementStateManager : MonoBehaviour
         velocity.y += jumpForce;
         isJumpStart = true;
     } 
+
+    public void OpenExitDoor(){
+        anim.SetLayerWeight(7,1);
+        anim.SetTrigger("Working");
+    }
+    public void EndExitDoor(){
+        anim.SetLayerWeight(7,1);
+    }
 
     public void Jumped() => jumped = true;
     

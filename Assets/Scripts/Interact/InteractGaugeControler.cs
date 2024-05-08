@@ -11,6 +11,7 @@ public class InteractGaugeControler : MonoBehaviour
 
     private float GaugeTimer;
     [SerializeField] private float interactGaugeFillSpeed = 4.0f;
+    [SerializeField] private float ExitGaugeFillSpeed = 1.6f;
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class InteractGaugeControler : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void EnableInvestinGaugeUI()
+    public void DisableInvestinGaugeUI()
     {
         gameObject.SetActive(false);
     }
@@ -45,6 +46,26 @@ public class InteractGaugeControler : MonoBehaviour
         InteractGuageImage.gameObject.SetActive(true);
 
         GaugeTimer += interactGaugeFillSpeed / 10.0f * Time.deltaTime;
+
+        if (GaugeTimer >= 1)
+        {
+            GaugeTimer = 0;
+            InteractGuageImage.gameObject.SetActive(false);
+            return true; //수색을 성공적으로 마침
+        }
+
+        return false; // 수색에 실패함
+    }
+
+    
+    public bool ExitFillCircle()
+    {
+        Debug.Log("ExitFillCircle 실행");
+
+        InteractGuageImage.fillAmount = GaugeTimer;
+        InteractGuageImage.gameObject.SetActive(true);
+
+        GaugeTimer += ExitGaugeFillSpeed / 10.0f * Time.deltaTime;
 
         if (GaugeTimer >= 1)
         {

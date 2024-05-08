@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,11 @@ public class Interact : MonoBehaviour
     public WeaponInventory WeaponQuickslot;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
+    public bool isExiting = false;
+    public string playerId;
+    Vector3 PlayerMoveDir;
+
+    //[HideInInspector] public Animator anim;
 
 
     RaycastHit hit;
@@ -24,7 +30,7 @@ public class Interact : MonoBehaviour
 
     //CheckBattery 함수를 위한 변수
     [SerializeField] int cntBattery;
-    [SerializeField] int needBattery = 3;
+    [SerializeField] int needBattery = 0;
 
     private void Start()
     {
@@ -35,6 +41,7 @@ public class Interact : MonoBehaviour
         circleGaugeControler = canvas.Find("GaugeController").gameObject; 
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+        //anim = GetComponent<Animator>();
 }
 
     void Update()
@@ -60,6 +67,7 @@ public class Interact : MonoBehaviour
             {
                 if (selectedTarget)
                 {
+                    isExiting = false;
                     removeOutline(selectedTarget);
                     clearTarget(selectedTarget);
                     image_F.GetComponent<UIpressF>().remove_image();
@@ -74,7 +82,7 @@ public class Interact : MonoBehaviour
                 {
                     Debug.Log("문 상호작용 ");
                     if (selectedTarget.GetComponent<DoorRight>())
-                    {
+                    {   
                         selectedTarget.GetComponent<DoorRight>().ChangeDoorStateRPC();
                     }
                     else
@@ -85,9 +93,11 @@ public class Interact : MonoBehaviour
                 }
 
                 if (selectedTarget.CompareTag("Exit"))
-                {
+                {   
                     Debug.Log("Exit 문 상호작용 ");
-                    CheckBattery();
+                    FindMovedir();
+                    if(PlayerMoveDir.magnitude < 0.1f && CheckBattery())
+                        isExiting = true;
                 }
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
@@ -157,15 +167,31 @@ public class Interact : MonoBehaviour
 
                 //수색종료
                 isInvetigating = false; 
-                circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
+                circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
+            }
+        }
+        else if (isExiting)
+        {
+            if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
+            {
+                //수색종료
+                Tmp();
             }
         }
 
     }
 
-    void CheckBattery()
+    public void FindMovedir()
     {
-        //현재 가지고 있는 배터리 갯수 확
+        playerId = GameManager.Instance.UserId;
+        GameObject obj = GameObject.Find(playerId);
+        MovementStateManager movement = obj.GetComponent<MovementStateManager>();
+        PlayerMoveDir = movement.moveDir;
+    }
+
+    bool CheckBattery()
+    {
+        //현재 가지고 있는 배터리 갯수 확인
         cntBattery = 0;
         for (int i = 0; i < quicSlot.items.Count; i++)
         {
@@ -177,39 +203,46 @@ public class Interact : MonoBehaviour
         }
         Debug.Log("현재 소지한 배터리 갯수 : " + cntBattery);
 
-        //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
         if (cntBattery >= needBattery)
         {
-            Debug.Log("배터리 충분. ");
-            if (selectedTarget.GetComponent<Exit>())
-            {
-                selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
-            }
-
-            //사용한 배터리 삭제
-            cntBattery = 0;
-            int idx = 0;
-
-            while (cntBattery < needBattery) 
-            {
-                Debug.Log("idx : " + idx);
-                if (quicSlot.items[idx] && quicSlot.items[idx].itemName == "battery")
-                {
-                    Debug.Log("hit");
-                    quicSlot.slots[idx].item =null;
-
-                    cntBattery++;
-                }
-                idx++;
-            }
-            quicSlot.FreshSlot();
-            Debug.Log("배터리를 사용해서 문을 열였습니다.");
-
+            return true;
         }
         else
-        {
+        {   
             Debug.Log("배터리가 부족합니다.");
+            return false;
         }
+    }
+
+    void Tmp()
+    {
+        //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
+
+        Debug.Log("배터리 충분. ");
+        if (selectedTarget.GetComponent<Exit>())
+        {
+            selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+        }
+
+        //사용한 배터리 삭제
+        cntBattery = 0;
+        int idx = 0;
+
+        while (cntBattery < needBattery)
+        {
+            Debug.Log("idx : " + idx);
+            if (quicSlot.items[idx] && quicSlot.items[idx].itemName == "battery")
+            {
+                Debug.Log("hit");
+                quicSlot.slots[idx].item = null;
+
+                cntBattery++;
+            }
+            idx++;
+        }
+        quicSlot.FreshSlot();
+        isExiting = false; 
+        Debug.Log("배터리를 사용해서 문을 열였습니다.");
     }
 
 
@@ -223,7 +256,7 @@ public class Interact : MonoBehaviour
 
 
         isInvetigating = false; //수색중이라면 취소하고
-        circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
+        circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI(); //게이지UI끄기 
 
     }
 
