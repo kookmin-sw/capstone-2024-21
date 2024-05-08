@@ -8,7 +8,7 @@ public class MovementStateManager : MonoBehaviour
 {
     [SerializeField] Interact interact;
     [SerializeField] bool isExiting = false;
-
+    bool wasExiting = false;
 
     [HideInInspector] public float xAxis; // 좌, 우
     [HideInInspector] public float zAxis; // 앞, 뒤
@@ -112,14 +112,25 @@ public class MovementStateManager : MonoBehaviour
             }
             attackManager.RpcSwap();
 
-            if (interact.isExiting)
-            {
-                isExiting = interact.isExiting;
-                anim.SetBool("Exiting", isExiting);
-                interact.isExiting = false;
-                isExiting = interact.isExiting;
-            }
+            ExitState();
         }
+    }
+
+    void ExitState(){
+        if (!wasExiting && interact.isExiting)
+            {   
+                anim.SetLayerWeight(7,1);
+                wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
+                isExiting = interact.isExiting;
+                anim.SetTrigger("Exiting");
+                interact.isExiting = false;
+            }
+            else if(wasExiting && moveDir.magnitude > 0.1f){
+                isExiting = interact.isExiting;
+                anim.SetTrigger("Cancel");
+                anim.SetLayerWeight(7,0);
+                interact.isExiting = false;
+            }
     }
 
     public void SwitchState(MovementBaseState state)

@@ -83,29 +83,6 @@ public class AttackManager : MonoBehaviour
         else movementStateManager.anim.SetBool("Attack", false); // 애니메이션 트리거
     }
 
-    // 무기 장착 시와 비 장착시 공격 시작(collider on)
-        // public void AttackStart(){      
-        //     if(Armed != "") {
-        //         Debug.Log("WeapColl On");
-        //         colliderWeapon.enabled = true;
-        //     }
-        //     else {
-        //         Debug.Log("HandColl On");
-        //         colliderHand.enabled = true;
-        //     }
-        // }
-
-        // // 무기 장착 시와 비 장착시 공격 끝(collider off)
-        // public void AttackEnd(){
-        //     Debug.Log("coll Off");
-        //     if(Armed != "") {
-        //         colliderWeapon.enabled = false;
-        //     }
-        //     else {
-        //         colliderHand.enabled = false;
-        //     }
-        // }
-
     // 공격 시작
     public void AttackIn(){
         isAttack = true;
