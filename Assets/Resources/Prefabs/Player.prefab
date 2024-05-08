@@ -5155,6 +5155,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   attackManager: {fileID: 0}
   staminaManager: {fileID: 0}
+  killManager: {fileID: 0}
 --- !u!143 &8050459515468456632
 CharacterController:
   m_ObjectHideFlags: 0

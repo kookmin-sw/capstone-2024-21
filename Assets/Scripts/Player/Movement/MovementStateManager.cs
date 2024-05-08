@@ -54,6 +54,7 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public Animator anim;
     [HideInInspector] public AttackManager attackManager;
     [HideInInspector] public StaminaManager staminaManager;
+    public KillManager killManager;
 
     private UIManager uiManager;
 
@@ -117,7 +118,7 @@ public class MovementStateManager : MonoBehaviour
     }
 
     void ExitState(){   
-        if (!wasExiting && interact.isExiting && moveDir.magnitude < -0.1f) 
+        if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
             {   
                 anim.SetLayerWeight(7,1);
                 wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정

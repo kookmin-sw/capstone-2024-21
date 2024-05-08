@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,6 +16,8 @@ public class Interact : MonoBehaviour
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
+    public string playerId;
+    Vector3 PlayerMoveDir;
 
     //[HideInInspector] public Animator anim;
 
@@ -92,11 +95,9 @@ public class Interact : MonoBehaviour
                 if (selectedTarget.CompareTag("Exit"))
                 {   
                     Debug.Log("Exit 문 상호작용 ");
-                    if (CheckBattery()) {
+                    FindMovedir();
+                    if(PlayerMoveDir.magnitude < 0.1f && CheckBattery())
                         isExiting = true;
-                        //anim.SetLayerWeight(7,1); // 애니메이션 실행
-                        //anim.SetTrigger("Working");
-                    }
                 }
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
@@ -175,16 +176,17 @@ public class Interact : MonoBehaviour
             {
                 //수색종료
                 Tmp();
-                
-                //circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
             }
-            //anim.SetLayerWeight(7,1);
         }
 
     }
 
-    bool DoorOpen(){
-        return true;
+    public void FindMovedir()
+    {
+        playerId = GameManager.Instance.UserId;
+        GameObject obj = GameObject.Find(playerId);
+        MovementStateManager movement = obj.GetComponent<MovementStateManager>();
+        PlayerMoveDir = movement.moveDir;
     }
 
     bool CheckBattery()
