@@ -5128,6 +5128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interact: {fileID: 0}
   isExiting: 0
+  wasExiting: 0
   xAxis: 0
   zAxis: 0
   moveDir: {x: 0, y: 0, z: 0}

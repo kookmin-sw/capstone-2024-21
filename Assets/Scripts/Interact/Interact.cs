@@ -64,6 +64,7 @@ public class Interact : MonoBehaviour
             {
                 if (selectedTarget)
                 {
+                    isExiting = false;
                     removeOutline(selectedTarget);
                     clearTarget(selectedTarget);
                     image_F.GetComponent<UIpressF>().remove_image();
@@ -174,7 +175,7 @@ public class Interact : MonoBehaviour
             {
                 //수색종료
                 Tmp();
-                isExiting = false; 
+                
                 //circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
             }
             //anim.SetLayerWeight(7,1);
@@ -238,6 +239,7 @@ public class Interact : MonoBehaviour
             idx++;
         }
         quicSlot.FreshSlot();
+        isExiting = false; 
         Debug.Log("배터리를 사용해서 문을 열였습니다.");
     }
 
