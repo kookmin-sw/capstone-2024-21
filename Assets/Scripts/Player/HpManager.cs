@@ -76,6 +76,7 @@ public class HpManager : MonoBehaviour
             if (hp <= 0 && !isDead)
             {
                 Debug.Log("나를 죽인 사람: " + playerId);
+                AddKillCount(playerId);
                 Die();
             }
         }
