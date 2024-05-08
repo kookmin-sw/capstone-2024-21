@@ -45,7 +45,7 @@ public class KillManager : MonoBehaviour
 
     public void AddKillCount()
     {
-        pv.RPC("RpcAddKillCount", RpcTarget.Others);
+        pv.RPC("RpcAddKillCount", RpcTarget.All);
     }
 
     // Update is called once per frame

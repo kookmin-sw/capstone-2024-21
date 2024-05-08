@@ -103,8 +103,8 @@ public class HpManager : MonoBehaviour
         }
     }
 
-    // 사망 함수
-    public void Die()
+    [PunRPC]
+    public void RpcDie()
     {
         Debug.Log("사망");
         // 사망 이벤트 있으면 실행
@@ -116,5 +116,11 @@ public class HpManager : MonoBehaviour
         gameObject.SetActive(false);
         uiManager.isGameOver = true;
         uiManager.isUIActivate = true;
+    }
+
+    // 사망 함수
+    public void Die()
+    {
+        pv.RPC("RpcDie", RpcTarget.All);
     }
 }
