@@ -49,6 +49,13 @@ public class HpManager : MonoBehaviour
     //     isDead = newIsDead;
     // }
 
+    public void AddKillCount(string playerId)
+    {
+        GameObject obj = GameObject.Find(playerId);
+        KillManager killer = obj.GetComponent<KillManager>();
+        killer.AddKillCount();
+    }
+
     // 데미지 처리하는 함수
     [PunRPC]
     public void RpcOnDamage(float damage, string playerId)

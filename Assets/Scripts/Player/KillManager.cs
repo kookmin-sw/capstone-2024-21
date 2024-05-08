@@ -21,6 +21,7 @@ public class KillManager : MonoBehaviour
         if (pv.IsMine)
         {
             playerId = GameManager.Instance.UserId;
+            this.name = playerId;
         }
     }
 
