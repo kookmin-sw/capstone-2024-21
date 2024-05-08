@@ -11,6 +11,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] public BoxCollider meleeArea;
     [HideInInspector] public AttackManager attackManager;
 
+    public KillManager killManager;
+
     public void Use(){
         if(type == Type.Melee){
             StartCoroutine("Swing");
@@ -27,7 +29,7 @@ public class WeaponManager : MonoBehaviour
                 meleeArea.enabled = false;
                     
                 Debug.Log("Hit : " + damage);
-                hpManager.OnDamage(damage);
+                hpManager.OnDamage(damage, killManager.playerId);
             }    
         }
     }

@@ -5017,6 +5017,7 @@ GameObject:
   - component: {fileID: 5885699318320276508}
   - component: {fileID: 2338498939151246857}
   - component: {fileID: 1121426347387241336}
+  - component: {fileID: 2071272907111481895}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5277,6 +5278,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: HitOut
+  - Type: 9
+    SynchronizeType: 0
+    Name: Pill
+  - Type: 9
+    SynchronizeType: 0
+    Name: Working
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -5292,6 +5299,10 @@ MonoBehaviour:
     LayerIndex: 5
   - SynchronizeType: 1
     LayerIndex: 6
+  - SynchronizeType: 0
+    LayerIndex: 7
+  - SynchronizeType: 0
+    LayerIndex: 8
 --- !u!114 &5885699318320276508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5359,6 +5370,19 @@ MonoBehaviour:
   movementStateManager: {fileID: 0}
   attackManager: {fileID: 0}
   weaponManager: {fileID: 0}
+--- !u!114 &2071272907111481895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427532538760597786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e2d841e3d5f7f478cfb40987d973f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 
 --- !u!1 &486837474902890276
 GameObject:
   m_ObjectHideFlags: 0
@@ -10215,6 +10239,7 @@ GameObject:
   - component: {fileID: 5652718622679295216}
   - component: {fileID: 5032333518691643225}
   - component: {fileID: 7037668277888386467}
+  - component: {fileID: 5673116772213378469}
   m_Layer: 0
   m_Name: Heavy Wrench 01
   m_TagString: Weapon
@@ -10345,6 +10370,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7517124, y: 0.8907965, z: 0.2594621}
   m_Center: {x: -0.17149952, y: 1.0024598, z: 0.0000026845057}
+--- !u!114 &5673116772213378469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546357139680069383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 15
+  rate: 0
+  meleeArea: {fileID: 7037668277888386467}
+  attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &552755411695636314
 GameObject:
   m_ObjectHideFlags: 0
@@ -10487,6 +10530,7 @@ GameObject:
   - component: {fileID: 6275451062583319282}
   - component: {fileID: 2369772172463849296}
   - component: {fileID: 6533936314835178008}
+  - component: {fileID: 5848609979442850732}
   m_Layer: 0
   m_Name: Shovel 01
   m_TagString: Weapon
@@ -10619,6 +10663,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8038171, y: 1.1021066, z: 0.18095428}
   m_Center: {x: -0.0000026455175, y: 2.0178485, z: 0.023037935}
+--- !u!114 &5848609979442850732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893028442165390518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 13
+  rate: 0
+  meleeArea: {fileID: 6533936314835178008}
+  attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &909471981896714675
 GameObject:
   m_ObjectHideFlags: 0
@@ -10812,6 +10874,7 @@ GameObject:
   - component: {fileID: 500425260327091859}
   - component: {fileID: 5692818871515642127}
   - component: {fileID: 530685730081464450}
+  - component: {fileID: 5826507108131513954}
   m_Layer: 0
   m_Name: Tactical Knife 01
   m_TagString: Weapon
@@ -10942,6 +11005,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.43403473, y: 0.9756308, z: 0.11680862}
   m_Center: {x: 0.040797625, y: 1.0002377, z: -0.00000042852326}
+--- !u!114 &5826507108131513954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171927611567419732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 12
+  rate: 0
+  meleeArea: {fileID: 530685730081464450}
+  attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &1234659474313482950
 GameObject:
   m_ObjectHideFlags: 0
@@ -25941,8 +26022,9 @@ MonoBehaviour:
   type: 0
   damage: 18
   rate: 0
-  meleeArea: {fileID: 0}
+  meleeArea: {fileID: 1803669778647655008}
   attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!65 &1803669778647655008
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26037,6 +26119,7 @@ GameObject:
   - component: {fileID: 2750931192928597350}
   - component: {fileID: 9130144126251755781}
   - component: {fileID: 6706275408852877554}
+  - component: {fileID: 7542898009922577053}
   m_Layer: 0
   m_Name: Crowbar 01
   m_TagString: Weapon
@@ -26167,6 +26250,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9494202, y: 1.5148305, z: 0.27307522}
   m_Center: {x: -0.24028367, y: 1.6470647, z: 0.017803362}
+--- !u!114 &7542898009922577053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367854020509431975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 17
+  rate: 0
+  meleeArea: {fileID: 6706275408852877554}
+  attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &2440832649462614495
 GameObject:
   m_ObjectHideFlags: 0
@@ -36931,10 +37032,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 0
+  damage: 10
   rate: 0
-  meleeArea: {fileID: 0}
+  meleeArea: {fileID: 7025279090861752861}
   attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &4271635742091733020
 GameObject:
   m_ObjectHideFlags: 0
@@ -42249,8 +42351,9 @@ MonoBehaviour:
   type: 0
   damage: 20
   rate: 0
-  meleeArea: {fileID: 0}
+  meleeArea: {fileID: 1522295618171812483}
   attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!65 &1522295618171812483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42366,6 +42469,7 @@ GameObject:
   - component: {fileID: 5094893760970310484}
   - component: {fileID: 4348089535153823190}
   - component: {fileID: 4733072929402936386}
+  - component: {fileID: 9077706731876035749}
   m_Layer: 0
   m_Name: Machete 01
   m_TagString: Weapon
@@ -42496,6 +42600,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.506775, y: 1.4119141, z: 0.1083874}
   m_Center: {x: -0.07435965, y: 0.9047465, z: 0.0000006862917}
+--- !u!114 &9077706731876035749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221460684810204920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 14
+  rate: 0
+  meleeArea: {fileID: 4733072929402936386}
+  attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &5443073790549448493
 GameObject:
   m_ObjectHideFlags: 0
@@ -67400,6 +67522,7 @@ GameObject:
   - component: {fileID: 3812223335660142033}
   - component: {fileID: 6877734242726742306}
   - component: {fileID: 1498932016659719495}
+  - component: {fileID: 2434397920689110657}
   m_Layer: 3
   m_Name: Hammer 01
   m_TagString: Item
@@ -67530,6 +67653,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2557795, y: 0.32973146, z: 0.25864628}
   m_Center: {x: 0.391042, y: 1.6731102, z: 0.0000074696422}
+--- !u!114 &2434397920689110657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7094252123530271328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 16
+  rate: 0
+  meleeArea: {fileID: 1498932016659719495}
+  attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!1 &7224127174155218336
 GameObject:
   m_ObjectHideFlags: 0
@@ -77927,8 +78068,9 @@ MonoBehaviour:
   type: 0
   damage: 19
   rate: 0
-  meleeArea: {fileID: 0}
+  meleeArea: {fileID: 4321985513830270707}
   attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!65 &4321985513830270707
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93269,7 +93411,6 @@ GameObject:
   - component: {fileID: 6398658105303655887}
   - component: {fileID: 7133571737149686072}
   - component: {fileID: 2319198497490049385}
-  - component: {fileID: 8119751654296695607}
   m_Layer: 0
   m_Name: mixamorig:RightHandMiddle1
   m_TagString: Weapon
@@ -93306,10 +93447,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 5
+  damage: 10
   rate: 0
-  meleeArea: {fileID: 0}
+  meleeArea: {fileID: 2319198497490049385}
   attackManager: {fileID: 0}
+  killManager: {fileID: 2071272907111481895}
 --- !u!65 &2319198497490049385
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93331,24 +93473,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.077338, y: 0.05267, z: 0.039482}
   m_Center: {x: 0.001809, y: 0.016178, z: 0.005778}
---- !u!135 &8119751654296695607
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211573521248898947}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.045
-  m_Center: {x: 0, y: 0, z: 0}

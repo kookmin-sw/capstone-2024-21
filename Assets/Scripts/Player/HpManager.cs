@@ -49,12 +49,22 @@ public class HpManager : MonoBehaviour
     //     isDead = newIsDead;
     // }
 
+    public void AddKillCount(string playerId)
+    {
+        GameObject obj = GameObject.Find(playerId);
+        KillManager killer = obj.GetComponent<KillManager>();
+        killer.AddKillCount();
+    }
+
     // 데미지 처리하는 함수
     [PunRPC]
-    public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {   
-        if(pv.IsMine){
+    public void RpcOnDamage(float damage, string playerId)
+    {
+        Debug.Log("RpcOnDamage는 실행됨");
+        if (pv.IsMine){
+            Debug.Log("pv.isMine은 실행됨");
             Debug.Log("데미지 입음");
+            Debug.Log("받은 데미지: " + damage);
             hp -= damage;
             healthPointBar.value = hp;
             healthPointCount.text = hp.ToString();
@@ -65,12 +75,16 @@ public class HpManager : MonoBehaviour
             // 체력이 0 이하이고 살아있으면 사망
             if (hp <= 0 && !isDead)
             {
+                Debug.Log("나를 죽인 사람: " + playerId);
+                AddKillCount(playerId);
                 Die();
             }
         }
     }
-    public void OnDamage(float damage)    {
-        pv.RPC("OnDamage", RpcTarget.Others, damage, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
+    public void OnDamage(float damage, string playerId)
+    {
+        Debug.Log("OnDamage는 실행됨");
+        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, playerId);
     }
 
     // 체력 회복 함수
@@ -89,10 +103,9 @@ public class HpManager : MonoBehaviour
         }
     }
 
-    // 사망 함수
-    public void Die()
+    [PunRPC]
+    public void RpcDie()
     {
-        Debug.Log("사망");
         // 사망 이벤트 있으면 실행
         if (onDeath != null)
         {
@@ -100,7 +113,17 @@ public class HpManager : MonoBehaviour
         }
         isDead = true;
         gameObject.SetActive(false);
-        uiManager.isGameOver = true;
-        uiManager.isUIActivate = true;
+        if (pv.IsMine)
+        {
+            Debug.Log("사망");
+            uiManager.isGameOver = true;
+            uiManager.isUIActivate = true;
+        }
+    }
+
+    // 사망 함수
+    public void Die()
+    {
+        pv.RPC("RpcDie", RpcTarget.All);
     }
 }
