@@ -44,7 +44,7 @@ public class KillManager : MonoBehaviour
 
     public void AddKillCount()
     {
-        pv.RPC("RpcAddKillCount", RpcTarget.All, playerId);
+        pv.RPC("RpcAddKillCount", RpcTarget.All);
         Debug.Log("Kill Count: " + killCount);
     }
 
