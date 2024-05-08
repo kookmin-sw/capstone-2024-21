@@ -33,7 +33,7 @@ public class KillManager : MonoBehaviour
 
     public void Rename(string playerId)
     {
-        pv.RPC("RpcOnRename", RpcTarget.All, playerId);
+        pv.RPC("RpcRename", RpcTarget.All, playerId);
     }
 
     [PunRPC]
