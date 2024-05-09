@@ -6,8 +6,8 @@ public class Spawner : MonoBehaviour
 {
     //스포너 오브젝트 근처로 포물선 운동을 하며 스폰됨
 
-    [SerializeField] protected List<Item> items; //스포너에서 스폰될 수 있는 아이템들. 인스펙터 창에서 골라 넣어주면 됨
-    [SerializeField] protected bool isSpawned = false;
+    [SerializeField] protected List<Item> items; //상속받은 스포너들에서 객체 생성해서 할당해줘야함 
+    [SerializeField] protected bool isSpawned = false; // 아이템이 하나 이상 나오지 않도록 하기위해
 
     GameObject ItemPrefab; //items중 생성될 아이템 
     float maxDistance = 1f; // 아이템이 스폰될 최대 반경
