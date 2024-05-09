@@ -6,14 +6,12 @@ public class BatterySpawner : Spawner
 {
     [SerializeField] Item battery;
 
-    //List<Item> BatterySpawner.items = Spawner.items;
 
-    // Start is called before the first frame update
     void Start()
     {
         battery = (Item)Resources.Load("Item/Battery");
-
+        items = new List<Item>();
         items.Add(battery);
-        Debug.Log("items.Count" + items.Count);
     }
+
 }

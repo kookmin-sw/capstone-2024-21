@@ -8,11 +8,13 @@ public class MapManager : MonoBehaviour
 {
     GameObject[] gameObjs;
 
-    List<GameObject> BatterySpawnerTargets = new List<GameObject>();//배터리 스포너 후보들
-    int BatterySpawnerCount = 7;
+    [Header("BatterySpawner")]
+    [SerializeField] List<GameObject> BatterySpawnerTargets = new List<GameObject>();//배터리 스포너 후보들
+    [SerializeField] int BatterySpawnerCount = 7;
 
-    List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//무기 스포너 후보들
-    int WeaponSpawnerCount = 1;
+    [Header("WeaponSpawner")]
+    [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//무기 스포너 후보들
+    [SerializeField] int WeaponSpawnerCount = 1;
 
     private void Awake()
     {
@@ -86,7 +88,7 @@ public class MapManager : MonoBehaviour
             //WeaponSpawner 없으면 찾아서 넣어주고 활성화
             if (WeaponSpawnerTargets[i].gameObject.GetComponent<WeaponSpawner>() == null)
             {
-                WeaponSpawner weaponSpawner = BatterySpawnerTargets[i].AddComponent<WeaponSpawner>();
+                WeaponSpawner weaponSpawner = WeaponSpawnerTargets[i].AddComponent<WeaponSpawner>();
                 weaponSpawner.enabled = true;
                 cnt++;
             }

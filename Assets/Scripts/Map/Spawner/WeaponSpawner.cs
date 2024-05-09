@@ -17,15 +17,17 @@ public class WeaponSpawner : Spawner
     void Start()
     {
 
-        Axe = (Item)Resources.Load("Assets/Resources/Item/Axe.asset");
-        BaseballBat = (Item)Resources.Load("Assets/Resources/Item/BaseballBat.asset");
-        ButcherKnife = (Item)Resources.Load("Assets/Resources/Item/Butcher Knife.asset");
-        Crowbar = (Item)Resources.Load("Assets/Resources/Item/Crowbar.asset");
-        Hammer = (Item)Resources.Load("Assets/Resources/Item/Hammer.asset");
-        HeavyWrench = (Item)Resources.Load("Assets/Resources/Item/HeavyWrench.asset");
-        Machete = (Item)Resources.Load("Assets/Resources/Item/Machete.asset");
-        Shovel = (Item)Resources.Load("Assets/Resources/Item/Shovel.asset");
-        TacticalKnife = (Item)Resources.Load("Assets/Resources/Item/TacticalKnife.asset");
+        Axe = (Item)Resources.Load("Item/Axe");
+        BaseballBat = (Item)Resources.Load("Item/BaseballBat");
+        ButcherKnife = (Item)Resources.Load("Item/Butcher Knife");
+        Crowbar = (Item)Resources.Load("Item/Crowbar");
+        Hammer = (Item)Resources.Load("Item/Hammer");
+        HeavyWrench = (Item)Resources.Load("Item/HeavyWrench");
+        Machete = (Item)Resources.Load("Item/Machete");
+        Shovel = (Item)Resources.Load("Item/Shovel");
+        TacticalKnife = (Item)Resources.Load("Item/TacticalKnife");
+
+        items = new List<Item>();
 
         items.Add(Axe);
         items.Add(BaseballBat);
