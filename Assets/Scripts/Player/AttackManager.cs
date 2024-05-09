@@ -343,7 +343,7 @@ public class AttackManager : MonoBehaviour
 
     public void RpcSwap()
     {
-        pv.RPC("Swap", RpcTarget.All);
+        pv.RPC("Swap", RpcTarget.AllBuffered);
     }
 
     void hitOut(){
