@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.119178645, g: 0.119178645, b: 0.119178645, a: 1}
+  m_IndirectSpecularColor: {r: 0.11922146, g: 0.11922146, b: 0.11922146, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2754,7 +2754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604700330260897718, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_PC_Monitor (1)
+      value: BatterySpawner_PC_Monitor (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8604700330260897718, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -3106,7 +3106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604750617792156964, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_PC_Monitor
+      value: BatterySpawner_PC_Monitor
       objectReference: {fileID: 0}
     - target: {fileID: 8604750617792156964, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -3466,7 +3466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604804804038312644, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_Lamp
+      value: BatterySpawner_Lamp
       objectReference: {fileID: 0}
     - target: {fileID: 8604804804038312644, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -4142,7 +4142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604910843672679610, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_Lamp (2)
+      value: BatterySpawner_Lamp (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8604910843672679610, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -6870,7 +6870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8605309423508250842, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_Lamp (1)
+      value: BatterySpawner_Lamp (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8605309423508250842, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -7898,7 +7898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8912249507427794659, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_TV_Retro (1)
+      value: BatterySpawner_TV_Retro (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8912249507427794659, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -7914,7 +7914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8912249507865143782, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner_TV_Retro
+      value: BatterySpawnerTV_Retro
       objectReference: {fileID: 0}
     - target: {fileID: 8912249507865143782, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
@@ -8454,12 +8454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76007ebdd625140fa96bd1dfd1f4d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items:
-  - {fileID: 11400000, guid: 1b586aa55524247c1924e8c0c949f9e9, type: 2}
-  - {fileID: 11400000, guid: da1e7137fe9214535abac10ade8bc32b, type: 2}
-  - {fileID: 11400000, guid: 053dc8dd1cd3645e19ffb3db5751ef78, type: 2}
-  maxDistance: 1
-  m_InitialAngle: 70
+  items: []
 --- !u!1 &970177677
 GameObject:
   m_ObjectHideFlags: 0

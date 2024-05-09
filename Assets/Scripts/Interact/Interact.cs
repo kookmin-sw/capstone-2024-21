@@ -152,8 +152,16 @@ public class Interact : MonoBehaviour
         {
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().FillCircle())
             {
-                //수색을 성공적으로 마쳤다면 아이템 스폰 
-                selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
+                //수색을 성공적으로 마쳤다면 스폰
+                if(selectedTarget.gameObject.GetComponent<BatterySpawner>() != null)
+                {
+                    selectedTarget.GetComponent<BatterySpawner>().SpawnItem();
+                }
+                else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null)
+                {
+                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
+                }
+
 
                 //수색종료
                 isInvetigating = false; 
