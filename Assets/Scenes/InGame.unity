@@ -9698,8 +9698,10 @@ MonoBehaviour:
   quicSlot: {fileID: 673319133}
   WeaponQuickslot: {fileID: 673319134}
   isInvetigating: 0
+  isExiting: 0
+  playerId: 
   cntBattery: 0
-  needBattery: 3
+  needBattery: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
