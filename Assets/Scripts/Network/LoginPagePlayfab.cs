@@ -62,7 +62,7 @@ public class LoginPagePlayfab : MonoBehaviour
 
     public void OnclickedRegisterButton()
     {
-        var registerRequest = new RegisterPlayFabUserRequest { Email = registerEmailField.text, Password = passwordConfirmField.text , Username = nickNameField.text};
+        var registerRequest = new RegisterPlayFabUserRequest { Email = registerEmailField.text, Password = passwordConfirmField.text , Username = nickNameField.text, DisplayName = nickNameField.text };
 
         if(registerPasswordField.text != passwordConfirmField.text)
         {
@@ -88,6 +88,8 @@ public class LoginPagePlayfab : MonoBehaviour
 
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
+        var request = new UpdatePlayerStatisticsRequest { Statistics = new List<StatisticUpdate> { new StatisticUpdate { StatisticName = "Score", Value = 0 } } };
+        PlayFabClientAPI.UpdatePlayerStatistics(request, (result) => { }, (error) => print("값 저장 실패"));
         login.SetActive(true);
         register.SetActive(false);
         ClearField();
