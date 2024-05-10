@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class Exit : MonoBehaviour
 {
+    GameObject door;
+
     // 문을 열고 닫기위해 필요한 변수
     [SerializeField] private bool open = false;
     private Vector3 localPositoin;
@@ -16,7 +18,9 @@ public class Exit : MonoBehaviour
 
     private void Start()
     {
-        localPositoin = transform.position;
+        door = transform.parent.Find("exit").gameObject;
+
+        localPositoin = door.transform.position;
 
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
@@ -46,7 +50,7 @@ public class Exit : MonoBehaviour
 
         if (open)
         {
-            StartCoroutine(ExitOpenDoor(transform));
+            StartCoroutine(ExitOpenDoor(door.transform));
         }
 
     }

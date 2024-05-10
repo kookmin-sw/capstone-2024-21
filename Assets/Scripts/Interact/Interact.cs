@@ -9,13 +9,15 @@ public class Interact : MonoBehaviour
 {
     public Transform canvas;
 
-    public GameObject image_F;//껐다 켰다 할 F UI. 직접 할당해줘야함 findObject로 바꿀까 고민중 
-    public GameObject circleGaugeControler; //껐다 켰다 할 게이지  UI. 직접 할당해줘야함
-    public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI. 직접 할당해줘야함
+    public GameObject image_F;//껐다 켰다 할 F UI. 
+    public GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
+    public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     public WeaponInventory WeaponQuickslot;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
+
+    GameObject ExitDoor;
     public string playerId;
     Vector3 PlayerMoveDir;
 
@@ -25,11 +27,8 @@ public class Interact : MonoBehaviour
     RaycastHit hit;
     float interactDiastance = 4.0f;
     Transform selectedTarget;
-
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
-    //CheckBattery 함수를 위한 변수
-    [SerializeField] int cntBattery;
     [SerializeField] int needBattery = 0;
 
     private void Start()
@@ -38,10 +37,11 @@ public class Interact : MonoBehaviour
 
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
         image_F = canvas.Find("image_F").gameObject;
-        circleGaugeControler = canvas.Find("GaugeController").gameObject; 
+        circleGaugeControler = canvas.Find("GaugeController").gameObject;
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
-        //anim = GetComponent<Animator>();
+
+        ExitDoor = GameObject.Find("exit");
 }
 
     void Update()
@@ -96,16 +96,18 @@ public class Interact : MonoBehaviour
                 {   
                     Debug.Log("Exit 문 상호작용 ");
                     FindMovedir();
-                    if(PlayerMoveDir.magnitude < 0.1f && CheckBattery())
+                    if(PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
+                    {
+                        circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
+                    }
                 }
+                        
 
                 if (selectedTarget.CompareTag("ItemSpawner"))
                 {
                     //Debug.Log("betterySpawner 와 상호작용");
-
-                    circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화하고
-                    circleGaugeControler.GetComponent<InteractGaugeControler>().AbleInvestinGaugeUI(); //게이지UI켜고 
+                    circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                     isInvetigating = true;//수색시작
                 }
 
@@ -172,18 +174,17 @@ public class Interact : MonoBehaviour
                     selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
                 }
 
-
                 //수색종료
                 isInvetigating = false; 
-                circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI();
             }
         }
         else if (isExiting)
         {
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
             {
-                //수색종료
-                Tmp();
+                // 성공적으로 게이지가 다 찼다면
+                OpenExitDoor();
+                EraseInventoryBattery();
             }
         }
 
@@ -197,10 +198,10 @@ public class Interact : MonoBehaviour
         PlayerMoveDir = movement.moveDir;
     }
 
-    bool CheckBattery()
+    bool CheckInventoryBattery()
     {
         //현재 가지고 있는 배터리 갯수 확인
-        cntBattery = 0;
+        int cntBattery = 0;
         for (int i = 0; i < quicSlot.items.Count; i++)
         {
             Debug.Log("quicSlot.items[i] : "+quicSlot.items[i]);
@@ -222,18 +223,22 @@ public class Interact : MonoBehaviour
         }
     }
 
-    void Tmp()
+    void OpenExitDoor()
     {
-        //needBattery개 이상이면 문을 열고 가지고 있는 배터리 3개 삭제 
-
-        Debug.Log("배터리 충분. ");
-        if (selectedTarget.GetComponent<Exit>())
+        if (ExitDoor.GetComponent<Exit>())
         {
-            selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+            ExitDoor.GetComponent<Exit>().ChangeExitDoorStateRPC();
         }
+        else
+        {
+            Debug.Log("탈출구에 컴포넌트가 없습니니다 ");
+        }
+    }
 
+    void EraseInventoryBattery()
+    {
         //사용한 배터리 삭제
-        cntBattery = 0;
+        int cntBattery = 0;
         int idx = 0;
 
         while (cntBattery < needBattery)
@@ -250,7 +255,7 @@ public class Interact : MonoBehaviour
         }
         quicSlot.FreshSlot();
         isExiting = false; 
-        Debug.Log("배터리를 사용해서 문을 열였습니다.");
+        Debug.Log("배터리를 사용했습니닫.");
     }
 
 
@@ -264,7 +269,7 @@ public class Interact : MonoBehaviour
 
 
         isInvetigating = false; //수색중이라면 취소하고
-        circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInvestinGaugeUI(); //게이지UI끄기 
+        circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInteractGaugeImage(); //게이지UI끄기 
 
     }
 
