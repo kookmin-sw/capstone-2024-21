@@ -16,9 +16,17 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//무기 스포너 후보들
     [SerializeField] int WeaponSpawnerCount = 1;
 
+    [Header("Light")]
+    [SerializeField] List<GameObject> Lights = new List<GameObject>();//lights
+
+    public PhotonView pv;
+
     // 모든 오브젝트들을 이름 기준으로 살펴보며 적절한 스크립트를 넣어줌 
     private void Awake()
     {
+        pv = gameObject.AddComponent<PhotonView>();
+        pv.ViewID = PhotonNetwork.AllocateViewID(0);
+
         gameObjs = FindObjectsOfType<GameObject>();
 
         for(int i = 0; i < gameObjs.Length; i++)
@@ -57,6 +65,15 @@ public class MapManager : MonoBehaviour
 
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
+            }
+            else if (gameObjs[i].name.Contains("Lamp") && gameObjs[i].GetComponentInChildren<Light>())
+            {
+                Lights.Add(gameObjs[i]);
+
+                //빛 초기환
+                gameObjs[i].GetComponentInChildren<Light>().range = 5;
+                gameObjs[i].GetComponentInChildren<Light>().intensity = 1;
+
             }
         }
 
@@ -125,6 +142,20 @@ public class MapManager : MonoBehaviour
                 cnt++;
             }
         }
+    }
 
+    [PunRPC]
+    public void SetLight(int range, int intensity)
+    {
+        for(int i=0;i< Lights.Count; i++) {
+            Lights[i].GetComponentInChildren<Light>().range = range;
+            Lights[i].GetComponentInChildren<Light>().intensity = intensity;
+        }
+
+    }
+
+    public void SetLightRPC(int range, int intensity=1)
+    {
+        pv.RPC("SetLight", RpcTarget.AllBuffered, range, intensity);
     }
 }

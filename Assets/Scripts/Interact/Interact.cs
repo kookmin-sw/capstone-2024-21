@@ -13,6 +13,7 @@ public class Interact : MonoBehaviour
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
     public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     public WeaponInventory WeaponQuickslot;
+    MapManager mapManager;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
@@ -40,6 +41,8 @@ public class Interact : MonoBehaviour
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 
         ExitDoor = GameObject.Find("exit");
 }
@@ -185,6 +188,7 @@ public class Interact : MonoBehaviour
             {
                 // 성공적으로 게이지가 다 찼다면
                 OpenExitDoor();
+                mapManager.SetLightRPC(15);
                 EraseInventoryBattery();
             }
         }
