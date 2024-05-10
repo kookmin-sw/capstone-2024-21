@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackManager : MonoBehaviour
@@ -30,7 +31,7 @@ public class AttackManager : MonoBehaviour
 
     public BoxCollider colliderWeapon; // 무기들의 collider
     BoxCollider colliderHand; // 주먹 collider
-    public WeaponManager equipWeaponGameobject; // 장착중인 무기 gameobject(무기 및 주먹)
+    [SerializeField] public WeaponManager equipWeaponGameobject; // 장착중인 무기 gameobject(무기 및 주먹)
     
     public string Armed; // 현재 장착중인 무기 타입
 
@@ -204,22 +205,24 @@ public class AttackManager : MonoBehaviour
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
                         if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 3)
                         {
-                            movementStateManager.anim.SetBool(Armed, false);
-                            movementStateManager.anim.SetLayerWeight(1, 0);
+                            if(movementStateManager.anim.GetLayerWeight(2) != 1){
+                                movementStateManager.anim.SetBool(Armed, false);
+                                movementStateManager.anim.SetLayerWeight(1, 0);
 
-                            Armed = "THW";
-                            movementStateManager.anim.SetBool(Armed, true);
-                            movementStateManager.anim.SetLayerWeight(2, 1);
-
+                                Armed = "THW";
+                                movementStateManager.anim.SetBool(Armed, true);
+                                movementStateManager.anim.SetLayerWeight(2, 1);
+                            }
                         }
                         else
                         {
-                            movementStateManager.anim.SetBool(Armed, false);
-                            movementStateManager.anim.SetLayerWeight(2, 0);
-                            Armed = "OHW";
-                            movementStateManager.anim.SetBool(Armed, true);
-                            movementStateManager.anim.SetLayerWeight(1, 1);
-
+                            if(movementStateManager.anim.GetLayerWeight(1) != 1){
+                                movementStateManager.anim.SetBool(Armed, false);
+                                movementStateManager.anim.SetLayerWeight(2, 0);
+                                Armed = "OHW";
+                                movementStateManager.anim.SetBool(Armed, true);
+                                movementStateManager.anim.SetLayerWeight(1, 1);
+                            }
                         }
                     }
                     RpcEquip(equipWeaponIndex);
@@ -240,11 +243,12 @@ public class AttackManager : MonoBehaviour
                         isSwap = true;
                         Invoke("SwapOut", 0.3f);
                     }
-
-                    movementStateManager.anim.SetLayerWeight(1, 0);
-                    movementStateManager.anim.SetLayerWeight(2, 0);
-                    movementStateManager.anim.SetBool("OHW", false);
-                    movementStateManager.anim.SetBool("THW", false);
+                    if(movementStateManager.anim.GetLayerWeight(1) == 1 || movementStateManager.anim.GetLayerWeight(2) == 1){
+                        movementStateManager.anim.SetLayerWeight(1, 0);
+                        movementStateManager.anim.SetLayerWeight(2, 0);
+                        movementStateManager.anim.SetBool("OHW", false);
+                        movementStateManager.anim.SetBool("THW", false);
+                    }
                 }
             }             // 아이템 슬롯 스왑/습득 시 애니메이션 처리 
             else if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
@@ -282,12 +286,14 @@ public class AttackManager : MonoBehaviour
                     if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType > 10)
                     {
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
-
-                        movementStateManager.anim.SetBool(Armed, false);
-                        movementStateManager.anim.SetLayerWeight(2, 0);
-                        Armed = "OHW";
-                        movementStateManager.anim.SetBool(Armed, true);
-                        movementStateManager.anim.SetLayerWeight(1, 1);
+                        
+                        if(movementStateManager.anim.GetLayerWeight(1) != 1){
+                            movementStateManager.anim.SetBool(Armed, false);
+                            movementStateManager.anim.SetLayerWeight(2, 0);
+                            Armed = "OHW";
+                            movementStateManager.anim.SetBool(Armed, true);
+                            movementStateManager.anim.SetLayerWeight(1, 1);
+                        }
                     }
                     RpcEquip(equipItemIndex);
 
@@ -315,6 +321,22 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetBool("THW", false);
                 }
             }
+        }
+    }
+
+    void UseItem(){
+        // 11 : battery
+        // 12 : pill
+        // 13 : trap
+        // ......... //
+        if(equipItemIndex == 12){
+            movementStateManager.anim.SetTrigger("pill");
+        }
+    }
+
+    void EndItem(){
+        if(equipItemIndex == 12){
+            movementStateManager.anim.SetTrigger("pill");
         }
     }
 
