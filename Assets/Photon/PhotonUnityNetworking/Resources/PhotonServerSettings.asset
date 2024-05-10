@@ -47,6 +47,10 @@ MonoBehaviour:
   - RPCWeaponEquip
   - ChangeDoorState
   - ChangeExitDoorState
+  - RpcOnDamage
+  - RpcRename
+  - RpcAddKillCount
+  - RpcDie
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

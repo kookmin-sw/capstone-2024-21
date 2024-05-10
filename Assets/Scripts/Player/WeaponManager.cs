@@ -8,8 +8,10 @@ public class WeaponManager : MonoBehaviour
     public Type type;
     public int damage;
     public float rate;
-    public BoxCollider meleeArea;
+    [SerializeField] public BoxCollider meleeArea;
     [HideInInspector] public AttackManager attackManager;
+
+    public KillManager killManager;
 
     public void Use(){
         if(type == Type.Melee){
@@ -24,9 +26,10 @@ public class WeaponManager : MonoBehaviour
             attackManager = GetComponent<AttackManager>();
             if (Enemy != null) {
                 Enemy.OnDamaged();
-
+                meleeArea.enabled = false;
+                    
                 Debug.Log("Hit : " + damage);
-                hpManager.OnDamage(damage);
+                hpManager.OnDamage(damage, killManager.playerId);
             }    
         }
     }
