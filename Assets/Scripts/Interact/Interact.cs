@@ -16,6 +16,8 @@ public class Interact : MonoBehaviour
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
+
+    GameObject ExitDoor;
     public string playerId;
     Vector3 PlayerMoveDir;
 
@@ -38,6 +40,8 @@ public class Interact : MonoBehaviour
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+
+        ExitDoor = GameObject.Find("exit");
 }
 
     void Update()
@@ -221,9 +225,9 @@ public class Interact : MonoBehaviour
 
     void OpenExitDoor()
     {
-        if (selectedTarget.GetComponent<Exit>())
+        if (ExitDoor.GetComponent<Exit>())
         {
-            selectedTarget.GetComponent<Exit>().ChangeExitDoorStateRPC();
+            ExitDoor.GetComponent<Exit>().ChangeExitDoorStateRPC();
         }
         else
         {
