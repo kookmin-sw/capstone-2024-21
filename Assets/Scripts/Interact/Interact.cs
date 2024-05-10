@@ -80,8 +80,12 @@ public class Interact : MonoBehaviour
             {
                 if (selectedTarget.CompareTag("door"))
                 {
+                    if (selectedTarget.name == "ExitCup")
+                    {
+                        selectedTarget.GetComponent<ExitCupOpen>().ChangeDoorStateRPC();
+                    }
                     //Debug.Log("문 상호작용 ");
-                    if (selectedTarget.GetComponent<DoorRight>())
+                    else if(selectedTarget.GetComponent<DoorRight>())
                     {   
                         selectedTarget.GetComponent<DoorRight>().ChangeDoorStateRPC();
                     }
@@ -91,8 +95,7 @@ public class Interact : MonoBehaviour
                     }
 
                 }
-
-                if (selectedTarget.CompareTag("Exit"))
+                else if (selectedTarget.CompareTag("Exit"))
                 {   
                     Debug.Log("Exit 문 상호작용 ");
                     FindMovedir();
@@ -102,16 +105,13 @@ public class Interact : MonoBehaviour
                         isExiting = true;
                     }
                 }
-                        
-
-                if (selectedTarget.CompareTag("ItemSpawner"))
+                else if (selectedTarget.CompareTag("ItemSpawner"))
                 {
                     //Debug.Log("betterySpawner 와 상호작용");
                     circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                     isInvetigating = true;//수색시작
                 }
-
-                if (selectedTarget.CompareTag("Item"))
+                else if (selectedTarget.CompareTag("Item"))
                 {
                     //Debug.Log(hit.collider.gameObject.name + " item과 상호작용");
                     ItemData itemdata = hit.collider.gameObject.GetComponent<ItemData>();
@@ -145,6 +145,7 @@ public class Interact : MonoBehaviour
                         }
                     }
                 }
+
             }
 
         }
