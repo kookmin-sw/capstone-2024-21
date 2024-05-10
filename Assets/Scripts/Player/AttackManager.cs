@@ -330,7 +330,12 @@ public class AttackManager : MonoBehaviour
         // 13 : trap
         // ......... //
         if(equipItemIndex == 12){
-            movementStateManager.anim.SetLayerWeight(8, 1);
+            movementStateManager.anim.SetTrigger("pill");
+        }
+    }
+
+    void EndItem(){
+        if(equipItemIndex == 12){
             movementStateManager.anim.SetTrigger("pill");
         }
     }
