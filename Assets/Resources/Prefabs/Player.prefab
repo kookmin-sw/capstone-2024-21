@@ -5280,11 +5280,14 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: HitOut
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Pill
   - Type: 9
-    SynchronizeType: 0
-    Name: Working
+    SynchronizeType: 1
+    Name: Exiting
+  - Type: 9
+    SynchronizeType: 1
+    Name: Cancel
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -5300,9 +5303,9 @@ MonoBehaviour:
     LayerIndex: 5
   - SynchronizeType: 1
     LayerIndex: 6
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 7
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 8
 --- !u!114 &5885699318320276508
 MonoBehaviour:

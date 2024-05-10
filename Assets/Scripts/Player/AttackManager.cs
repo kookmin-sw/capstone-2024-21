@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackManager : MonoBehaviour
@@ -30,7 +31,7 @@ public class AttackManager : MonoBehaviour
 
     public BoxCollider colliderWeapon; // 무기들의 collider
     BoxCollider colliderHand; // 주먹 collider
-    public WeaponManager equipWeaponGameobject; // 장착중인 무기 gameobject(무기 및 주먹)
+    [SerializeField] public WeaponManager equipWeaponGameobject; // 장착중인 무기 gameobject(무기 및 주먹)
     
     public string Armed; // 현재 장착중인 무기 타입
 
@@ -315,6 +316,17 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetBool("THW", false);
                 }
             }
+        }
+    }
+
+    void UseItem(){
+        // 11 : battery
+        // 12 : pill
+        // 13 : trap
+        // ......... //
+        if(equipItemIndex == 12){
+            movementStateManager.anim.SetLayerWeight(8, 1);
+            movementStateManager.anim.SetTrigger("pill");
         }
     }
 
