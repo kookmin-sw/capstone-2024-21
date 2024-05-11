@@ -21,6 +21,11 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     [SerializeField] private GameObject canvas;
     [SerializeField] private LobbyPagePlayfab lobbyPlayFab;
 
+    [SerializeField] private bool isPlayClicked;
+    [SerializeField] private bool isLeaderBoardClicked;
+    [SerializeField] private bool isClicked;
+
+
     void Awake()
     {
         preColor = gameObject.GetComponent<TextMeshProUGUI>().color;
@@ -40,7 +45,6 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-
         gameObject.GetComponent<TextMeshProUGUI>().color = preColor;
     }
 

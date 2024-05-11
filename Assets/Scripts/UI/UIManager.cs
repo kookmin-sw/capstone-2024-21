@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject combinationSlots;
     [SerializeField] private GameObject systemEnvironment;
     [SerializeField] private GameObject gameOverBoard;
+
+    [SerializeField] private TextMeshProUGUI statePlayerName;
+    [SerializeField] private TextMeshProUGUI gameOverPlayerName;
+
 
     private int selectSlot = 0;
     [HideInInspector] public bool isGameOver;
@@ -26,10 +31,15 @@ public class UIManager : MonoBehaviour
         isGameOver = false;
         isUIActivate = false;
         ChangeSlot(0);
+
+        statePlayerName.text = GameManager.Instance.UserId;
+        gameOverPlayerName.text = GameManager.Instance.UserId;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
          
     }
+
 
     // Update is called once per frame
     void Update()
