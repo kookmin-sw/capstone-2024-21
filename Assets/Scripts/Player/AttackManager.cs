@@ -37,7 +37,8 @@ public class AttackManager : MonoBehaviour
 
     public MovementStateManager movementStateManager;   
     [HideInInspector] public AttackManager attackManager;
-    [HideInInspector] public WeaponManager weaponManager; 
+    [HideInInspector] public WeaponManager weaponManager;
+    [HideInInspector] public HpManager hpManager;
     private PhotonView pv;
     
     void Awake(){
@@ -50,6 +51,8 @@ public class AttackManager : MonoBehaviour
         equipWeapon = weapons[9];
         colliderHand = RightHand.GetChild(1).GetComponent<BoxCollider>();
         movementStateManager = GetComponent<MovementStateManager>();
+        hpManager = GetComponent<HpManager>();
+
     }
     
     void Update(){
@@ -64,7 +67,7 @@ public class AttackManager : MonoBehaviour
         sDown4 = Input.GetButtonDown("sDown4");
         sDown5 = Input.GetButtonDown("sDown5");
         gDown = Input.GetButtonDown("gDown"); // 아이템 버리기
-        eDown = Input.GetButtonDown("eDown"); // 아이템 장착
+        eDown = Input.GetButtonDown("eDown"); // 아이템 사용
     }
 
     // 공격
@@ -107,7 +110,7 @@ public class AttackManager : MonoBehaviour
         {
             if (equipWeapon != null) // 착용된 장비가 있고
             {
-                if (equipWeapon.transform.childCount > 0)
+                if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
                 {
                     if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
                     {
@@ -121,6 +124,45 @@ public class AttackManager : MonoBehaviour
             }
 
             if (isAttack) return; // 공격 중에는 스왑 불가
+
+
+            if(Input.GetButtonDown("eDown"))
+            {
+                if (equipWeapon.GetComponent<ItemData>().itemData.ItemType == 12)
+                {
+                    movementStateManager.anim.SetLayerWeight(8, 1);
+                    movementStateManager.anim.SetTrigger("Pill");
+                }
+            }
+
+            if (movementStateManager.pillTaked == true)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
+                    {
+                        Debug.Log("약먹음");
+
+                        movementStateManager.anim.SetLayerWeight(8, 0);
+                        hpManager.OnRecovery(itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemRecovery);
+                        itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
+                        itemQuickSlots.GetComponent<Inventory>().FreshSlot();
+                        
+                        RpcEquip(-1);
+                        equipWeapon = null;
+                        isSwap = true;
+
+                        movementStateManager.anim.SetBool(Armed, false);
+                        movementStateManager.anim.SetLayerWeight(1, 0);
+                        movementStateManager.anim.SetLayerWeight(2, 0);
+                        Armed = "";
+                        movementStateManager.pillTaked = false;
+
+                        break;
+                    }
+                }
+            }
+
 
             if (gDown) // G는 버리는 키
             {
@@ -157,6 +199,8 @@ public class AttackManager : MonoBehaviour
                         {
                             if (equipWeapon != null)
                             {
+                                Debug.Log("아이템 버림");
+
                                 weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
                                 itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
                                 itemQuickSlots.GetComponent<Inventory>().FreshSlot();

@@ -99,6 +99,8 @@ public class HpManager : MonoBehaviour
             if (hp > maxHp)
             {
                 hp = maxHp;
+                healthPointBar.value = hp;
+                healthPointCount.text = hp.ToString();
             }
         }
     }
