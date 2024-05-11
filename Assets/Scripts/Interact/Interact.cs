@@ -188,7 +188,7 @@ public class Interact : MonoBehaviour
             {
                 // 성공적으로 게이지가 다 찼다면
                 OpenExitDoor();
-                mapManager.SetLightRPC(15);
+                //mapManager.SetLightRPC(15);
                 EraseInventoryBattery();
             }
         }
@@ -251,7 +251,7 @@ public class Interact : MonoBehaviour
             Debug.Log("idx : " + idx);
             if (quicSlot.items[idx] && quicSlot.items[idx].itemName == "battery")
             {
-                Debug.Log("hit");
+                //Debug.Log("hit");
                 quicSlot.slots[idx].item = null;
 
                 cntBattery++;
@@ -270,7 +270,7 @@ public class Interact : MonoBehaviour
 
         removeOutline(obj);
         selectedTarget = null;
-        Debug.Log(obj.name + " is unselected");
+        //Debug.Log(obj.name + " is unselected");
 
 
         isInvetigating = false; //수색중이라면 취소하고
@@ -285,7 +285,7 @@ public class Interact : MonoBehaviour
         clearTarget(selectedTarget); //이전에 이미 선택했던 오브젝트는 원래대로
 
         selectedTarget = obj;
-        Debug.Log("selectTarget is " + obj.name);
+        //Debug.Log("selectTarget is " + obj.name);
         addOutline(obj);
     }
 

@@ -145,7 +145,7 @@ public class MapManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void SetLight(int range, int intensity)
+    public void ChangeLight(int range, int intensity)
     {
         for(int i=0;i< Lights.Count; i++) {
             Lights[i].GetComponentInChildren<Light>().range = range;
@@ -154,8 +154,8 @@ public class MapManager : MonoBehaviour
 
     }
 
-    public void SetLightRPC(int range, int intensity=1)
+    public void ChangeLightRPC(int range, int intensity=1)
     {
-        pv.RPC("SetLight", RpcTarget.AllBuffered, range, intensity);
+        pv.RPC("ChangeLight", RpcTarget.AllBuffered, range, intensity);
     }
 }
