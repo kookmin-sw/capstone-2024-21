@@ -31,6 +31,7 @@ public class MovementStateManager : MonoBehaviour
     [SerializeField] float jumpForce = 3;
     [SerializeField] float gravity = -9.81f;
     public bool jumped;
+    public bool pillTaked;
     public bool isJumpStart;
     Vector3 velocity;
 
@@ -184,11 +185,13 @@ public class MovementStateManager : MonoBehaviour
     }
 
     public void Jumped() => jumped = true;
-    
+
+    public void PillTaked() => pillTaked = true;
+
     // private void OnDrawGizmos()
     // {
     //     Gizmos.color = Color.red;
     //     Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
     // }
-    
+
 }
