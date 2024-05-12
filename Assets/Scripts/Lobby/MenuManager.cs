@@ -20,12 +20,6 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private LobbyPagePlayfab lobbyPlayFab;
-
-    [SerializeField] private bool isPlayClicked;
-    [SerializeField] private bool isLeaderBoardClicked;
-    [SerializeField] private bool isClicked;
-
-
     void Awake()
     {
         preColor = gameObject.GetComponent<TextMeshProUGUI>().color;
@@ -34,18 +28,40 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
         leaderBoardText = GameObject.Find("LeaderBoardText");
         statisticText = GameObject.Find("StatisticText");
         canvas = GameObject.Find("Canvas");
-
     }
+
+    void Start()
+    {
+        hoverColor.a = 0.7f;
+        playText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+    }
+
     // 버튼 호버
     public void OnPointerEnter(PointerEventData eventData)
     {
-        hoverColor.a = 0.7f;
         gameObject.GetComponent<TextMeshProUGUI>().color = hoverColor;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        gameObject.GetComponent<TextMeshProUGUI>().color = preColor;
+        if (playPanel.activeSelf == true)
+        {
+            playText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+            leaderBoardText.GetComponent<TextMeshProUGUI>().color = preColor;
+            statisticText.GetComponent<TextMeshProUGUI>().color = preColor;
+        }
+        else if (leaderBoardPanel.activeSelf == true)
+        {
+            leaderBoardText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+            playText.GetComponent<TextMeshProUGUI>().color = preColor;
+            statisticText.GetComponent<TextMeshProUGUI>().color = preColor;
+        }
+        else if (statisticPanel.activeSelf == true)
+        {
+            statisticText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+            leaderBoardText.GetComponent<TextMeshProUGUI>().color = preColor;
+            playText.GetComponent<TextMeshProUGUI>().color = preColor;
+        }
     }
 
     // 버튼 클릭
@@ -58,7 +74,8 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         if (eventData.pointerEnter == playText)
         {
-            gameObject.GetComponent<TextMeshProUGUI>().color = hoverColor;
+            playText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+
             leaderBoardText.GetComponent<TextMeshProUGUI>().color = preColor;
             statisticText.GetComponent<TextMeshProUGUI>().color = preColor;
 
@@ -70,7 +87,8 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
         }
         else if (eventData.pointerEnter == leaderBoardText)
         {
-            gameObject.GetComponent<TextMeshProUGUI>().color = hoverColor;
+            leaderBoardText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+
             playText.GetComponent<TextMeshProUGUI>().color = preColor;
             statisticText.GetComponent<TextMeshProUGUI>().color = preColor;
 
@@ -84,7 +102,8 @@ public class MenuManager : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
         }
         else if (eventData.pointerEnter == statisticText)
         {
-            gameObject.GetComponent<TextMeshProUGUI>().color = hoverColor;
+            statisticText.GetComponent<TextMeshProUGUI>().color = hoverColor;
+
             leaderBoardText.GetComponent<TextMeshProUGUI>().color = preColor;
             playText.GetComponent<TextMeshProUGUI>().color = preColor;
 
