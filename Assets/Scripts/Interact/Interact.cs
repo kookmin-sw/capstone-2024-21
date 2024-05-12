@@ -14,14 +14,8 @@ public class Interact : MonoBehaviour
     Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     WeaponInventory WeaponQuickslot;
 
-
-    enum State
-    {
-        Nomal,
-        Invetigating,
-        Exiting
-    }
-    State currentState = State.Nomal;
+    public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
+    public bool isExiting = false;
 
     GameObject ExitDoor;
     public string playerId;
@@ -71,7 +65,9 @@ public class Interact : MonoBehaviour
             {
                 if (selectedTarget)
                 {
-                    currentState = State.Nomal;
+                    isInvetigating = false; 
+                    isExiting = false;
+
                     removeOutline(selectedTarget);
                     clearTarget(selectedTarget);
                     image_F.GetComponent<UIpressF>().remove_image();
@@ -102,7 +98,7 @@ public class Interact : MonoBehaviour
                 else if (selectedTarget.CompareTag("Spawner"))
                 {
                     circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
-                    currentState = State.Invetigating;//수색시작
+                    isInvetigating = true;//수색시작
                 }
                 else if (selectedTarget.CompareTag("Item"))
                 {
@@ -153,7 +149,7 @@ public class Interact : MonoBehaviour
 
 
         //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증가 
-        if (currentState == State.Invetigating)
+        if (isInvetigating)
         {
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().FillCircle())
             {
@@ -172,10 +168,10 @@ public class Interact : MonoBehaviour
                 }
 
                 //수색종료
-                currentState = State.Nomal;
+                isInvetigating=false;
             }
         }
-        else if (currentState == State.Exiting)
+        else if (isExiting)
         {
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
             {
