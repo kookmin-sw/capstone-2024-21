@@ -131,8 +131,7 @@ public class AttackManager : MonoBehaviour
             {
                 if (equipWeapon.GetComponent<ItemData>().itemData.ItemType == 12)
                 {
-                    movementStateManager.anim.SetLayerWeight(8, 1);
-                    movementStateManager.anim.SetTrigger("Pill");
+                    RpcPill();
                 }
             }
 
@@ -392,6 +391,16 @@ public class AttackManager : MonoBehaviour
 
     public void RpcEquip(int RpcEquipWeaponIndex){
         pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+    }
+
+    [PunRPC]
+    void RpcTakingPill(){
+        movementStateManager.anim.SetLayerWeight(8, 1);
+        movementStateManager.anim.SetTrigger("Pill");
+    }
+    
+    public void RpcPill(){
+        pv.RPC("RpcTakingPill", RpcTarget.All);
     }
 
     public void RpcSwap()
