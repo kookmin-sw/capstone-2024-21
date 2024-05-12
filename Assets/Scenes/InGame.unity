@@ -2734,11 +2734,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604678489607022100, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8604678489607022100, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_TagString
-      value: ItemSpawner
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8604679178756972116, guid: beef3bcde1610f04aa96275436147bb9, type: 3}
       propertyPath: m_Layer

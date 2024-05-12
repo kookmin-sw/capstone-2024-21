@@ -6,7 +6,30 @@ using Photon.Pun;
 
 public class MapManager : MonoBehaviour
 {
+    private static MapManager _instance;
+    public static MapManager Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                _instance = FindObjectOfType<MapManager>();
+                if (!_instance)
+                {
+                    GameObject obj = new GameObject();
+                    obj.name = "MapManager";
+                    _instance = obj.AddComponent(typeof(MapManager)) as MapManager;
+                }
+            }
+            return _instance;
+        }
+    }
+
+
     GameObject[] gameObjs;
+
+    [SerializeField] public int ExitNeedBattery = 1;
+    [SerializeField] public int ExitChargedBattery = 0;
 
     [Header("BatterySpawner")]
     [SerializeField] List<GameObject> BatterySpawnerTargets = new List<GameObject>();//배터리 스포너 후보들
@@ -17,6 +40,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] int WeaponSpawnerCount = 1;
 
     [Header("Light")]
+    float brightSpeed = 1f;
     [SerializeField] List<GameObject> Lights = new List<GameObject>();//lights
 
     public PhotonView pv;
@@ -54,7 +78,7 @@ public class MapManager : MonoBehaviour
             {
                 BatterySpawnerTargets.Add(gameObjs[i]);
 
-                gameObjs[i].tag = "ItemSpawner";
+                gameObjs[i].tag = "Spawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
 
@@ -63,7 +87,7 @@ public class MapManager : MonoBehaviour
             {
                 WeaponSpawnerTargets.Add(gameObjs[i]);
 
-                gameObjs[i].tag = "ItemSpawner";
+                gameObjs[i].tag = "Spawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
             else if (gameObjs[i].name.Contains("Lamp") && gameObjs[i].GetComponentInChildren<Light>())
@@ -71,15 +95,14 @@ public class MapManager : MonoBehaviour
                 Lights.Add(gameObjs[i]);
 
                 //빛 초기환
-                gameObjs[i].GetComponentInChildren<Light>().range = 5;
-                gameObjs[i].GetComponentInChildren<Light>().intensity = 1;
+                Light light = gameObjs[i].GetComponentInChildren<Light>();
+                SetLight(light, 5, 1); //range=5, intensity =1로 초기
 
             }
         }
 
         LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
-        LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화 
-
+        LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
     }
 
     void addDoorRightScript(GameObject obj)
@@ -144,18 +167,62 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public IEnumerator BightenLight(Light light, int range)
+    {
+        Debug.Log("BightenLight 코루틴 실행됨 ");
+
+        float currntRange = light.range;
+
+        while (currntRange<range)
+        {
+            yield return null; //yield return을 만나는 순간마다 다음 구문이 실행되는 프레임으로 나뉘게 됨 
+            currntRange += brightSpeed*Time.deltaTime;
+            light.range = currntRange;
+        }
+    }
+
+    public IEnumerator SequentiallyBightenLight(Light light, int range)
+    {
+        Debug.Log("SequentiallyBightenLight 코루틴 실행됨 ");
+        for(int i = 1; i <= ExitNeedBattery; i++)
+        {
+            if(ExitChargedBattery == i)
+            {
+                StartCoroutine(BightenLight(light, range*i));
+            }
+        }
+        yield return null;
+    }
+
     [PunRPC]
-    public void ChangeLight(int range, int intensity)
+    public void BightenLight(int range)
     {
         for(int i=0;i< Lights.Count; i++) {
+            Light light = Lights[i].GetComponentInChildren<Light>();
+            StartCoroutine(BightenLight(light,range));
+        }
+
+    }
+
+    public void BightenLightRPC(int range)
+    {
+        pv.RPC("BightenLight", RpcTarget.AllBuffered, range);
+    }
+
+    public void SetLights(int range,int intensity=1)
+    {
+        for (int i = 0; i < Lights.Count; i++)
+        {
             Lights[i].GetComponentInChildren<Light>().range = range;
             Lights[i].GetComponentInChildren<Light>().intensity = intensity;
         }
 
     }
-
-    public void ChangeLightRPC(int range, int intensity=1)
+    public void SetLight(Light light, int range, int intensity = 1)
     {
-        pv.RPC("ChangeLight", RpcTarget.AllBuffered, range, intensity);
+        light.range = range;
+        light.intensity = intensity;
     }
+
+
 }
