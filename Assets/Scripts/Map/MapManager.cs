@@ -28,7 +28,7 @@ public class MapManager : MonoBehaviour
 
     GameObject[] gameObjs;
 
-    [SerializeField] public int ExitNeedBattery = 1;
+    public int ExitNeedBattery = 2;
     [SerializeField] public int ExitChargedBattery = 0;
 
     [Header("BatterySpawner")]
@@ -96,7 +96,7 @@ public class MapManager : MonoBehaviour
 
                 //빛 초기환
                 Light light = gameObjs[i].GetComponentInChildren<Light>();
-                SetLight(light, 5, 1); //range=5, intensity =1로 초기
+                SetLight(light, 5, 1); //range=5, intensity =1로 초기화 
 
             }
         }
@@ -173,11 +173,13 @@ public class MapManager : MonoBehaviour
 
         float currntRange = light.range;
 
-        while (currntRange<range)
+        while (light.range < range)
         {
-            yield return null; //yield return을 만나는 순간마다 다음 구문이 실행되는 프레임으로 나뉘게 됨 
-            currntRange += brightSpeed*Time.deltaTime;
-            light.range = currntRange;
+            yield return null; //yield return을 만나는 순간마다 다음 구문이 실행되는 프레임으로 나뉘게 됨
+            light.range += brightSpeed * Time.deltaTime;
+
+            //currntRange += brightSpeed*Time.deltaTime;
+            //light.range = currntRange;
         }
     }
 

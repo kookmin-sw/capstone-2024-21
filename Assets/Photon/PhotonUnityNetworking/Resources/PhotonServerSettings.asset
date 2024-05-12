@@ -55,6 +55,7 @@ MonoBehaviour:
   - RpcExitState
   - ChangeLight
   - BightenLight
+  - AddExitChargeBattery
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

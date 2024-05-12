@@ -3,19 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
 //Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
 {
-    Transform canvas;
+    PhotonView pv;
 
+    Transform canvas;
     GameObject image_F;//껐다 켰다 할 F UI. 
     GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
     Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     WeaponInventory WeaponQuickslot;
 
-    public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
-    public bool isExiting = false;
+
+    public bool isInvetigating = false; //수색중인가?
+    public bool isExiting = false; //탈출구에 배터리를 넣고 있는가? 
 
     GameObject ExitDoor;
     public string playerId;
@@ -31,6 +34,9 @@ public class Interact : MonoBehaviour
 
     private void Start()
     {
+        pv = gameObject.AddComponent<PhotonView>();
+        pv.ViewID = PhotonNetwork.AllocateViewID(0);
+
         canvas = GameObject.Find("Canvas").transform;
 
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
@@ -50,6 +56,7 @@ public class Interact : MonoBehaviour
         //레이캐스트 발사 
         if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance))
         {
+            //레이캐스트에 충돌한 물체가 Interact레이어라면 
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Interact"))
             {
                 //충돌한 물체의 레이어가 Interact고, 셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
@@ -61,13 +68,16 @@ public class Interact : MonoBehaviour
                     image_F.GetComponent<UIpressF>().show_image(); //UI에서 F 이미지 활성화 
                 }
             }
+            //레이캐스트에 충돌한 물체가 Interact레이어가 아니라면 
             else
             {
+                //status 초기화 
+                isInvetigating = false;
+                isExiting = false;
+
+                //셀렉한 물체가 있다면 unselect 
                 if (selectedTarget)
                 {
-                    isInvetigating = false; 
-                    isExiting = false;
-
                     removeOutline(selectedTarget);
                     clearTarget(selectedTarget);
                     image_F.GetComponent<UIpressF>().remove_image();
@@ -93,7 +103,6 @@ public class Interact : MonoBehaviour
                     {
                         selectedTarget.GetComponent<DoorLeft>().ChangeDoorStateRPC();
                     }
-
                 }
                 else if (selectedTarget.CompareTag("Spawner"))
                 {
@@ -133,13 +142,25 @@ public class Interact : MonoBehaviour
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
+
+                }
+                else if (selectedTarget.CompareTag("Exit"))
+                {
+                    Debug.Log("Exit 문 상호작용 ");
+                    FindMovedir();
+                    if (PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
+                    {
+                        circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
+                        isExiting = true;
+                    }
                 }
             }
 
         }
         else  //레이캐스트가 Interactable 오브젝트와 충돌하지 않고 있다면
         {
-            if (selectedTarget)            //셀렉된 타겟이 있다면
+            //셀렉된 타겟이 있다면
+            if (selectedTarget)            
             {
                 removeOutline(selectedTarget);
                 clearTarget(selectedTarget);
@@ -177,14 +198,23 @@ public class Interact : MonoBehaviour
             {
                 // 성공적으로 게이지가 다 찼다면
                 EraseInventoryBattery(); //인벤토리에서 배터리 하나 지우고 
-                MapManager.Instance.ExitChargedBattery++; // 차지한 배터리 하나 증가
-                //맵 밝게하기 
+                AddExitChargeBatteryRPC(); // 차지한 배터리 하나 증가
+
+                //맵 밝게하기
+                MapManager.Instance.BightenLightRPC(15);
 
                 // 문을 여는데 필요하한 갯수만큼 배터리를 차지했다면 탈출구 열기 
-                if(MapManager.Instance.ExitNeedBattery == MapManager.Instance.ExitNeedBattery)
+                if (MapManager.Instance.ExitNeedBattery == MapManager.Instance.ExitChargedBattery)
                 {
-                    OpenExitDoor();
+                    ExitDoor.GetComponent<Exit>().ChangeExitDoorStateRPC();
                 }
+                else
+                {
+                    Debug.Log("탈출구를 열기 위해서는 배터리를 더 차지해야합니다 ");
+                }
+
+                //isExiting
+                isExiting = false;
             }
         }
 
@@ -198,7 +228,6 @@ public class Interact : MonoBehaviour
         PlayerMoveDir = movement.moveDir;
     }
 
-    //현재 배터리를 가지고 있는지 확인하는 함수 
     bool CheckInventoryBattery()
     {
         bool check = false;
@@ -211,18 +240,6 @@ public class Interact : MonoBehaviour
             }
         }
         return check;
-    }
-
-    void OpenExitDoor()
-    {
-        if (ExitDoor.GetComponent<Exit>())
-        {
-            ExitDoor.GetComponent<Exit>().ChangeExitDoorStateRPC();
-        }
-        else
-        {
-            Debug.Log("탈출구에 컴포넌트가 없습니니다 ");
-        }
     }
 
     void EraseInventoryBattery()
@@ -238,10 +255,21 @@ public class Interact : MonoBehaviour
             idx++;
         }
         quicSlot.FreshSlot();
-        isExiting = false; 
+        //isExiting = false; 
         Debug.Log("배터리를 사용했습니닫.");
     }
 
+    [PunRPC]
+    void AddExitChargeBattery()
+    {
+        MapManager.Instance.ExitChargedBattery++;
+        Debug.Log("MapManager.Instance.ExitChargedBattery : "+ MapManager.Instance.ExitChargedBattery);
+    }
+
+    void AddExitChargeBatteryRPC()
+    {
+        pv.RPC("AddExitChargeBattery", RpcTarget.AllBuffered);
+    }
 
     void clearTarget(Transform obj)
     {
@@ -250,7 +278,6 @@ public class Interact : MonoBehaviour
         removeOutline(obj);
         selectedTarget = null;
         //Debug.Log(obj.name + " is unselected");
-
 
         isInvetigating = false; //수색중이라면 취소하고
         circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInteractGaugeImage(); //게이지UI끄기 
