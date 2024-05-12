@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class LobbyUIManager : MonoBehaviour
 {
-    Button StartButton;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI tagText;
+    public TextMeshProUGUI locationText;
+    public TextMeshProUGUI rankText;
+    public TextMeshProUGUI scoreText;
 
-    }
+    // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()
