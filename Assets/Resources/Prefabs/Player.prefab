@@ -5361,6 +5361,7 @@ MonoBehaviour:
   - {fileID: 5221460684810204920}
   - {fileID: 2238502313671331862}
   - {fileID: 1171927611567419732}
+  - {fileID: 9211573521248898947}
   - {fileID: 4189021082437541975}
   - {fileID: 1042517094913337198}
   equipWeapon: {fileID: 0}
@@ -93771,6 +93772,7 @@ GameObject:
   - component: {fileID: 6398658105303655887}
   - component: {fileID: 7133571737149686072}
   - component: {fileID: 2319198497490049385}
+  - component: {fileID: 4071111542367816952}
   m_Layer: 0
   m_Name: mixamorig:RightHandMiddle1
   m_TagString: Weapon
@@ -93833,3 +93835,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.077338, y: 0.05267, z: 0.039482}
   m_Center: {x: 0.001809, y: 0.016178, z: 0.005778}
+--- !u!114 &4071111542367816952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211573521248898947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f19215456674531b35b269e48192d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: b0d014e0055c8564a89266f844969be4, type: 2}
