@@ -16,6 +16,10 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//무기 스포너 후보들
     [SerializeField] int WeaponSpawnerCount = 1;
 
+    [Header("ItemSpawner")]
+    [SerializeField] List<GameObject> ItemSpawnerTargets = new List<GameObject>();//무기 스포너 후보들
+    [SerializeField] int ItemSpawnerCount = 1;
+
     // 모든 오브젝트들을 이름 기준으로 살펴보며 적절한 스크립트를 넣어줌 
     private void Awake()
     {
@@ -58,10 +62,18 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
+            else if (gameObjs[i].name.Contains("ItemSpawner"))
+            {
+                ItemSpawnerTargets.Add(gameObjs[i]);
+
+                gameObjs[i].tag = "ItemSpawner";
+                gameObjs[i].layer = LayerMask.NameToLayer("Interact");
+            }
         }
 
         LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
-        LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화 
+        LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
+        ItemSpawnerSpawner();
 
     }
 
@@ -125,6 +137,20 @@ public class MapManager : MonoBehaviour
                 cnt++;
             }
         }
+    }
 
+    void ItemSpawnerSpawner()
+    {
+        int cnt = 0;
+        while (cnt != ItemSpawnerCount)
+        {
+            int i = Random.Range(0, ItemSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
+            if (ItemSpawnerTargets[i].gameObject.GetComponent<ItemSpawner>() == null)
+            {
+                ItemSpawner itemSpawner = ItemSpawnerTargets[i].AddComponent<ItemSpawner>();
+                itemSpawner.enabled = true;
+                cnt++;
+            }
+        }
     }
 }
