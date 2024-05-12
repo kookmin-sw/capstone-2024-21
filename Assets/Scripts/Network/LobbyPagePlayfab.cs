@@ -4,17 +4,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using static UnityEditor.FilePathAttribute;
+using UnityEditor.PackageManager;
+using System.Linq;
 
 public class LobbyPagePlayfab : MonoBehaviour
 {
     public string playFabId;
-    public string username;
+    public string userName;
+    public string playerLocation;
+    public string playerRank;
+    public string playerScore;
     public TextMeshProUGUI playerName;
     public GameObject rowPrefab;
     public Transform rowsParent;
+
+    public LobbyUIManager lobbyUIManager;
     void Awake()
     {
-
+        lobbyUIManager = GetComponent<LobbyUIManager>();
         // 로그인된 상태에서만 PlayFab ID를 가져옵니다.
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
@@ -29,49 +37,81 @@ public class LobbyPagePlayfab : MonoBehaviour
         }
 
         GetLeaderboard();
+        GetPlayerCountry();
     }
 
+
+
+    public void GetPlayerCountry()
+    {
+        var request = new GetPlayerProfileRequest
+        {
+            ProfileConstraints = new PlayerProfileViewConstraints
+            {
+                ShowLocations = true // 위치 정보(국가)를 요청합니다.
+            }
+        };
+        PlayFabClientAPI.GetPlayerProfile(request, OnPlayerCountryGet, (error) => { });
+    }
+
+    public void OnPlayerCountryGet(GetPlayerProfileResult result)
+    {
+        playerLocation = result.PlayerProfile.Locations[0].CountryCode.Value.ToString();
+        lobbyUIManager.locationText.text = playerLocation;
+    }
     public void GetLeaderboard()
     {
         var request = new GetLeaderboardRequest
         {
             StatisticName = "Score",
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 100
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, (error) => { });
     }
 
-    void OnLeaderboardGet(GetLeaderboardResult result)
+    public void OnLeaderboardGet(GetLeaderboardResult result)
     {
         foreach(Transform item in rowsParent)
         {
             Destroy(item.gameObject);
         }
 
-        foreach(var item in result.Leaderboard)
+        for (int i = 0; i < result.Leaderboard.Count; i++)
         {
-            GameObject row = Instantiate(rowPrefab, rowsParent);
-            TextMeshProUGUI[] texts = row.GetComponentsInChildren<TextMeshProUGUI>();
-            texts[0].text = (item.Position+1).ToString();
-            texts[1].text = item.DisplayName.ToString();
-            texts[2].text = item.StatValue.ToString();
+            if(i < 10)
+            {
+                GameObject row = Instantiate(rowPrefab, rowsParent);
+                TextMeshProUGUI[] texts = row.GetComponentsInChildren<TextMeshProUGUI>();
+                texts[0].text = (result.Leaderboard[i].Position + 1).ToString();
+                texts[1].text = result.Leaderboard[i].DisplayName;
+                texts[2].text = result.Leaderboard[i].StatValue.ToString();
+            }
+
+            // 자신의 정보인 경우 순위와 점수를 업데이트합니다.
+            if (result.Leaderboard[i].PlayFabId == playFabId)
+            {
+                playerRank = (result.Leaderboard[i].Position + 1).ToString();
+                playerScore = result.Leaderboard[i].StatValue.ToString();
+                lobbyUIManager.rankText.text = playerRank;
+                lobbyUIManager.scoreText.text = playerScore;
+            }
         }
     }
 
     // 계정 정보 가져오기 성공 시 호출될 콜백 함수
-    private void OnGetAccountInfoSuccess(GetAccountInfoResult result)
+    public void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
         playFabId = result.AccountInfo.PlayFabId;
-        username = result.AccountInfo.Username;
-        GameManager.Instance.UserId = username;
-        playerName.text = username;
-        Debug.Log("PlayFab ID: " + playFabId);
-        Debug.Log("PlayFab ID: " + username);
+        userName = result.AccountInfo.Username;
+        GameManager.Instance.UserId = userName;
+        lobbyUIManager.nameText.text = userName;
+        lobbyUIManager.tagText.text = playFabId;
+        playerName.text = userName;
     }
 
     // 계정 정보 가져오기 실패 시 호출될 콜백 함수
-    private void OnGetAccountInfoFailure(PlayFabError error)
+    public void OnGetAccountInfoFailure(PlayFabError error)
     {
         Debug.LogError("GetAccountInfo request failed: " + error.GenerateErrorReport());
     }

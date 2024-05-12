@@ -106,14 +106,11 @@ public class AttackManager : MonoBehaviour
     [PunRPC]
     void Swap(){
         if(!sDown1 && !sDown2 && !sDown3 && !sDown4 && !sDown5 && !eDown && !gDown) return;
-
+        
         if (pv.IsMine)
         {   
             if (equipWeapon != weapons[9]) // 착용된 장비가 있고
             {
-                Debug.Log(equipWeapon);
-                Debug.Log(equipWeapon.transform.childCount);
-                Debug.Log(equipWeapon.GetComponent<ItemData>().itemData.ItemType);
                 if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
                 {
                     if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
@@ -130,40 +127,11 @@ public class AttackManager : MonoBehaviour
             if (isAttack) return; // 공격 중에는 스왑 불가
 
 
-            if(Input.GetButtonDown("eDown"))
+            if(eDown)
             {
                 if (equipWeapon.GetComponent<ItemData>().itemData.ItemType == 12)
                 {
-                    movementStateManager.anim.SetLayerWeight(8, 1);
-                    movementStateManager.anim.SetTrigger("Pill");
-                }
-            }
-
-            if (movementStateManager.pillTaked == true)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
-                    {
-                        Debug.Log("약먹음");
-
-                        movementStateManager.anim.SetLayerWeight(8, 0);
-                        hpManager.OnRecovery(itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemRecovery);
-                        itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
-                        itemQuickSlots.GetComponent<Inventory>().FreshSlot();
-                        
-                        RpcEquip(9);
-                        equipWeapon = weapons[9];
-                        isSwap = true;
-
-                        movementStateManager.anim.SetBool(Armed, false);
-                        movementStateManager.anim.SetLayerWeight(1, 0);
-                        movementStateManager.anim.SetLayerWeight(2, 0);
-                        Armed = "";
-                        movementStateManager.pillTaked = false;
-
-                        break;
-                    }
+                    RpcPill();
                 }
             }
 
@@ -372,19 +340,33 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    void UseItem(){
-        // 11 : battery
-        // 12 : pill
-        // 13 : trap
-        // ......... //
-        if(equipItemIndex == 12){
-            movementStateManager.anim.SetTrigger("pill");
-        }
-    }
+    void PillTaked(){
+        if (movementStateManager.pillTaked == true)
+        {   
+            for (int i = 0; i < 4; i++)
+            {
+                if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
+                {
+                    Debug.Log("약먹음");
 
-    void EndItem(){
-        if(equipItemIndex == 12){
-            movementStateManager.anim.SetTrigger("pill");
+                    movementStateManager.anim.SetLayerWeight(8, 0);
+                    hpManager.OnRecovery(itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemRecovery);
+                    itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
+                    itemQuickSlots.GetComponent<Inventory>().FreshSlot();
+                    
+                    RpcEquip(9);
+                    equipWeapon = weapons[9];
+                    isSwap = true;
+
+                    movementStateManager.anim.SetBool(Armed, false);
+                    movementStateManager.anim.SetLayerWeight(1, 0);
+                    movementStateManager.anim.SetLayerWeight(2, 0);
+                    Armed = "";
+                    movementStateManager.pillTaked = false;
+
+                    break;
+                }
+            }
         }
     }
 
@@ -409,6 +391,16 @@ public class AttackManager : MonoBehaviour
 
     public void RpcEquip(int RpcEquipWeaponIndex){
         pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+    }
+
+    [PunRPC]
+    void RpcTakingPill(){
+        movementStateManager.anim.SetLayerWeight(8, 1);
+        movementStateManager.anim.SetTrigger("Pill");
+    }
+    
+    public void RpcPill(){
+        pv.RPC("RpcTakingPill", RpcTarget.All);
     }
 
     public void RpcSwap()
