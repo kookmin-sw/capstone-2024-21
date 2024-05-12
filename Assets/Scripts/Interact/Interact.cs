@@ -107,7 +107,6 @@ public class Interact : MonoBehaviour
                 }
                 else if (selectedTarget.CompareTag("ItemSpawner"))
                 {
-                    //Debug.Log("betterySpawner 와 상호작용");
                     circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                     isInvetigating = true;//수색시작
                 }
@@ -173,6 +172,10 @@ public class Interact : MonoBehaviour
                 else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null)
                 {
                     selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
+                }
+                else if (selectedTarget.gameObject.GetComponent<ItemSpawner>() != null)
+                {
+                    selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
                 }
 
                 //수색종료

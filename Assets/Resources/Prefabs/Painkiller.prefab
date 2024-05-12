@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -8506611681605092845}
   - component: {fileID: -4779002062982825153}
   - component: {fileID: 8328171692316895679}
+  - component: {fileID: 6135868678732720217}
   m_Layer: 3
   m_Name: Painkiller
   m_TagString: Item
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 673718436290370276}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4595962, y: 11.232018, z: -2.931301}
+  m_LocalPosition: {x: 3.4595962, y: 11.232, z: -2.931301}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -75,7 +76,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!135 &8328171692316895679
 SphereCollider:
@@ -97,7 +98,20 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 15
-  m_Center: {x: 9, y: 0.47369996, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6135868678732720217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673718436290370276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be476986d1b684e0dbdcf6760042c611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 60
 --- !u!1 &1100495867243827177
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +139,7 @@ Transform:
   m_GameObject: {fileID: 1100495867243827177}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.11, y: 6.25, z: 2.99}
+  m_LocalPosition: {x: 0, y: 6.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -208,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 1700620003884032019}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.120403, y: -11.232018, z: 2.931301}
+  m_LocalPosition: {x: 0, y: -11.232018, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -291,7 +305,7 @@ Transform:
   m_GameObject: {fileID: 6466998495381891639}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.53, y: -10.59, z: 2.931301}
+  m_LocalPosition: {x: 0, y: -10.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
