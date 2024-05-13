@@ -14,23 +14,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI statePlayerName;
     [SerializeField] private TextMeshProUGUI gameOverPlayerName;
-    [SerializeField] private TextMeshProUGUI rankScore;
-    [SerializeField] private TextMeshProUGUI killScore;
-    [SerializeField] private TextMeshProUGUI survivalTime;
 
 
-    [SerializeField] private TextMeshProUGUI killPoint;
-    [SerializeField] private TextMeshProUGUI rankPoint;
-    public TextMeshProUGUI totalScore;
-
-    private float gameTime;
-    private int selectSlot;
-
-    public int killCount;
-    public int totalPlayers;
-    public int curPlayers;
-
-    [HideInInspector] public bool isGameStart;
+    private int selectSlot = 0;
     [HideInInspector] public bool isGameOver;
     [HideInInspector] public bool isUIActivate;
     [HideInInspector] public bool isComActivate;
@@ -42,11 +28,8 @@ public class UIManager : MonoBehaviour
         combinationSlots.SetActive(false);
         systemEnvironment.SetActive(false);
         gameOverBoard.SetActive(false);
-        isGameStart = false;
         isGameOver = false;
         isUIActivate = false;
-        gameTime = 0;
-        selectSlot = 0;
         ChangeSlot(0);
 
         statePlayerName.text = GameManager.Instance.UserId;
@@ -54,16 +37,13 @@ public class UIManager : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+         
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if(isGameStart == true)
-        {
-            gameTime += Time.deltaTime;
-        }
         if(isGameOver == false)
         {
             ManageCombinationSlot();
@@ -118,16 +98,6 @@ public class UIManager : MonoBehaviour
     {
         if(isGameOver)
         {
-            isGameStart = false;
-            gameTime = Mathf.FloorToInt(gameTime);
-            survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
-            killScore.text = killCount.ToString(); //킬매니저에 killCount넣어줘야 한다!!!
-            rankScore.text = curPlayers.ToString() + "/" + totalPlayers.ToString();
-
-            killPoint.text = "+" + (killCount * 5).ToString();
-            rankPoint.text = "+" + Mathf.FloorToInt(20 / curPlayers).ToString();
-            totalScore.text = ((killCount * 5) + Mathf.FloorToInt(20 / curPlayers)).ToString();
-
             gameOverBoard.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;

@@ -23,7 +23,6 @@ public class LobbyUIManager : MonoBehaviour
 
     public void OnClickedStartButton()
     {
-
         SceneManager.LoadScene("InGame");
     }
 }
