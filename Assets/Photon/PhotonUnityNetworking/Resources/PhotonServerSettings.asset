@@ -52,7 +52,10 @@ MonoBehaviour:
   - RpcAddKillCount
   - RpcDie
   - RpcTakingPill
+<<<<<<< Updated upstream
   - RPCFlashLight
+=======
+>>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
