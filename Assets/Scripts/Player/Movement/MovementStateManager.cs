@@ -76,8 +76,8 @@ public class MovementStateManager : MonoBehaviour
         staminaManager = GetComponent<StaminaManager>();
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         // FlashLight
-        // spotLightObject = transform.Find("FlashLight").gameObject;
-        // lightComponent = spotLightObject.GetComponent<Light>();
+        spotLightObject = transform.Find("CameraFollowPos").gameObject;
+        lightComponent = spotLightObject.GetComponentInChildren<Light>();
 
         SwitchState(Idle);
     }

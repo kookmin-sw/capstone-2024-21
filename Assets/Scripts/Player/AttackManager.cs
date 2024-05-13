@@ -58,7 +58,7 @@ public class AttackManager : MonoBehaviour
     
     void Update(){
         getInput();
-        
+        FlashLight();
     }
 
     void getInput(){
@@ -73,7 +73,7 @@ public class AttackManager : MonoBehaviour
     }
 
     public void FlashLight(){
-        if(qDown) 
+        if(qDown) {
             Debug.Log("FQFQFQQ");
             Debug.Log("lightComponent");
             if(movementStateManager.lightComponent.enabled) {
@@ -81,6 +81,7 @@ public class AttackManager : MonoBehaviour
                 Debug.Log("IITITNT");
             }
             else movementStateManager.lightComponent.enabled = true;
+        }
     }
 
     // 공격
