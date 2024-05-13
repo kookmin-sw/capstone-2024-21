@@ -6,6 +6,29 @@ using Photon.Pun;
 
 public class MapManager : MonoBehaviour
 {
+    //싱글턴
+    private static MapManager _instance;
+    public static MapManager Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                _instance = FindObjectOfType<MapManager>();
+                if (!_instance)
+                {
+                    GameObject obj = new GameObject();
+                    obj.name = "MapManager";
+                    _instance = obj.AddComponent(typeof(MapManager)) as MapManager;
+                }
+            }
+            return _instance;
+        }
+    }
+    [Header("About Exit")]
+    [SerializeField] public int ExitNeedBattery = 2;
+    [SerializeField] public int ExitChargedBattery = 0;
+
     GameObject[] gameObjs;
 
     [Header("BatterySpawner")]
@@ -20,9 +43,18 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<GameObject> ItemSpawnerTargets = new List<GameObject>();//무기 스포너 후보들
     [SerializeField] int ItemSpawnerCount = 1;
 
+    [Header("Light")]
+    float brightSpeed = 1f;
+    [SerializeField] List<GameObject> Lights = new List<GameObject>();//lights
+
+    public PhotonView pv;
+
     // 모든 오브젝트들을 이름 기준으로 살펴보며 적절한 스크립트를 넣어줌 
     private void Awake()
     {
+        pv = gameObject.AddComponent<PhotonView>();
+        pv.ViewID = PhotonNetwork.AllocateViewID(0);
+
         gameObjs = FindObjectsOfType<GameObject>();
 
         for(int i = 0; i < gameObjs.Length; i++)
@@ -68,6 +100,15 @@ public class MapManager : MonoBehaviour
 
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
+            }
+            else if (gameObjs[i].name.Contains("Lamp") && gameObjs[i].GetComponentInChildren<Light>())
+            {
+                Lights.Add(gameObjs[i]);
+
+                //빛 초기환
+                Light light = gameObjs[i].GetComponentInChildren<Light>();
+                SetLight(light, 5, 1); //range=5, intensity =1로 초기화 
+
             }
         }
 
@@ -153,4 +194,35 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+
+    //여기부터 살펴보기 !!!
+    public IEnumerator BightenLight(Light light, int range)
+    {
+        while (light.range < range)
+        {
+            yield return null; //yield return을 만나는 순간마다 다음 구문이 실행되는 프레임으로 나뉘게 됨 
+            light.range += brightSpeed * Time.deltaTime;
+        }
+    }
+
+    [PunRPC]
+    public void StartCoroutineBightenLight(int range)
+    {
+        for (int i = 0; i < Lights.Count; i++)
+        {
+            Light light = Lights[i].GetComponentInChildren<Light>();
+            StartCoroutine(BightenLight(light, range));
+        }
+    }
+
+    public void BightenLightRPC(int range)
+    {
+        pv.RPC("StartCoroutineBightenLight", RpcTarget.AllBuffered, range);
+    }
+    public void SetLight(Light light, int range, int intensity = 1)
+    {
+        light.range = range;
+        light.intensity = intensity;
+    }
+
 }
