@@ -8,12 +8,15 @@ public class KillManager : MonoBehaviour
     public string playerId;
     public int killCount { get; set; } = 0;
 
+
     private PhotonView pv;
+    private UIManager uiManager;
 
     // Start is called before the first frame update
     void Awake()
     {
         pv = GetComponent<PhotonView>();
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     private void Start()
@@ -37,8 +40,16 @@ public class KillManager : MonoBehaviour
     [PunRPC]
     public void RpcAddKillCount()
     {
-        killCount += 1;
-        Debug.Log("Kill Count: " + killCount);
+        if(pv.IsMine)
+        {
+            killCount += 1;
+            uiManager.killCount = killCount;
+            Debug.Log("Kill Count: " + killCount);
+        }
+        else
+        {
+            uiManager.curPlayers -= 1;
+        }
     }
 
     public void AddKillCount()
