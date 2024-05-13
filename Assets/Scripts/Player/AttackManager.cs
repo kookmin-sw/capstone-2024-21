@@ -72,16 +72,15 @@ public class AttackManager : MonoBehaviour
         qDown = Input.GetButtonDown("qDown"); // 손전등 On / Off
     }
 
+    [PunRPC]
+    public void RPCFlashLight(){
+        if(pv.IsMine)
+            if(qDown)
+                movementStateManager.lightComponent.enabled = !movementStateManager.lightComponent.enabled;
+    }
+
     public void FlashLight(){
-        if(qDown) {
-            Debug.Log("FQFQFQQ");
-            Debug.Log("lightComponent");
-            if(movementStateManager.lightComponent.enabled) {
-                movementStateManager.lightComponent.enabled = false;
-                Debug.Log("IITITNT");
-            }
-            else movementStateManager.lightComponent.enabled = true;
-        }
+        pv.RPC("RPCFlashLight", RpcTarget.All);
     }
 
     // 공격
