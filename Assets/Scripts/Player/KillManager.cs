@@ -19,6 +19,7 @@ public class KillManager : MonoBehaviour
     private void Start()
     {
         playerId = GameManager.Instance.UserId;
+        Rename(playerId);
     }
 
     [PunRPC]
