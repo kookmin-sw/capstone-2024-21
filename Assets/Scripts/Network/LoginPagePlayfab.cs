@@ -117,6 +117,8 @@ public class LoginPagePlayfab : MonoBehaviour
         passwordConfirmField.text = "";
         registerPasswordField.text = "";
         nickNameField.text = "";
+
+
     }
 
 }

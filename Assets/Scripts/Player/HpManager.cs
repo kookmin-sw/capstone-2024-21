@@ -54,7 +54,6 @@ public class HpManager : MonoBehaviour
         GameObject obj = GameObject.Find(playerId);
         KillManager killer = obj.GetComponent<KillManager>();
         killer.AddKillCount();
-        uiManager.killCount += 1;
     }
 
     // 데미지 처리하는 함수
@@ -114,20 +113,13 @@ public class HpManager : MonoBehaviour
         {
             onDeath();
         }
+        isDead = true;
+        gameObject.SetActive(false);
         if (pv.IsMine)
         {
             Debug.Log("사망");
-            isDead = true;
-            gameObject.SetActive(false);
             uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
-        }
-        else
-        {
-            if(isDead == false)
-            {
-                uiManager.curPlayers -= 1;
-            }
         }
     }
 
