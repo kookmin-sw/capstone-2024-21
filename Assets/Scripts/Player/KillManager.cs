@@ -18,11 +18,8 @@ public class KillManager : MonoBehaviour
 
     private void Start()
     {
-        if (pv.IsMine)
-        {
-            playerId = GameManager.Instance.UserId;
-            Rename(playerId);
-        }
+        playerId = GameManager.Instance.UserId;
+        Rename(playerId);
     }
 
     [PunRPC]
@@ -33,7 +30,8 @@ public class KillManager : MonoBehaviour
 
     public void Rename(string playerId)
     {
-        pv.RPC("RpcRename", RpcTarget.All, playerId);
+        // pv.RPC("RpcRename", RpcTarget.All, playerId);
+        this.name = pv.Owner.NickName;
     }
 
     [PunRPC]
