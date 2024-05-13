@@ -58,7 +58,8 @@ public class AttackManager : MonoBehaviour
     
     void Update(){
         getInput();
-        FlashLight();
+        if (qDown)
+            FlashLight();
     }
 
     void getInput(){
@@ -75,12 +76,11 @@ public class AttackManager : MonoBehaviour
     [PunRPC]
     public void RPCFlashLight(){
         if(pv.IsMine)
-            if(qDown)
-                movementStateManager.lightComponent.enabled = !movementStateManager.lightComponent.enabled;
+            movementStateManager.lightComponent.enabled = !movementStateManager.lightComponent.enabled;
     }
 
     public void FlashLight(){
-        pv.RPC("RPCFlashLight", RpcTarget.All);
+        pv.RPC("RPCFlashLight", RpcTarget.AllBuffered);
     }
 
     // 공격
@@ -118,8 +118,6 @@ public class AttackManager : MonoBehaviour
 
     [PunRPC]
     void Swap(){
-        if(!sDown1 && !sDown2 && !sDown3 && !sDown4 && !sDown5 && !eDown && !gDown) return;
-        
         if (pv.IsMine)
         {   
             if (equipWeapon != weapons[9]) // 착용된 장비가 있고
@@ -418,6 +416,8 @@ public class AttackManager : MonoBehaviour
 
     public void RpcSwap()
     {
+        if (!sDown1 && !sDown2 && !sDown3 && !sDown4 && !sDown5 && !eDown && !gDown) return;
+
         pv.RPC("Swap", RpcTarget.AllBuffered);
     }
 
