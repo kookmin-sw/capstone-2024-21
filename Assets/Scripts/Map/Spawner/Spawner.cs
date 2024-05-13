@@ -21,12 +21,6 @@ public class Spawner : MonoBehaviour
     //네트워크
     public PhotonView pv;
 
-    private void Start()
-    {
-        pv = gameObject.AddComponent<PhotonView>();
-        pv.ViewID = PhotonNetwork.AllocateViewID(0);
-    }
-
     //interact 스크립트에서 호출됨. 아이템 리스트중 랜덤으로 하나를 뽑아서 스폰
     [PunRPC]
     public void SpawnItem()
