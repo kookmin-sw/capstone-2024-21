@@ -34,6 +34,8 @@ public class Spawner : MonoBehaviour
             // 스포너 근처의랜덤 위치를 가져옵니다.
             Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
 
+            Debug.Log("transform.position " + transform.position);
+
             GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
             itemRigidbody = item.GetComponent<Rigidbody>();
             Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
