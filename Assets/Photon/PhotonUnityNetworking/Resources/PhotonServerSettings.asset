@@ -51,6 +51,8 @@ MonoBehaviour:
   - RpcRename
   - RpcAddKillCount
   - RpcDie
+  - RpcTakingPill
+  - RPCFlashLight
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
