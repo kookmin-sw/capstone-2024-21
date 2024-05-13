@@ -29,8 +29,6 @@ public class Interact : MonoBehaviour
     Transform selectedTarget;
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
-    [SerializeField] int needBattery = 0;
-
     private void Start()
     {
         canvas = GameObject.Find("Canvas").transform;
@@ -67,6 +65,7 @@ public class Interact : MonoBehaviour
             {
                 if (selectedTarget)
                 {
+                    isInvetigating = false;
                     isExiting = false;
                     removeOutline(selectedTarget);
                     clearTarget(selectedTarget);
@@ -187,8 +186,19 @@ public class Interact : MonoBehaviour
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
             {
                 // 성공적으로 게이지가 다 찼다면
-                OpenExitDoor();
-                EraseInventoryBattery();
+                isExiting = false;
+                EraseInventoryBattery(); //인벤토리에서 배터리 하나 지우고 
+                MapManager.Instance.AddChargeBatteryRPC(); // 차지한 배터리 하나 증가
+
+                //맵 밝게하기 
+                MapManager.Instance.BightenLightRPC(5*(1+MapManager.Instance.ExitChargedBattery));
+                //Debug.Log("코루틴 끝남 ?");
+
+                // 문을 여는데 필요하한 갯수만큼 배터리를 차지했다면 탈출구 열기 
+                if (MapManager.Instance.ExitNeedBattery == MapManager.Instance.ExitChargedBattery)
+                {
+                    ExitDoor.GetComponent<Exit>().ChangeExitDoorStateRPC(); //OpenExitDoor
+                }
             }
         }
 
@@ -196,71 +206,41 @@ public class Interact : MonoBehaviour
 
     public void FindMovedir()
     {
+        Debug.Log("FindMovedir실행");
         playerId = GameManager.Instance.UserId;
         GameObject obj = GameObject.Find(playerId);
         MovementStateManager movement = obj.GetComponent<MovementStateManager>();
         PlayerMoveDir = movement.moveDir;
     }
 
+    //배터리를 가지고 있는지 확인 
     bool CheckInventoryBattery()
     {
-        //현재 가지고 있는 배터리 갯수 확인
-        int cntBattery = 0;
         for (int i = 0; i < quicSlot.items.Count; i++)
         {
-            Debug.Log("quicSlot.items[i] : "+quicSlot.items[i]);
-            if (quicSlot.items[i] && quicSlot.items[i].itemName == "battery")
-            {
-                cntBattery++;
-            }
+            if (quicSlot.items[i] && quicSlot.items[i].itemName == "battery") return true;
         }
-        Debug.Log("현재 소지한 배터리 갯수 : " + cntBattery);
-
-        if (cntBattery >= needBattery)
-        {
-            return true;
-        }
-        else
-        {   
-            Debug.Log("배터리가 부족합니다.");
-            return false;
-        }
+        return false;
     }
 
-    void OpenExitDoor()
-    {
-        if (ExitDoor.GetComponent<Exit>())
-        {
-            ExitDoor.GetComponent<Exit>().ChangeExitDoorStateRPC();
-        }
-        else
-        {
-            Debug.Log("탈출구에 컴포넌트가 없습니니다 ");
-        }
-    }
-
+    //사용한 배터리 삭제
     void EraseInventoryBattery()
     {
-        //사용한 배터리 삭제
-        int cntBattery = 0;
-        int idx = 0;
-
-        while (cntBattery < needBattery)
+        for (int i = 0; i < quicSlot.items.Count; i++)
         {
-            Debug.Log("idx : " + idx);
-            if (quicSlot.items[idx] && quicSlot.items[idx].itemName == "battery")
-            {
-                Debug.Log("hit");
-                quicSlot.slots[idx].item = null;
-
-                cntBattery++;
+            if (quicSlot.items[i] && quicSlot.items[i].itemName == "battery"){
+                quicSlot.slots[i].item = null;
+                break;
             }
-            idx++;
+
+            
         }
         quicSlot.FreshSlot();
         isExiting = false; 
         Debug.Log("배터리를 사용했습니닫.");
     }
+
+
 
 
     void clearTarget(Transform obj)
@@ -269,10 +249,10 @@ public class Interact : MonoBehaviour
 
         removeOutline(obj);
         selectedTarget = null;
-        Debug.Log(obj.name + " is unselected");
-
+        //Debug.Log(obj.name + " is unselected");
 
         isInvetigating = false; //수색중이라면 취소하고
+        isExiting = false;
         circleGaugeControler.GetComponent<InteractGaugeControler>().DisableInteractGaugeImage(); //게이지UI끄기 
 
     }
@@ -284,7 +264,7 @@ public class Interact : MonoBehaviour
         clearTarget(selectedTarget); //이전에 이미 선택했던 오브젝트는 원래대로
 
         selectedTarget = obj;
-        Debug.Log("selectTarget is " + obj.name);
+        //Debug.Log("selectTarget is " + obj.name);
         addOutline(obj);
     }
 
