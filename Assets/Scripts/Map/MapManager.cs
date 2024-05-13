@@ -229,7 +229,9 @@ public class MapManager : MonoBehaviour
     [PunRPC]
     public void AddChargeBattery()
     {
+        Debug.Log("AddChargeBattery 실행! 추가 전 : " + ExitChargedBattery);
         ExitChargedBattery++;
+        Debug.Log("  추가 후  : " + ExitChargedBattery);
     }
 
     public void AddChargeBatteryRPC()
