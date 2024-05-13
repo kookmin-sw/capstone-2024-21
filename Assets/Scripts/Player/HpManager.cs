@@ -73,6 +73,7 @@ public class HpManager : MonoBehaviour
             // 체력이 0 이하이고 살아있으면 사망
             if (hp <= 0 && !isDead)
             {
+                hp = 0;
                 Debug.Log("나를 죽인 사람: " + playerId);
                 AddKillCount(playerId);
                 Die();

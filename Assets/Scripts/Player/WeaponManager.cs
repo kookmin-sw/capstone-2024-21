@@ -24,9 +24,10 @@ public class WeaponManager : MonoBehaviour
             HpManager hpManager = other.GetComponent<HpManager>();
             // AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
+            meleeArea.enabled = false;
             if (hpManager != null) {
                 // Enemy.OnDamaged();
-                meleeArea.enabled = false;
+                
                     
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage, killManager.playerId);
