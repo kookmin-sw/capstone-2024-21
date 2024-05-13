@@ -14,6 +14,8 @@ public class HpManager : MonoBehaviour
     public float hp { get; set; }
     public bool isDead { get; set; } // 죽었는지 확인
 
+    public AttackManager attackManager;
+
     [SerializeField] private Slider healthPointBar;
     [SerializeField] private TMP_Text healthPointCount;
     [SerializeField] private UIManager uiManager;
@@ -28,6 +30,7 @@ public class HpManager : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
+        attackManager = GetComponent<AttackManager>();
         uiManager = FindObjectOfType<UIManager>();
         healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
         healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
@@ -42,29 +45,23 @@ public class HpManager : MonoBehaviour
         isDead = false;
     }
 
-    // [PunRPC]
-    // public void ApplyUpdatedHp(float newHp, bool newIsDead)
-    // {
-    //     hp = newHp;
-    //     isDead = newIsDead;
-    // }
-
     public void AddKillCount(string playerId)
     {
         GameObject obj = GameObject.Find(playerId);
         KillManager killer = obj.GetComponent<KillManager>();
         killer.AddKillCount();
-        uiManager.killCount += 1;
     }
 
     // 데미지 처리하는 함수
     [PunRPC]
     public void RpcOnDamage(float damage, string playerId)
     {
-        Debug.Log("RpcOnDamage는 실행됨");
-        if (pv.IsMine){
-            Debug.Log("pv.isMine은 실행됨");
+        if (pv.IsMine && GameManager.Instance.UserId != playerId){
+            attackManager.OnDamaged();
             Debug.Log("데미지 입음");
+            Debug.Log("내 이름: " + GameManager.Instance.UserId);
+            Debug.Log("나를 때린 사람 이름: " + playerId);
+
             Debug.Log("받은 데미지: " + damage);
             hp -= damage;
             healthPointBar.value = hp;
@@ -121,13 +118,6 @@ public class HpManager : MonoBehaviour
             gameObject.SetActive(false);
             uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
-        }
-        else
-        {
-            if(isDead == false)
-            {
-                uiManager.curPlayers -= 1;
-            }
         }
     }
 
