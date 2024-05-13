@@ -188,11 +188,11 @@ public class Interact : MonoBehaviour
                 // 성공적으로 게이지가 다 찼다면
                 isExiting = false;
                 EraseInventoryBattery(); //인벤토리에서 배터리 하나 지우고 
-                MapManager.Instance.ExitChargedBattery++; // 차지한 배터리 하나 증가
+                MapManager.Instance.AddChargeBatteryRPC(); // 차지한 배터리 하나 증가
 
                 //맵 밝게하기 
                 MapManager.Instance.BightenLightRPC(5*(1+MapManager.Instance.ExitChargedBattery));
-                Debug.Log("코루틴 끝남 ?");
+                //Debug.Log("코루틴 끝남 ?");
 
                 // 문을 여는데 필요하한 갯수만큼 배터리를 차지했다면 탈출구 열기 
                 if (MapManager.Instance.ExitNeedBattery == MapManager.Instance.ExitChargedBattery)
@@ -239,6 +239,8 @@ public class Interact : MonoBehaviour
         isExiting = false; 
         Debug.Log("배터리를 사용했습니닫.");
     }
+
+
 
 
     void clearTarget(Transform obj)

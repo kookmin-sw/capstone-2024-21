@@ -219,10 +219,22 @@ public class MapManager : MonoBehaviour
     {
         pv.RPC("StartCoroutineBightenLight", RpcTarget.AllBuffered, range);
     }
+
     public void SetLight(Light light, int range, int intensity = 1)
     {
         light.range = range;
         light.intensity = intensity;
+    }
+
+    [PunRPC]
+    public void AddChargeBattery()
+    {
+        ExitChargedBattery++;
+    }
+
+    public void AddChargeBatteryRPC()
+    {
+        pv.RPC("AddChargeBattery", RpcTarget.AllBuffered);
     }
 
 }
