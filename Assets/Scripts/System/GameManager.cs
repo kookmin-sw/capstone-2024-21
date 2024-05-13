@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public string UserId { get; set; } = "yongjae";
+    public string UserId { get; set; } = "soldier";
 
     void Awake()
     {

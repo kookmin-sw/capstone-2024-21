@@ -21,12 +21,14 @@ public class WeaponManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other){
         if(other.gameObject.tag == "Player"){
+            meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
-            AttackManager Enemy = other.GetComponent<AttackManager>();
+            // AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
-            if (Enemy != null) {
-                Enemy.OnDamaged();
-                meleeArea.enabled = false;
+            
+            if (hpManager != null) {
+                // Enemy.OnDamaged();
+                
                     
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage, killManager.playerId);
