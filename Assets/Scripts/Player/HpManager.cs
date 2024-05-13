@@ -74,6 +74,8 @@ public class HpManager : MonoBehaviour
             if (hp <= 0 && !isDead)
             {
                 hp = 0;
+                healthPointBar.value = hp;
+                healthPointCount.text = hp.ToString();
                 Debug.Log("나를 죽인 사람: " + playerId);
                 AddKillCount(playerId);
                 Die();
