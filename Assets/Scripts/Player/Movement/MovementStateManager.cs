@@ -44,6 +44,10 @@ public class MovementStateManager : MonoBehaviour
     bool isFireReady;
     ////// Attack
 
+    // FlashLight
+    public GameObject spotLightObject;
+    public Light lightComponent;
+
     public MovementBaseState previousState;
     public MovementBaseState currentState;
     public IdleState Idle = new IdleState();
@@ -71,6 +75,9 @@ public class MovementStateManager : MonoBehaviour
         attackManager = GetComponent<AttackManager>();
         staminaManager = GetComponent<StaminaManager>();
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        // FlashLight
+        // spotLightObject = transform.Find("FlashLight").gameObject;
+        // lightComponent = spotLightObject.GetComponent<Light>();
 
         SwitchState(Idle);
     }

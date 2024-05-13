@@ -21,6 +21,7 @@ public class AttackManager : MonoBehaviour
     bool fDown;
     bool isFireReady;
     ////// Attack
+    
     bool sDown1;
     bool sDown2;
     bool sDown3;
@@ -28,6 +29,7 @@ public class AttackManager : MonoBehaviour
     bool sDown5;
     bool gDown;
     bool eDown;
+    bool qDown;
 
     public BoxCollider colliderWeapon; // 무기들의 collider
     BoxCollider colliderHand; // 주먹 collider
@@ -52,7 +54,6 @@ public class AttackManager : MonoBehaviour
         colliderHand = RightHand.GetChild(1).GetComponent<BoxCollider>();
         movementStateManager = GetComponent<MovementStateManager>();
         hpManager = GetComponent<HpManager>();
-
     }
     
     void Update(){
@@ -68,6 +69,18 @@ public class AttackManager : MonoBehaviour
         sDown5 = Input.GetButtonDown("sDown5");
         gDown = Input.GetButtonDown("gDown"); // 아이템 버리기
         eDown = Input.GetButtonDown("eDown"); // 아이템 사용
+        qDown = Input.GetButtonDown("qDown"); // 손전등 On / Off
+    }
+
+    public void FlashLight(){
+        if(qDown) 
+            Debug.Log("FQFQFQQ");
+            Debug.Log("lightComponent");
+            if(movementStateManager.lightComponent.enabled) {
+                movementStateManager.lightComponent.enabled = false;
+                Debug.Log("IITITNT");
+            }
+            else movementStateManager.lightComponent.enabled = true;
     }
 
     // 공격
