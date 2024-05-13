@@ -60,6 +60,8 @@ public class AttackManager : MonoBehaviour
         getInput();
         if (qDown)
             FlashLight();
+        if (sDown1 || sDown2 || sDown3 || sDown4 || sDown5 || eDown || gDown)
+            RpcSwap(); 
     }
 
     void getInput(){
@@ -416,8 +418,6 @@ public class AttackManager : MonoBehaviour
 
     public void RpcSwap()
     {
-        if (!sDown1 && !sDown2 && !sDown3 && !sDown4 && !sDown5 && !eDown && !gDown) return;
-
         pv.RPC("Swap", RpcTarget.AllBuffered);
     }
 

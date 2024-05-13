@@ -119,7 +119,6 @@ public class MovementStateManager : MonoBehaviour
             {
                 attackManager.Attack();
             }
-            attackManager.RpcSwap();
 
             ExitState();
         }
