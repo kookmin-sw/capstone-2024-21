@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Spawner : MonoBehaviour
 {
@@ -17,7 +18,17 @@ public class Spawner : MonoBehaviour
     float m_InitialAngle = 70f; // 처음 날라가는 각도
     Rigidbody itemRigidbody;
 
+    //네트워크
+    public PhotonView pv;
+
+    private void Start()
+    {
+        pv = gameObject.AddComponent<PhotonView>();
+        pv.ViewID = PhotonNetwork.AllocateViewID(0);
+    }
+
     //interact 스크립트에서 호출됨. 아이템 리스트중 랜덤으로 하나를 뽑아서 스폰
+    [PunRPC]
     public void SpawnItem()
     {
         //아이템이 전에 스폰되지 않았을 경우에만 스폰. 
@@ -41,6 +52,11 @@ public class Spawner : MonoBehaviour
         {
             Debug.Log("이미 전에 아이템이 스폰됐습니다.");
         }
+    }
+
+    public void SpawnItemRPC()
+    {
+        pv.RPC("SpawnItem", RpcTarget.AllBuffered);
     }
 
     //포물선을 그리며 스폰되도록 하는 함수. 이건 그냥 가져옴..ㅋ 
