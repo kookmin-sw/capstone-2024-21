@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -23,13 +24,17 @@ public class WeaponManager : MonoBehaviour
         if(other.gameObject.tag == "Player"){
             meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
+            PhotonView pv = other.GetComponent<PhotonView>();
             // AttackManager Enemy = other.GetComponent<AttackManager>();
             attackManager = GetComponent<AttackManager>();
-            
-            if (hpManager != null) {
+
+            Debug.Log("공격");
+            Debug.Log("내 이름: " + GameManager.Instance.UserId);
+            Debug.Log("상대 이름: " + pv.Owner.NickName);
+
+            if (hpManager != null && pv.Owner.NickName != GameManager.Instance.UserId) {
                 // Enemy.OnDamaged();
                 
-                    
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage, killManager.playerId);
             }    
