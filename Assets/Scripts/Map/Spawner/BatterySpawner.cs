@@ -6,15 +6,23 @@ using Photon.Pun;
 
 public class BatterySpawner : Spawner
 {
+    //네트워크
+    //public PhotonView pv;
+
     [SerializeField] Item battery;
 
     void Start()
     {
-        battery = (Item)Resources.Load("Item/Battery");
+        //pv = gameObject.AddComponent<PhotonView>();
+        //pv.ViewID = PhotonNetwork.AllocateViewID(0);
+        //Debug.Log(transform.gameObject.name + " 의 ViewID : ")
+
+        pv = gameObject.GetComponent<PhotonView>();
+
+        battery = (Item)Resources.Load("Item/Battery"); 
         items = new List<Item>();
         items.Add(battery);
 
-        pv = gameObject.AddComponent<PhotonView>();
-        pv.ViewID = PhotonNetwork.AllocateViewID(0);
+
     }
 }

@@ -21,8 +21,11 @@ public class Spawner : MonoBehaviour
     //네트워크
     public PhotonView pv;
 
+
+    // 아예 start문이 실행안되는 것 같음 
     //private void Start()
     //{
+    //    Debug.Log("hit");
     //    pv = gameObject.AddComponent<PhotonView>();
     //    pv.ViewID = PhotonNetwork.AllocateViewID(0);
     //}
@@ -34,19 +37,19 @@ public class Spawner : MonoBehaviour
         //아이템이 전에 스폰되지 않았을 경우에만 스폰. 
         if (!isSpawned)
         {
-            //int randomItemNumber = Random.Range(0, items.Count); //items중 랜덤 인덱스 추출 
-            //ItemPrefab = items[randomItemNumber].itemPrefab;
+            int randomItemNumber = Random.Range(0, items.Count); //items중 랜덤 인덱스 추출 
+            ItemPrefab = items[randomItemNumber].itemPrefab;
 
             // 스포너 근처의랜덤 위치를 가져옵니다.
-            //Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
+            Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
 
             Debug.Log("transform.name " + transform.name);
             Debug.Log("transform.position " + transform.position);
 
-            //GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
-            //itemRigidbody = item.GetComponent<Rigidbody>();
-            //Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
-            //itemRigidbody.velocity = velocity;
+            GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
+            itemRigidbody = item.GetComponent<Rigidbody>();
+            Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
+            itemRigidbody.velocity = velocity;
 
             Debug.Log("item is spawned");
             isSpawned = true;
