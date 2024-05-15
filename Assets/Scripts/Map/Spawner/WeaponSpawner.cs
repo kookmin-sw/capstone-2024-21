@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class WeaponSpawner : Spawner
 {
     Item Axe;
@@ -16,6 +16,7 @@ public class WeaponSpawner : Spawner
 
     void Start()
     {
+        pv = gameObject.GetComponent<PhotonView>();
 
         Axe = (Item)Resources.Load("Item/Axe");
         BaseballBat = (Item)Resources.Load("Item/BaseballBat");
