@@ -38,7 +38,7 @@ public class ItemMoveManage : MonoBehaviour
         }
     }
 
-    public void Destroy_battery()
+    public void Destroy_item()
     {
         Destroy(gameObject);
     }

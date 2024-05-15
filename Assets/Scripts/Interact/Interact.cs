@@ -121,10 +121,12 @@ public class Interact : MonoBehaviour
                     Item item = itemdata.itemData;
                     if (item.ItemType > 10)
                     {
+                        // AddItem은 성공하면 1 실패하면 0반환
                         if (quicSlot.AddItem(item) == 1)
                         {
                             //아이템 넣기에 성공할때만 디스트로이
                             DestroyItemRPC(hit.collider.gameObject);
+
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
