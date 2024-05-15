@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
 //Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
 {
+    public PhotonView pv;
+
     public Transform canvas;
 
     public GameObject image_F;//껐다 켰다 할 F UI. 
@@ -31,6 +34,8 @@ public class Interact : MonoBehaviour
 
     private void Start()
     {
+        pv = gameObject.GetComponent<PhotonView>();
+
         canvas = GameObject.Find("Canvas").transform;
 
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
@@ -119,7 +124,7 @@ public class Interact : MonoBehaviour
                         if (quicSlot.AddItem(item) == 1)
                         {
                             //아이템 넣기에 성공할때만 디스트로이
-                            Destroy(hit.collider.gameObject);
+                            DestroyItemRPC(hit.collider.gameObject);
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
@@ -240,6 +245,17 @@ public class Interact : MonoBehaviour
         Debug.Log("배터리를 사용했습니닫.");
     }
 
+    //얻은 아이템 디스트로이
+    [PunRPC]
+    void DestroyItem(GameObject target)
+    {
+        Destroy(target);
+    }
+
+    void DestroyItemRPC(GameObject target)
+    {
+        pv.RPC("DestroyItem", RpcTarget.AllBuffered, target);
+    }
 
 
 
