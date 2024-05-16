@@ -2121,6 +2121,7 @@ MonoBehaviour:
   rankScore: {fileID: 5983279423072525246}
   killScore: {fileID: 1231433884501217230}
   survivalTime: {fileID: 1989972798200402581}
+  currentPlayers: {fileID: 7261813537340924001}
   killPoint: {fileID: 1142645177708008057}
   rankPoint: {fileID: 3127495472099565687}
   totalScore: {fileID: 8147216861124777972}
