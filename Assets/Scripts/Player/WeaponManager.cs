@@ -14,27 +14,26 @@ public class WeaponManager : MonoBehaviour
 
     public KillManager killManager;
 
+    private Coroutine swingCoroutine; // 코루틴 참조를 저장하기 위한 변수
+
     public void Use(){
         if(type == Type.Melee){
-            StartCoroutine("Swing");
+            StartSwing();
         }
     }
 
+    void StartSwing(){
+        if (swingCoroutine == null) // 이미 코루틴이 실행 중인지 확인
+            swingCoroutine = StartCoroutine(Swing());
+    }
+
     void OnTriggerEnter(Collider other){
-        if(other.gameObject.tag == "Player"){
+        if(other.gameObject.tag == "Player" && meleeArea.enabled){
             meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
             PhotonView pv = other.GetComponent<PhotonView>();
-            // AttackManager Enemy = other.GetComponent<AttackManager>();
-            attackManager = GetComponent<AttackManager>();
-
-            Debug.Log("공격");
-            Debug.Log("내 이름: " + GameManager.Instance.UserId);
-            Debug.Log("상대 이름: " + pv.Owner.NickName);
 
             if (hpManager != null && pv.Owner.NickName != GameManager.Instance.UserId) {
-                // Enemy.OnDamaged();
-                
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage, killManager.playerId);
             }    
@@ -42,14 +41,9 @@ public class WeaponManager : MonoBehaviour
     }
 
     IEnumerator Swing(){
-        while(meleeArea.enabled)
-            yield return null;
-
-        yield return new WaitForSeconds(0.5f); //  15프레임
         meleeArea.enabled = true;
-
-        yield return new WaitForSeconds(0.83f); //  25프레임
+        yield return new WaitForSeconds(0.5f); // 15프레임
         meleeArea.enabled = false;
+        swingCoroutine = null; // 코루틴 종료 후 변수 초기화
     }
 }
-
