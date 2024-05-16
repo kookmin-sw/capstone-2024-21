@@ -9,6 +9,8 @@ public class WeaponManager : MonoBehaviour
     public Type type;
     public int damage;
     public float rate;
+    public float Oncollider;
+    public float Offcollider;
     [SerializeField] public BoxCollider meleeArea;
     [HideInInspector] public AttackManager attackManager;
 
@@ -41,8 +43,9 @@ public class WeaponManager : MonoBehaviour
     }
 
     IEnumerator Swing(){
+        yield return new WaitForSeconds(Oncollider);
         meleeArea.enabled = true;
-        yield return new WaitForSeconds(0.5f); // 15프레임
+        yield return new WaitForSeconds(Offcollider); // 15프레임
         meleeArea.enabled = false;
         swingCoroutine = null; // 코루틴 종료 후 변수 초기화
     }

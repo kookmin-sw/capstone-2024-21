@@ -5154,6 +5154,8 @@ MonoBehaviour:
   pillTaked: 0
   isJumpStart: 0
   DroppedItem: {fileID: 0}
+  spotLightObject: {fileID: 0}
+  lightComponent: {fileID: 0}
   anim: {fileID: 0}
   attackManager: {fileID: 0}
   staminaManager: {fileID: 0}
@@ -5321,6 +5323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c99401b29a56a04a9abdd21c9b3fd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackManager: {fileID: 0}
   healthPointBar: {fileID: 0}
   healthPointCount: {fileID: 0}
   uiManager: {fileID: 0}
@@ -5405,6 +5408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: []
+  uiManager: {fileID: 0}
 --- !u!1 &486837474902890276
 GameObject:
   m_ObjectHideFlags: 0
@@ -10407,6 +10411,8 @@ MonoBehaviour:
   type: 0
   damage: 15
   rate: 0
+  Oncollider: 14
+  Offcollider: 21
   meleeArea: {fileID: 7037668277888386467}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -10783,6 +10789,8 @@ MonoBehaviour:
   type: 0
   damage: 13
   rate: 0
+  Oncollider: 17
+  Offcollider: 25
   meleeArea: {fileID: 6533936314835178008}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -10944,9 +10952,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   damage: 0
   rate: 0
+  Oncollider: 0
+  Offcollider: 0
   meleeArea: {fileID: 293755722812349590}
   attackManager: {fileID: 0}
   killManager: {fileID: 0}
@@ -11214,6 +11224,8 @@ MonoBehaviour:
   type: 0
   damage: 12
   rate: 0
+  Oncollider: 14
+  Offcollider: 21
   meleeArea: {fileID: 530685730081464450}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -26299,6 +26311,8 @@ MonoBehaviour:
   type: 0
   damage: 18
   rate: 0
+  Oncollider: 14
+  Offcollider: 21
   meleeArea: {fileID: 1803669778647655008}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -26542,6 +26556,8 @@ MonoBehaviour:
   type: 0
   damage: 17
   rate: 0
+  Oncollider: 17
+  Offcollider: 25
   meleeArea: {fileID: 6706275408852877554}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -37159,7 +37175,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3203938803313734324}
   - component: {fileID: 7219937374252779328}
-  - component: {fileID: 7341432288186941598}
   - component: {fileID: 704124771719059072}
   - component: {fileID: 4235567960564008680}
   - component: {fileID: 6556208394400244485}
@@ -37195,18 +37210,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4189021082437541975}
   m_Mesh: {fileID: 4300000, guid: 07a088acddb7c4b41babb46ac5503475, type: 3}
---- !u!114 &7341432288186941598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4189021082437541975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5eabbde736124a09a45540e5ded17af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &704124771719059072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37220,6 +37223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 60
+  pv: {fileID: 0}
 --- !u!23 &4235567960564008680
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37311,6 +37315,8 @@ MonoBehaviour:
   type: 0
   damage: 10
   rate: 0
+  Oncollider: 14
+  Offcollider: 21
   meleeArea: {fileID: 7025279090861752861}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -42628,6 +42634,8 @@ MonoBehaviour:
   type: 0
   damage: 20
   rate: 0
+  Oncollider: 17
+  Offcollider: 25
   meleeArea: {fileID: 1522295618171812483}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -42892,6 +42900,8 @@ MonoBehaviour:
   type: 0
   damage: 14
   rate: 0
+  Oncollider: 14
+  Offcollider: 21
   meleeArea: {fileID: 4733072929402936386}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -68028,6 +68038,8 @@ MonoBehaviour:
   type: 0
   damage: 16
   rate: 0
+  Oncollider: 14
+  Offcollider: 21
   meleeArea: {fileID: 1498932016659719495}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -78428,6 +78440,8 @@ MonoBehaviour:
   type: 0
   damage: 19
   rate: 0
+  Oncollider: 17
+  Offcollider: 25
   meleeArea: {fileID: 4321985513830270707}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -93811,6 +93825,8 @@ MonoBehaviour:
   type: 0
   damage: 10
   rate: 0
+  Oncollider: 5
+  Offcollider: 15
   meleeArea: {fileID: 2319198497490049385}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
