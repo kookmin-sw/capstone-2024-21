@@ -58,8 +58,9 @@ public class AttackManager : MonoBehaviour
     
     void Update(){
         getInput();
-        if (qDown)
-            FlashLight();
+        if(pv.IsMine)
+            if (qDown)
+                FlashLight();
         if (sDown1 || sDown2 || sDown3 || sDown4 || sDown5 || eDown || gDown)
             RpcSwap(); 
     }
@@ -84,6 +85,7 @@ public class AttackManager : MonoBehaviour
     public void FlashLight(){
         pv.RPC("RPCFlashLight", RpcTarget.AllBuffered);
     }
+
 
     // 공격
     public void Attack()
