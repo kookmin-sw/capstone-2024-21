@@ -8,14 +8,15 @@ public class WeaponManager : MonoBehaviour
     public enum Type { Melee, Range };
     public Type type;
     public int damage;
-    public float rate;
-    public float Oncollider;
-    public float Offcollider;
+    public float rate = 1.0f;
+    public float colliderOn;
+    public float colliderOff;
     [SerializeField] public BoxCollider meleeArea;
     [HideInInspector] public AttackManager attackManager;
 
     public KillManager killManager;
 
+    [SerializeField] private bool chk = true;
     private Coroutine swingCoroutine; // 코루틴 참조를 저장하기 위한 변수
 
     public void Use(){
@@ -25,8 +26,14 @@ public class WeaponManager : MonoBehaviour
     }
 
     void StartSwing(){
-        if (swingCoroutine == null) // 이미 코루틴이 실행 중인지 확인
-            swingCoroutine = StartCoroutine(Swing());
+        if (chk == true){ // 이미 코루틴이 실행 중인지 확인
+            Debug.Log(chk);
+            chk = false;
+            Debug.Log("스타트스윙");
+            Debug.Log(chk);
+            StartCoroutine(Swing());
+        }
+        else Debug.Log("실패");
     }
 
     void OnTriggerEnter(Collider other){
@@ -43,10 +50,15 @@ public class WeaponManager : MonoBehaviour
     }
 
     IEnumerator Swing(){
-        yield return new WaitForSeconds(Oncollider);
+        Debug.Log("스윙");
+        Debug.Log(chk);
+        yield return new WaitForSeconds(colliderOn);
         meleeArea.enabled = true;
-        yield return new WaitForSeconds(Offcollider); // 15프레임
+        yield return new WaitForSeconds(colliderOff);
         meleeArea.enabled = false;
-        swingCoroutine = null; // 코루틴 종료 후 변수 초기화
+        yield return new WaitForSeconds(1.0f - colliderOn - colliderOff);
+        chk = true; // 코루틴 종료 후 변수 초기화
+        Debug.Log("스윙끝");
+        Debug.Log(chk);
     }
 }
