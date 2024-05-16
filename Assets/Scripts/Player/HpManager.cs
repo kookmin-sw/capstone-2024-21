@@ -114,14 +114,14 @@ public class HpManager : MonoBehaviour
         {
             onDeath();
         }
-        isDead = true;
-        gameObject.SetActive(false);
         if (pv.IsMine)
         {
             Debug.Log("사망");
             uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
         }
+        isDead = true;
+        gameObject.SetActive(false);
     }
 
     // 사망 함수
