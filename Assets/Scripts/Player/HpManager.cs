@@ -120,7 +120,10 @@ public class HpManager : MonoBehaviour
             uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
         }
-        uiManager.curPlayers -= 1;
+        else
+        {
+            uiManager.curPlayers -= 1;
+        }
         isDead = true;
         gameObject.SetActive(false);
     }

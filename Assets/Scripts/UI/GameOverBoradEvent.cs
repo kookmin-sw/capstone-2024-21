@@ -41,6 +41,7 @@ public class GameOverBoradEvent : MonoBehaviour
     public void OnGetStatistics(GetPlayerStatisticsResult result)
     {
         updateValue = result.Statistics[0].Value + Int32.Parse(uiManager.totalScore.text);
+        Debug.Log(updateValue);
     }
 
     public void UpdatePlayerStatistics()
