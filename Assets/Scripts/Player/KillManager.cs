@@ -45,10 +45,6 @@ public class KillManager : MonoBehaviour
             uiManager.killCount = killCount;
             Debug.Log("Kill Count: " + killCount);
         }
-        else
-        {
-            uiManager.curPlayers -= 1;
-        }
     }
 
     public void AddKillCount()
