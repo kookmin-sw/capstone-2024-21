@@ -24,7 +24,6 @@ public class GameOverBoradEvent : MonoBehaviour
     public void OnClickedScoreLobbyButton()
     {
         GetPlayerStatistics();
-        UpdatePlayerStatistics();
         SceneManager.LoadScene("Lobby");
     }
 
@@ -42,6 +41,8 @@ public class GameOverBoradEvent : MonoBehaviour
     {
         updateValue = result.Statistics[0].Value + Int32.Parse(uiManager.totalScore.text);
         Debug.Log(updateValue);
+
+        UpdatePlayerStatistics();
     }
 
     public void UpdatePlayerStatistics()
