@@ -10411,8 +10411,8 @@ MonoBehaviour:
   type: 0
   damage: 15
   rate: 0
-  Oncollider: 14
-  Offcollider: 21
+  Oncollider: 0.46
+  Offcollider: 0.7
   meleeArea: {fileID: 7037668277888386467}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -10789,8 +10789,8 @@ MonoBehaviour:
   type: 0
   damage: 13
   rate: 0
-  Oncollider: 17
-  Offcollider: 25
+  Oncollider: 0.55
+  Offcollider: 0.83
   meleeArea: {fileID: 6533936314835178008}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -11224,8 +11224,8 @@ MonoBehaviour:
   type: 0
   damage: 12
   rate: 0
-  Oncollider: 14
-  Offcollider: 21
+  Oncollider: 0.47
+  Offcollider: 0.7
   meleeArea: {fileID: 530685730081464450}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -26311,8 +26311,8 @@ MonoBehaviour:
   type: 0
   damage: 18
   rate: 0
-  Oncollider: 14
-  Offcollider: 21
+  Oncollider: 0.46
+  Offcollider: 0.7
   meleeArea: {fileID: 1803669778647655008}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -26556,8 +26556,8 @@ MonoBehaviour:
   type: 0
   damage: 17
   rate: 0
-  Oncollider: 17
-  Offcollider: 25
+  Oncollider: 0.55
+  Offcollider: 0.83
   meleeArea: {fileID: 6706275408852877554}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -37315,8 +37315,8 @@ MonoBehaviour:
   type: 0
   damage: 10
   rate: 0
-  Oncollider: 14
-  Offcollider: 21
+  Oncollider: 0.47
+  Offcollider: 0.7
   meleeArea: {fileID: 7025279090861752861}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -42634,8 +42634,8 @@ MonoBehaviour:
   type: 0
   damage: 20
   rate: 0
-  Oncollider: 17
-  Offcollider: 25
+  Oncollider: 0.55
+  Offcollider: 0.83
   meleeArea: {fileID: 1522295618171812483}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -42900,8 +42900,8 @@ MonoBehaviour:
   type: 0
   damage: 14
   rate: 0
-  Oncollider: 14
-  Offcollider: 21
+  Oncollider: 0.46
+  Offcollider: 0.7
   meleeArea: {fileID: 4733072929402936386}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -68038,8 +68038,8 @@ MonoBehaviour:
   type: 0
   damage: 16
   rate: 0
-  Oncollider: 14
-  Offcollider: 21
+  Oncollider: 0.46
+  Offcollider: 0.7
   meleeArea: {fileID: 1498932016659719495}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -78440,8 +78440,8 @@ MonoBehaviour:
   type: 0
   damage: 19
   rate: 0
-  Oncollider: 17
-  Offcollider: 25
+  Oncollider: 0.55
+  Offcollider: 0.83
   meleeArea: {fileID: 4321985513830270707}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
@@ -93825,8 +93825,8 @@ MonoBehaviour:
   type: 0
   damage: 10
   rate: 0
-  Oncollider: 5
-  Offcollider: 15
+  Oncollider: 0.16
+  Offcollider: 0.5
   meleeArea: {fileID: 2319198497490049385}
   attackManager: {fileID: 0}
   killManager: {fileID: 2071272907111481895}
