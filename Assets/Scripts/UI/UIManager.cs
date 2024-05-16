@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI killScore;
     [SerializeField] private TextMeshProUGUI survivalTime;
 
+    [SerializeField] private TextMeshProUGUI currentPlayers;
+
 
     [SerializeField] private TextMeshProUGUI killPoint;
     [SerializeField] private TextMeshProUGUI rankPoint;
@@ -63,6 +65,7 @@ public class UIManager : MonoBehaviour
         if(isGameStart == true)
         {
             gameTime += Time.deltaTime;
+            currentPlayers.text = curPlayers.ToString() + "/" + totalPlayers.ToString();
         }
         if(isGameOver == false)
         {
