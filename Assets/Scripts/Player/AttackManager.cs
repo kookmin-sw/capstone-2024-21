@@ -17,9 +17,9 @@ public class AttackManager : MonoBehaviour
     public Inventory itemInventory; //가지고 있는 아이템
     public Transform RightHand;
     ///////Attack
-    float fireDelay;
+    [SerializeField] float fireDelay;
     bool fDown;
-    bool isFireReady;
+    [SerializeField] bool isFireReady;
     ////// Attack
     
     bool sDown1;
