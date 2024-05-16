@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
 //Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
 {
+    public PhotonView pv;
+
     public Transform canvas;
 
     public GameObject image_F;//껐다 켰다 할 F UI. 
@@ -31,6 +34,8 @@ public class Interact : MonoBehaviour
 
     private void Start()
     {
+        pv = gameObject.GetComponent<PhotonView>();
+
         canvas = GameObject.Find("Canvas").transform;
 
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
@@ -116,10 +121,12 @@ public class Interact : MonoBehaviour
                     Item item = itemdata.itemData;
                     if (item.ItemType > 10)
                     {
+                        // AddItem은 성공하면 1 실패하면 0반환
                         if (quicSlot.AddItem(item) == 1)
                         {
                             //아이템 넣기에 성공할때만 디스트로이
-                            Destroy(hit.collider.gameObject);
+                            hit.collider.gameObject.GetComponent<ItemMoveManage>().DestroyItemRPC();
+
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
@@ -166,15 +173,15 @@ public class Interact : MonoBehaviour
                 //수색을 성공적으로 마쳤다면 스폰
                 if(selectedTarget.gameObject.GetComponent<BatterySpawner>() != null)
                 {
-                    selectedTarget.GetComponent<BatterySpawner>().SpawnItem();
+                    selectedTarget.GetComponent<BatterySpawner>().SpawnItemRPC();
                 }
                 else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null)
                 {
-                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
+                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItemRPC();
                 }
                 else if (selectedTarget.gameObject.GetComponent<ItemSpawner>() != null)
                 {
-                    selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
+                    selectedTarget.GetComponent<ItemSpawner>().SpawnItemRPC();
                 }
 
                 //수색종료
@@ -240,6 +247,17 @@ public class Interact : MonoBehaviour
         Debug.Log("배터리를 사용했습니닫.");
     }
 
+    //얻은 아이템 디스트로이
+    [PunRPC]
+    void DestroyItem(GameObject target)
+    {
+        Destroy(target);
+    }
+
+    void DestroyItemRPC(GameObject target)
+    {
+        pv.RPC("DestroyItem", RpcTarget.AllBuffered, target);
+    }
 
 
 
