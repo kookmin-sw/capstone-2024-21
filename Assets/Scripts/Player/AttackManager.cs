@@ -58,8 +58,8 @@ public class AttackManager : MonoBehaviour
     
     void Update(){
         getInput();
-        if(pv.IsMine)
-            if (qDown)
+        if (qDown)
+            if(pv.IsMine)
                 FlashLight();
         if (sDown1 || sDown2 || sDown3 || sDown4 || sDown5 || eDown || gDown)
             RpcSwap(); 
@@ -78,8 +78,7 @@ public class AttackManager : MonoBehaviour
 
     [PunRPC]
     public void RPCFlashLight(){
-        if(pv.IsMine)
-            movementStateManager.lightComponent.enabled = !movementStateManager.lightComponent.enabled;
+        movementStateManager.lightComponent.enabled = !movementStateManager.lightComponent.enabled;
     }
 
     public void FlashLight(){
