@@ -8,7 +8,7 @@ public class WeaponManager : MonoBehaviour
     public enum Type { Melee, Range };
     public Type type;
     public int damage;
-    public float rate = 1.0f;
+    [SerializeField] public float rate = 1.0f;
     public float colliderOn;
     public float colliderOff;
     [SerializeField] public BoxCollider meleeArea;
@@ -31,7 +31,8 @@ public class WeaponManager : MonoBehaviour
             chk = false;
             Debug.Log("스타트스윙");
             Debug.Log(chk);
-            StartCoroutine(Swing());
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
         }
         else Debug.Log("실패");
     }
