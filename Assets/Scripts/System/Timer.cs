@@ -13,11 +13,19 @@ public class Timer : MonoBehaviour
         pv = GetComponent<PhotonView>();
     }
 
-    void StartTimer()
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            StartTimer(60);
+        }
+    }
+
+    void StartTimer(int timerTime)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            time = 60;
+            time = timerTime;
 
             StartCoroutine(TimerCoroution());
         }
