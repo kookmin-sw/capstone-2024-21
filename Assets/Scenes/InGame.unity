@@ -3880,6 +3880,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 46903936}
+  - {fileID: 1922412569}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &538544176
@@ -12469,7 +12470,7 @@ GameObject:
   - component: {fileID: 1922412567}
   - component: {fileID: 1922412566}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Blackout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12555,12 +12556,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922412565}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -31.8}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 8.200001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 520319891}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1944992408
 GameObject:
@@ -14297,6 +14298,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 367655864678298502, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 925305737401029417, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793333673112307677, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478039739433466925, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812754090759688304, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129337183472245524, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6952511472077744242, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -14337,9 +14362,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7662813036369653169, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8257724211348262572, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Name
       value: Asylum
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464148452229226014, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911975228395958927, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: sceneViewId
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14364,4 +14401,3 @@ SceneRoots:
   - {fileID: 520319891}
   - {fileID: 2029727132}
   - {fileID: 140916539}
-  - {fileID: 1922412569}
