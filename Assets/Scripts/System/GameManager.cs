@@ -25,8 +25,10 @@ public class GameManager : MonoBehaviour
     }
 
     public string UserId { get; set; } = "soldier";
-    public Timer timer;
     public bool isPlaying { get; set; } = false;
+    public Timer timer;
+    GameObject[] playerObjects;
+    Player[] players;
 
     void Awake()
     {
@@ -57,11 +59,32 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         isPlaying = true;
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        players = new Player[playerObjects.Length];
 
-        foreach (GameObject player in players)
+        for (int i = 0; i < playerObjects.Length; i++)
         {
-            Debug.Log(player.name);
+            players[i] = playerObjects[i].GetComponent<Player>();
         }
+        Go2Map();
+    }
+
+    public void Go2Map()
+    {
+        //foreach (Player player in players)
+        //{
+        //    if (player != null)
+        //    {
+        //        player.Go2Map();
+        //    }
+        //}
+        Transform[] points = GameObject.Find("WarpPointGroup").GetComponentsInChildren<Transform>();
+        int idx = Random.Range(1, points.Length);
+        for (int i = 0; i < playerObjects.Length; i++)
+        {
+            Vector3 pos = points[idx].position;
+            players[i].Go2Map(pos);
+        }
+
     }
 }
