@@ -61,7 +61,7 @@ public class AttackManager : MonoBehaviour
         if (qDown)
             if(pv.IsMine)
                 FlashLight();
-        if (sDown1 || sDown2 || sDown3 || sDown4 || sDown5 || eDown || gDown)
+        if ((sDown1 || weaponInventory.isWeaponAdded == true) || (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)) || gDown || eDown)
             RpcSwap(); 
     }
 
