@@ -11,24 +11,13 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+        GameManager.Instance.timer = this;
     }
 
-    void Update()
+    public void StartTimer(int timerTime)
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            StartTimer(60);
-        }
-    }
-
-    void StartTimer(int timerTime)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            time = timerTime;
-
-            StartCoroutine(TimerCoroution());
-        }
+        time = timerTime;
+        StartCoroutine(TimerCoroution());
     }
 
     IEnumerator TimerCoroution()
@@ -40,6 +29,7 @@ public class Timer : MonoBehaviour
         else
         {
             Debug.Log("타이머 종료");
+            GameManager.Instance.GameStart();
             yield break;
         }
 

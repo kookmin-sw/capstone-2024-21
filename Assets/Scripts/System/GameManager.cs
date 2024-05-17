@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     }
 
     public string UserId { get; set; } = "soldier";
+    public Timer timer;
+    public bool isPlaying { get; set; } = false;
 
     void Awake()
     {
@@ -36,5 +39,29 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TimerStart();
+        }
+    }
+
+    public void TimerStart()
+    {
+        timer.StartTimer(10);
+    }
+
+    public void GameStart()
+    {
+        isPlaying = true;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            Debug.Log(player.name);
+        }
     }
 }
