@@ -59,6 +59,7 @@ MonoBehaviour:
   - DestroyItem
   - ShowTimer
   - SpawnItem_tmp
+  - RpcGo2Map
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
