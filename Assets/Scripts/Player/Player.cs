@@ -8,9 +8,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     Transform[] points;
     [SerializeField] UIManager uiManager;
+    private PhotonView pv;
+
     // Start is called before the first frame update
     void Awake()
     {
+        pv = GetComponent<PhotonView>();
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
@@ -21,6 +24,11 @@ public class Player : MonoBehaviour
         {
             Go2Map();
         }
+    }
+
+    void GameStart()
+    {
+        Go2Map();
     }
 
     void Go2Map()

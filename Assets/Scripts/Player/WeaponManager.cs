@@ -8,33 +8,42 @@ public class WeaponManager : MonoBehaviour
     public enum Type { Melee, Range };
     public Type type;
     public int damage;
-    public float rate;
+    [SerializeField] public float rate = 1.0f;
+    public float colliderOn;
+    public float colliderOff;
     [SerializeField] public BoxCollider meleeArea;
     [HideInInspector] public AttackManager attackManager;
 
     public KillManager killManager;
 
+    [SerializeField] private bool chk = true;
+    private Coroutine swingCoroutine; // 코루틴 참조를 저장하기 위한 변수
+
     public void Use(){
         if(type == Type.Melee){
-            StartCoroutine("Swing");
+            StartSwing();
         }
     }
 
+    void StartSwing(){
+        if (chk == true){ // 이미 코루틴이 실행 중인지 확인
+            Debug.Log(chk);
+            chk = false;
+            Debug.Log("스타트스윙");
+            Debug.Log(chk);
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
+        }
+        else Debug.Log("실패");
+    }
+
     void OnTriggerEnter(Collider other){
-        if(other.gameObject.tag == "Player"){
+        if(other.gameObject.tag == "Player" && meleeArea.enabled){
             meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
             PhotonView pv = other.GetComponent<PhotonView>();
-            // AttackManager Enemy = other.GetComponent<AttackManager>();
-            attackManager = GetComponent<AttackManager>();
-
-            Debug.Log("공격");
-            Debug.Log("내 이름: " + GameManager.Instance.UserId);
-            Debug.Log("상대 이름: " + pv.Owner.NickName);
 
             if (hpManager != null && pv.Owner.NickName != GameManager.Instance.UserId) {
-                // Enemy.OnDamaged();
-                
                 Debug.Log("Hit : " + damage);
                 hpManager.OnDamage(damage, killManager.playerId);
             }    
@@ -42,14 +51,15 @@ public class WeaponManager : MonoBehaviour
     }
 
     IEnumerator Swing(){
-        while(meleeArea.enabled)
-            yield return null;
-
-        yield return new WaitForSeconds(0.5f); //  15프레임
+        Debug.Log("스윙");
+        Debug.Log(chk);
+        yield return new WaitForSeconds(colliderOn);
         meleeArea.enabled = true;
-
-        yield return new WaitForSeconds(0.83f); //  25프레임
+        yield return new WaitForSeconds(colliderOff);
         meleeArea.enabled = false;
+        yield return new WaitForSeconds(1.0f - colliderOn - colliderOff);
+        chk = true; // 코루틴 종료 후 변수 초기화
+        Debug.Log("스윙끝");
+        Debug.Log(chk);
     }
 }
-
