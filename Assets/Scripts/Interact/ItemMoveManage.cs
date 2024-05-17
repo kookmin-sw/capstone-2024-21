@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
+
 
 public class ItemMoveManage : MonoBehaviour
 {
@@ -10,12 +10,10 @@ public class ItemMoveManage : MonoBehaviour
     bool is_collide = false;
     Vector3 stop_position;
 
-    public PhotonView pv;
+
 
     void Start()
     {
-        pv = gameObject.AddComponent<PhotonView>();
-        pv.ViewID = PhotonNetwork.AllocateViewID(0);
         //Destroy(gameObject, 5f); // 5초뒤 오브젝트를 파괴   
     }
 
@@ -43,14 +41,5 @@ public class ItemMoveManage : MonoBehaviour
         }
     }
 
-    [PunRPC]
-    public void DestroyItem()
-    {
-        Destroy(gameObject);
-    }
 
-    public void DestroyItemRPC()
-    {
-        pv.RPC("DestroyItem", RpcTarget.AllBuffered);
-    }
 }

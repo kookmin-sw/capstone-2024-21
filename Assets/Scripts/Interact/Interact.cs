@@ -125,8 +125,7 @@ public class Interact : MonoBehaviour
                         if (quicSlot.AddItem(item) == 1)
                         {
                             //아이템 넣기에 성공할때만 디스트로이
-                            hit.collider.gameObject.GetComponent<ItemMoveManage>().DestroyItemRPC();
-
+                            itemdata.DestroyItemRPC();
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
@@ -145,7 +144,7 @@ public class Interact : MonoBehaviour
                                 item.craftCompleted = false;  //아이템 정보도 일반무기로
                             }
                             //무기 넣기에 성공할때만 디스트로이
-                            Destroy(hit.collider.gameObject);
+                            itemdata.DestroyItemRPC();
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
@@ -173,15 +172,15 @@ public class Interact : MonoBehaviour
                 //수색을 성공적으로 마쳤다면 스폰
                 if(selectedTarget.gameObject.GetComponent<BatterySpawner>() != null)
                 {
-                    selectedTarget.GetComponent<BatterySpawner>().SpawnItemRPC();
+                    selectedTarget.GetComponent<BatterySpawner>().SpawnItem();
                 }
                 else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null)
                 {
-                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItemRPC();
+                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
                 }
                 else if (selectedTarget.gameObject.GetComponent<ItemSpawner>() != null)
                 {
-                    selectedTarget.GetComponent<ItemSpawner>().SpawnItemRPC();
+                    selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
                 }
 
                 //수색종료
