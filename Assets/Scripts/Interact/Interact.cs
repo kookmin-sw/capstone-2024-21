@@ -173,15 +173,15 @@ public class Interact : MonoBehaviour
                 //수색을 성공적으로 마쳤다면 스폰
                 if(selectedTarget.gameObject.GetComponent<BatterySpawner>() != null)
                 {
-                    selectedTarget.GetComponent<BatterySpawner>().SpawnItemRPC();
+                    selectedTarget.GetComponent<BatterySpawner>().SpawnItem();
                 }
                 else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null)
                 {
-                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItemRPC();
+                    selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
                 }
                 else if (selectedTarget.gameObject.GetComponent<ItemSpawner>() != null)
                 {
-                    selectedTarget.GetComponent<ItemSpawner>().SpawnItemRPC();
+                    selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
                 }
 
                 //수색종료

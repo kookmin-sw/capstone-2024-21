@@ -17,7 +17,7 @@ public class ItemData : MonoBehaviour
 
     }
 
-        Item getItemData()
+    Item getItemData()
     {
         return itemData;
     }
