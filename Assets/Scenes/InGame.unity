@@ -12918,10 +12918,13 @@ MonoBehaviour:
   ExitChargedBattery: 0
   BatterySpawnerTargets: []
   BatterySpawnerCount: 7
+  BatterySpawners: []
   WeaponSpawnerTargets: []
-  WeaponSpawnerCount: 1
+  WeaponSpawnerCount: 50
+  WeaponSpawners: []
   ItemSpawnerTargets: []
   ItemSpawnerCount: 1
+  ItemSpawners: []
   Lights: []
   pv: {fileID: 0}
 --- !u!4 &1898214401
@@ -15618,6 +15621,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1125994896188968959, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Statue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125994896188968959, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -15916,6 +15923,10 @@ PrefabInstance:
     - target: {fileID: 1512016360404893366, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516720095821811032, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_WoodUp_corners
       objectReference: {fileID: 0}
     - target: {fileID: 1516720095821811032, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -16334,6 +16345,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2117725810853700931, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_Down_floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2117725810853700931, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -16408,6 +16423,10 @@ PrefabInstance:
     - target: {fileID: 2227764338311775152, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2234789635834681864, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_HallUp
       objectReference: {fileID: 0}
     - target: {fileID: 2234789635834681864, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -16538,6 +16557,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2459365273785105309, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Down_roof
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459365273785105309, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -16628,6 +16651,10 @@ PrefabInstance:
     - target: {fileID: 2555545410929167438, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558588516628258583, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_WoodDown
       objectReference: {fileID: 0}
     - target: {fileID: 2558588516628258583, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -16792,6 +16819,10 @@ PrefabInstance:
     - target: {fileID: 2756710919206957207, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2757770363302446526, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_WoodDown_frame
       objectReference: {fileID: 0}
     - target: {fileID: 2757770363302446526, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -17032,6 +17063,10 @@ PrefabInstance:
     - target: {fileID: 3132046723417893644, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134639951188708442, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_MachineRoom
       objectReference: {fileID: 0}
     - target: {fileID: 3134639951188708442, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -18720,6 +18755,10 @@ PrefabInstance:
     - target: {fileID: 5475592554413248852, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477771421236228014, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: HallDown
       objectReference: {fileID: 0}
     - target: {fileID: 5477771421236228014, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -20658,6 +20697,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8045291668139710322, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_WoodUp_frame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045291668139710322, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -20784,6 +20827,10 @@ PrefabInstance:
     - target: {fileID: 8247481239725302873, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247764972227869884, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_WoodUp
       objectReference: {fileID: 0}
     - target: {fileID: 8247764972227869884, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -20996,6 +21043,10 @@ PrefabInstance:
     - target: {fileID: 8435341526680191895, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438433279861867427, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: HallUp_roof
       objectReference: {fileID: 0}
     - target: {fileID: 8438433279861867427, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21428,6 +21479,10 @@ PrefabInstance:
     - target: {fileID: 8978812157344988329, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980026701598941547, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Stair_WoodDown_corners
       objectReference: {fileID: 0}
     - target: {fileID: 8980026701598941547, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
