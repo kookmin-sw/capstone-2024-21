@@ -71,32 +71,20 @@ public class GameManager : MonoBehaviour
 
     public void Go2Map()
     {
+        //foreach (Player player in players)
+        //{
+        //    if (player != null)
+        //    {
+        //        player.Go2Map();
+        //    }
+        //}
         Transform[] points = GameObject.Find("WarpPointGroup").GetComponentsInChildren<Transform>();
-
-        int[] idx = new int[points.Length];
-        for (int i = 0; i < points.Length; i++)
-        {
-            idx[i] = i;
-        }
-
-        Shuffle(idx);
-
+        int idx = Random.Range(1, points.Length);
         for (int i = 0; i < playerObjects.Length; i++)
         {
-            Vector3 pos = points[idx[i]].position;
+            Vector3 pos = points[idx].position;
             players[i].Go2Map(pos);
         }
 
-    }
-
-    void Shuffle(int[] deck)
-    {
-        for (int i = 0; i < deck.Length; i++)
-        {
-            int temp = deck[i];
-            int randomIndex = Random.Range(0, deck.Length);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
-        }
     }
 }
