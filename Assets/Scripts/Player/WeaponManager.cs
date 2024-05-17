@@ -19,6 +19,12 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private bool chk = true;
     private Coroutine swingCoroutine; // 코루틴 참조를 저장하기 위한 변수
 
+    public void callAttack(){
+        StopCoroutine("Swing");
+        if(type == Type.Melee)
+            attackManager = transform.GetParentComponent<AttackManager>(); 
+    }
+
     public void Use(){
         if(type == Type.Melee){
             StartSwing();
@@ -53,12 +59,14 @@ public class WeaponManager : MonoBehaviour
     IEnumerator Swing(){
         Debug.Log("스윙");
         Debug.Log(chk);
+        attackManager.AttackIn();
         yield return new WaitForSeconds(colliderOn);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(colliderOff);
         meleeArea.enabled = false;
         yield return new WaitForSeconds(1.0f - colliderOn - colliderOff);
         chk = true; // 코루틴 종료 후 변수 초기화
+        attackManager.AttackOut();
         Debug.Log("스윙끝");
         Debug.Log(chk);
     }

@@ -39,7 +39,7 @@ public class AttackManager : MonoBehaviour
 
     public MovementStateManager movementStateManager;   
     [HideInInspector] public AttackManager attackManager;
-    [HideInInspector] public WeaponManager weaponManager;
+    [SerializeField] public WeaponManager weaponManager;
     [HideInInspector] public HpManager hpManager;
     private PhotonView pv;
     
@@ -281,7 +281,7 @@ public class AttackManager : MonoBehaviour
                     }
                 }
             }             // 아이템 슬롯 스왑/습득 시 애니메이션 처리 
-            else if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
+            else  if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
             {
                 equipItemIndex = -1;
                 bool isFound = false;
@@ -401,10 +401,13 @@ public class AttackManager : MonoBehaviour
             equipWeapon = weapons[RpcEquipWeaponIndex];
             equipWeapon.SetActive(true);
         }
+        // weaponManager = equipWeapon.GetComponent<WeaponManager>();
+        // weaponManager.callAttack();
     }
 
     public void RpcEquip(int RpcEquipWeaponIndex){
         pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+        //weaponManager.callAttack();
     }
 
     [PunRPC]
