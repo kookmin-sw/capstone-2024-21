@@ -58,6 +58,7 @@ MonoBehaviour:
   - SpawnItem
   - DestroyItem
   - ShowTimer
+  - RpcMonsterDie
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
