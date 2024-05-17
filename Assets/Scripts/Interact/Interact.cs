@@ -125,8 +125,7 @@ public class Interact : MonoBehaviour
                         if (quicSlot.AddItem(item) == 1)
                         {
                             //아이템 넣기에 성공할때만 디스트로이
-                            hit.collider.gameObject.GetComponent<ItemData>().DestroyItemRPC();
-
+                            itemdata.DestroyItemRPC();
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }
@@ -145,7 +144,7 @@ public class Interact : MonoBehaviour
                                 item.craftCompleted = false;  //아이템 정보도 일반무기로
                             }
                             //무기 넣기에 성공할때만 디스트로이
-                            Destroy(hit.collider.gameObject);
+                            itemdata.DestroyItemRPC();
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
                     }

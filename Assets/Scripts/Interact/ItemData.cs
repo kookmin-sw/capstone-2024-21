@@ -25,11 +25,13 @@ public class ItemData : MonoBehaviour
     [PunRPC]
     public void DestroyItem()
     {
+        Debug.Log("name " + gameObject.name);
         Destroy(gameObject);
     }
 
     public void DestroyItemRPC()
     {
+        Debug.Log("name " + gameObject.name);
         pv.RPC("DestroyItem", RpcTarget.AllBuffered);
     }
 }
