@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
+    [PunRPC]
     public void RpcGo2Map(Vector3 pos)
     {
         if (pv.IsMine)
