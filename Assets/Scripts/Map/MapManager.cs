@@ -94,7 +94,7 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
-            else if (gameObjs[i].name.Contains("ItemSpawner"))
+            else if (gameObjs[i].name.Contains("ItemSpawner") || gameObjs[i].name.Contains("SheetRackCase") || gameObjs[i].name.Contains("SmallMetalicCase"))
             {
                 ItemSpawnerTargets.Add(gameObjs[i]);
 
@@ -108,6 +108,11 @@ public class MapManager : MonoBehaviour
                 //빛 초기환
                 Light light = gameObjs[i].GetComponentInChildren<Light>();
                 SetLight(light, 5, 1); //range=5, intensity =1로 초기화 
+
+            }
+            else if (gameObjs[i].name.Contains("floor"))
+            {
+                gameObjs[i].layer = LayerMask.NameToLayer("Ground");
 
             }
         }
