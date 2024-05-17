@@ -37,22 +37,8 @@ public class Spawner : MonoBehaviour
         //아이템이 전에 스폰되지 않았을 경우에만 스폰. 
         if (!isSpawned)
         {
-            int randomItemNumber = Random.Range(0, items.Count); //items중 랜덤 인덱스 추출 
-            ItemPrefab = items[randomItemNumber].itemPrefab;
-
-            // 스포너 근처의랜덤 위치를 가져옵니다.
-            Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
-
-            Debug.Log("transform.name " + transform.name);
-            Debug.Log("transform.position " + transform.position);
-
-            GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
-            itemRigidbody = item.GetComponent<Rigidbody>();
-            Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
-            itemRigidbody.velocity = velocity;
-
-            Debug.Log("item is spawned");
-            isSpawned = true;
+            Vector3 spawnPosition = GetRandomPosition();
+            SpawnItem_tmpRPC(GetRandomItemNumber(), spawnPosition.x, spawnPosition.y, spawnPosition.z);
         }
         else
         {
@@ -60,10 +46,40 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void SpawnItemRPC()
+    //items중 랜덤 인덱스 추출 
+    public int GetRandomItemNumber()
     {
-        pv.RPC("SpawnItem", RpcTarget.AllBuffered);
+        return Random.Range(0, items.Count); 
     }
+
+    // 스포너 근처의랜덤 위치를 가져옵니다.
+    public Vector3 GetRandomPosition()
+    {
+        return transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
+    }
+
+    [PunRPC]
+    public void SpawnItem_tmp(int itemNum, float x, float y, float z)
+    {
+        ItemPrefab = items[itemNum].itemPrefab;
+
+        Vector3 spawnPosition = new Vector3(x, y, z);
+
+        GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
+        itemRigidbody = item.GetComponent<Rigidbody>();
+        Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
+        itemRigidbody.velocity = velocity;
+
+        Debug.Log("item is spawned");
+        isSpawned = true;
+    }
+
+    public void SpawnItem_tmpRPC(int itemNum, float x, float y, float z)
+    {
+        pv.RPC("SpawnItem_tmp", RpcTarget.AllBuffered, itemNum, x, y, z);
+    }
+
+
 
     //포물선을 그리며 스폰되도록 하는 함수. 이건 그냥 가져옴..ㅋ 
     private Vector3 GetVelocity(Vector3 start_pos, Vector3 target_pos, float initialAngle)
