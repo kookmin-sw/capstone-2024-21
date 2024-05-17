@@ -125,7 +125,7 @@ public class Interact : MonoBehaviour
                         if (quicSlot.AddItem(item) == 1)
                         {
                             //아이템 넣기에 성공할때만 디스트로이
-                            hit.collider.gameObject.GetComponent<ItemMoveManage>().DestroyItemRPC();
+                            hit.collider.gameObject.GetComponent<ItemData>().DestroyItemRPC();
 
                             image_F.GetComponent<UIpressF>().remove_image();
                         }
