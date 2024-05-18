@@ -77,6 +77,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("IsMasterClient 로써 맵 구성");
             //MapManager.Instance.LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화
             //MapManager.Instance.DisableSpawners_tmp();
+
+            MapManager.Instance.EnableBatterySpawner();
         }
 
 

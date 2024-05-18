@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.119178645, g: 0.119178645, b: 0.119178645, a: 1}
+  m_IndirectSpecularColor: {r: 0.11922146, g: 0.11922146, b: 0.11922146, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5513,7 +5513,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_4
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -7438,7 +7438,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_2
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -12985,7 +12985,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_1
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -13082,7 +13082,7 @@ MonoBehaviour:
   ExitChargedBattery: 0
   BatterySpawnerTargets: []
   BatterySpawnerCount: 7
-  BatterySpawners: []
+  WorkingBatterySpawners: []
   WeaponSpawnerTargets: []
   WeaponSpawnerCount: 50
   WeaponSpawners: []
@@ -13116,7 +13116,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_3
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x

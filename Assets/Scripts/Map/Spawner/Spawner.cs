@@ -133,7 +133,7 @@ public class Spawner : MonoBehaviour
     }
 
     [PunRPC]
-    void EnableSpawnerWorkingRPC()
+    public void EnableSpawnerWorkingRPC()
     {
         working = true;
     }
