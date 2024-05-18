@@ -44,15 +44,26 @@ public class WeaponManager : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other){
-        if(other.gameObject.tag == "Player" && meleeArea.enabled){
+        if((other.gameObject.tag == "Monster" || other.gameObject.tag == "Player") && meleeArea.enabled){
             meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
             PhotonView pv = other.GetComponent<PhotonView>();
 
-            if (hpManager != null && pv.Owner.NickName != GameManager.Instance.UserId) {
-                Debug.Log("Hit : " + damage);
-                hpManager.OnDamage(damage, killManager.playerId);
-            }    
+            if (hpManager != null) {
+                if (other.gameObject.tag == "Monster")
+                {
+                    Debug.Log("Hit : " + damage);
+                    hpManager.OnDamage(damage, killManager.playerId);
+                }
+                else
+                {
+                    if (pv.Owner.NickName != GameManager.Instance.UserId)
+                    {
+                        Debug.Log("Hit : " + damage);
+                        hpManager.OnDamage(damage, killManager.playerId);
+                    }
+                }
+            }
         }
     }
 

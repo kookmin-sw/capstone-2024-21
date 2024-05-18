@@ -120,26 +120,55 @@ public class MovementStateManager : MonoBehaviour
                 attackManager.Attack();
             }
 
-            ExitState();
+            if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
+                ExitState();
+            else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting))
+                ExitStateCancle();
         }
     }
 
-    void ExitState(){   
-        if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
-            {   
-                anim.SetLayerWeight(7,1);
-                wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
-                Debug.Log(wasExiting);
-                anim.SetTrigger("Exiting");
-                
-            }
-        else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting)){
-                anim.SetTrigger("Cancel");
-                anim.SetLayerWeight(7,0);
-                wasExiting = false;
-                Debug.Log(wasExiting);
-            }
+    [PunRPC]
+    void RpcExitState(){   
+        Debug.Log("hit");
+
+        anim.SetLayerWeight(7,1);
+        wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
+        Debug.Log(wasExiting);
+        anim.SetTrigger("Exiting");
+        dededede();
+            
         isExiting = interact.isExiting;
+    }
+
+    public void ExitState()
+    {
+        Debug.Log("RpcExitState 실행됨");
+        pv.RPC("RpcExitState", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RpcExitStateCancle(){   
+        anim.SetTrigger("Cancel");
+        anim.SetLayerWeight(7,0);
+        wasExiting = false;
+        Debug.Log(wasExiting);
+
+        isExiting = interact.isExiting;
+    }
+
+    public void ExitStateCancle()
+    {
+        Debug.Log("RpcExitStateCancle 실행됨");
+        pv.RPC("RpcExitStateCancle", RpcTarget.All);
+    }
+
+    public void dededede(){
+        Debug.Log("RpcExitState 실행됨");
+    }
+    public void OnDamage(float damage, string playerId)
+    {
+        Debug.Log("OnDamage는 실행됨");
+        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, playerId);
     }
 
 

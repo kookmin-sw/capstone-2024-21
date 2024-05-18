@@ -17,34 +17,22 @@ public class Player : MonoBehaviour
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    [PunRPC]
+    public void RpcGo2Map(Vector3 pos)
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (pv.IsMine)
         {
-            Go2Map();
+            uiManager.isGameStart = true;
+            uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            //Transform[] points = GameObject.Find("WarpPointGroup").GetComponentsInChildren<Transform>();
+            //int idx = Random.Range(1, points.Length);
+            this.transform.position = pos;
         }
     }
 
-    void GameStart()
+    public void Go2Map(Vector3 pos)
     {
-        Go2Map();
-    }
-
-    void Go2Map()
-    {
-        uiManager.isGameStart = true;
-        uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        Transform[] points = GameObject.Find("WarpPointGroup").GetComponentsInChildren<Transform>();
-        if (points != null)
-        {
-            int idx = Random.Range(1, points.Length);
-            this.transform.position = points[idx].position;
-        }
-        else
-        {
-            Debug.Log("points가 왜 null임??");
-        }
+        pv.RPC("RpcGo2Map", RpcTarget.All, pos);
     }
 }
