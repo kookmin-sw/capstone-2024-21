@@ -172,7 +172,7 @@ public class MapManager : MonoBehaviour
             int i = Random.Range(0, BatterySpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
             if (check[i]) continue; //이미 스포너로 지정한 오브젝트라면 continue
 
-            pv.RPC("AddBatterySpawnerScriptRPC", RpcTarget.All, i);
+            pv.RPC("AddBatterySpawnerScriptRPC", RpcTarget.AllBuffered, i);
             check[i]=true;
             cnt++;
         }
