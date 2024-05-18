@@ -71,14 +71,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //맵 구성
-
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("IsMasterClient 로써 맵 구성");
-            //MapManager.Instance.LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화
-            //MapManager.Instance.DisableSpawners_tmp();
-
             MapManager.Instance.EnableBatterySpawner();
+            MapManager.Instance.EnableWeaponSpawner();
         }
 
 

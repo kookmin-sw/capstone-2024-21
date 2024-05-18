@@ -42,12 +42,12 @@ public class MapManager : MonoBehaviour
     [Header("WeaponSpawner")]
     [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//스포너 후보들
     [SerializeField] int WeaponSpawnerCount = 50;
-    [SerializeField] List<GameObject> WeaponSpawners = new List<GameObject>();//스포너 후보들
+    [SerializeField] List<GameObject> WorkingWeaponSpawners = new List<GameObject>();//스포너들 
 
-    [Header("ItemSpawner")]
-    [SerializeField] List<GameObject> ItemSpawnerTargets = new List<GameObject>();//스포너 후보들
-    [SerializeField] int ItemSpawnerCount = 1;
-    [SerializeField] List<GameObject> ItemSpawners = new List<GameObject>();//스포너 후보들
+    //[Header("ItemSpawner")]
+    //[SerializeField] List<GameObject> ItemSpawnerTargets = new List<GameObject>();//스포너 후보들
+    //[SerializeField] int ItemSpawnerCount = 1;
+    //[SerializeField] List<GameObject> ItemSpawners = new List<GameObject>();//스포너 후보들
 
     [Header("Light")]
     float brightSpeed = 1f;
@@ -66,11 +66,6 @@ public class MapManager : MonoBehaviour
         for(int i = 0; i < gameObjs.Length; i++)
         {
             GameObject tmpObj = gameObjs[i];
-
-            //if (tmpObj.GetComponent<PhotonView>())
-            //{
-            //    Debug.Log("name : " + tmpObj.gameObject.name + " || id : " + tmpObj.GetComponent<PhotonView>().ViewID);
-            //}
 
             // door 
             if (tmpObj.name.Contains("Door") && !tmpObj.name.Contains("Frame") && !tmpObj.name.Contains("Window"))
@@ -111,18 +106,23 @@ public class MapManager : MonoBehaviour
             {
                 WeaponSpawnerTargets.Add(tmpObj);
 
-                tmpObj.tag = "ItemSpawner";
-                tmpObj.layer = LayerMask.NameToLayer("Interact");
-            }
-
-            //ItemSpawner
-            else if (tmpObj.name.Contains("ItemSpawner"))
-            {
-                ItemSpawnerTargets.Add(tmpObj);
+                if (tmpObj.GetComponent<WeaponSpawner>() == null)
+                {
+                    tmpObj.gameObject.AddComponent<WeaponSpawner>();
+                }
 
                 tmpObj.tag = "ItemSpawner";
                 tmpObj.layer = LayerMask.NameToLayer("Interact");
             }
+
+            ////ItemSpawner
+            //else if (tmpObj.name.Contains("ItemSpawner"))
+            //{
+            //    ItemSpawnerTargets.Add(tmpObj);
+
+            //    tmpObj.tag = "ItemSpawner";
+            //    tmpObj.layer = LayerMask.NameToLayer("Interact");
+            //}
 
             // 빛
             else if (tmpObj.name.Contains("Lamp") && tmpObj.GetComponentInChildren<Light>())
@@ -205,121 +205,85 @@ public class MapManager : MonoBehaviour
 
 
 
-
-
-
-    public void LocateBatterySpawner()
-    {
-        bool[] check = new bool[BatterySpawnerTargets.Count]; // false로 초기화됨 
-
-        int cnt = 0;
-
-        while (cnt != BatterySpawnerCount)
-        {
-            int i = Random.Range(0, BatterySpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
-            if (check[i]) continue; //이미 스포너로 지정한 오브젝트라면 continue
-
-            pv.RPC("AddBatterySpawnerScriptRPC", RpcTarget.AllBuffered, i);
-            check[i]=true;
-            cnt++;
-        }
-    }
-
-    //public void DisableSpawners_tmp()
+    //void AddPv(GameObject obj)
     //{
-    //    bool[] check = new bool[BatterySpawnerTargets.Count]; // false로 초기화됨 
-
-    //    int cnt = 0;
-
-    //    while (cnt != BatterySpawnerCount)
+    //    if (obj.gameObject.GetComponent<PhotonView>() == null)
     //    {
-    //        int i = Random.Range(0, BatterySpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
-    //        if (check[i]) continue; //이미 스포너로 지정한 오브젝트라면 continue
-
-    //        BatterySpawnerTargets[i].GetComponent<BatterySpawner>().DisableSpawner();
-    //        BatterySpawners.Add(BatterySpawnerTargets[i]);
-    //        check[i] = true;
-    //        cnt++;
-    //    }
-    //}
-
-    void AddPv(GameObject obj)
-    {
-        if (obj.gameObject.GetComponent<PhotonView>() == null)
-        {
-            PhotonView targetPV = obj.AddComponent<PhotonView>();
-            targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-        }
-    }
-
-    //[PunRPC]
-    //void AddBatterySpawnerScriptRPC(int i)
-    //{
-    //    // 포톤 없으면 포톤 달아주고 
-    //    if (BatterySpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
-    //    {
-    //        PhotonView targetPV = BatterySpawnerTargets[i].AddComponent<PhotonView>();
+    //        PhotonView targetPV = obj.AddComponent<PhotonView>();
     //        targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
     //    }
-
-    //    // 배터리 스포너 스크립트 달아주고 
-    //    if (BatterySpawnerTargets[i].gameObject.GetComponent<BatterySpawner>() == null)
-    //    {
-    //        BatterySpawner batterySpawner = BatterySpawnerTargets[i].AddComponent<BatterySpawner>();
-    //        batterySpawner.enabled = true;
-    //    }
-
-    //    BatterySpawners.Add(BatterySpawnerTargets[i]);
     //}
-    
-    void LocateWeaponSpawner()
+
+    public void EnableWeaponSpawner()
     {
+        bool[] check = new bool[WeaponSpawnerTargets.Count]; // false로 초기화됨 
+
         int cnt = 0;
+
         while (cnt != WeaponSpawnerCount)
         {
             int i = Random.Range(0, WeaponSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
 
-            if (WeaponSpawnerTargets[i].gameObject.GetComponent<WeaponSpawner>() == null)
-            {
-                if (WeaponSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
-                {
-                    PhotonView targetPV = WeaponSpawnerTargets[i].AddComponent<PhotonView>();
-                    targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-                }
+            if (check[i]) continue; //이미 스포너로 지정한 오브젝트라면 continue
 
-                WeaponSpawner weaponSpawner = WeaponSpawnerTargets[i].AddComponent<WeaponSpawner>();
-                weaponSpawner.enabled = true;
-                cnt++;
+            WeaponSpawner weaponSpawner = WeaponSpawnerTargets[i].GetComponent<WeaponSpawner>();
+            weaponSpawner.EnableSpawnerWorking();
 
-                WeaponSpawners.Add(WeaponSpawnerTargets[i]);
-            }
+            WorkingWeaponSpawners.Add(WeaponSpawnerTargets[i]);
+
+            check[i] = true;
+            cnt++;
         }
     }
 
-    void LocateItemSpawner()
-    {
-        int cnt = 0;
-        while (cnt != ItemSpawnerCount)
-        {
-            int i = Random.Range(0, ItemSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
-            if (ItemSpawnerTargets[i].gameObject.GetComponent<ItemSpawner>() == null)
-            {
-                if (ItemSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
-                {
-                    PhotonView targetPV = ItemSpawnerTargets[i].AddComponent<PhotonView>();
-                    targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-                }
+    //void LocateWeaponSpawner()
+    //{
+    //    int cnt = 0;
+    //    while (cnt != WeaponSpawnerCount)
+    //    {
+    //        int i = Random.Range(0, WeaponSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
 
-                ItemSpawner itemSpawner = ItemSpawnerTargets[i].AddComponent<ItemSpawner>();
-                itemSpawner.enabled = true;
-                cnt++;
+    //        if (WeaponSpawnerTargets[i].gameObject.GetComponent<WeaponSpawner>() == null)
+    //        {
+    //            if (WeaponSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
+    //            {
+    //                PhotonView targetPV = WeaponSpawnerTargets[i].AddComponent<PhotonView>();
+    //                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
+    //            }
 
-                ItemSpawners.Add(ItemSpawnerTargets[i]);
-            }
-        }
-    }
+    //            WeaponSpawner weaponSpawner = WeaponSpawnerTargets[i].AddComponent<WeaponSpawner>();
+    //            weaponSpawner.enabled = true;
+    //            cnt++;
 
-    //여기부터 살펴보기 !!!
+    //            WeaponSpawners.Add(WeaponSpawnerTargets[i]);
+    //        }
+    //    }
+    //}
+
+    //void LocateItemSpawner()
+    //{
+    //    int cnt = 0;
+    //    while (cnt != ItemSpawnerCount)
+    //    {
+    //        int i = Random.Range(0, ItemSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
+    //        if (ItemSpawnerTargets[i].gameObject.GetComponent<ItemSpawner>() == null)
+    //        {
+    //            if (ItemSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
+    //            {
+    //                PhotonView targetPV = ItemSpawnerTargets[i].AddComponent<PhotonView>();
+    //                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
+    //            }
+
+    //            ItemSpawner itemSpawner = ItemSpawnerTargets[i].AddComponent<ItemSpawner>();
+    //            itemSpawner.enabled = true;
+    //            cnt++;
+
+    //            ItemSpawners.Add(ItemSpawnerTargets[i]);
+    //        }
+    //    }
+    //}
+
+
     public IEnumerator BightenLight(Light light, int range)
     {
         while (light.range < range)
