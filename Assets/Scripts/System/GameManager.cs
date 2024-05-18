@@ -60,9 +60,6 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
 
-        PhotonNetwork.CurrentRoom.IsOpen = false;
-        PhotonNetwork.CurrentRoom.IsVisible = false;
-
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
 

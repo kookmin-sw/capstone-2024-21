@@ -85,23 +85,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 캐릭터 생성
         PhotonNetwork.Instantiate("Prefabs/Player", points[idx].position, points[idx].rotation, 0);
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 3)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             Debug.Log("현재 인원수: " + PhotonNetwork.CurrentRoom.PlayerCount);
             Debug.Log("Game Start!");
+
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+
             GameManager.Instance.TimerStart();
+
+            Debug.Log("현재 방 오픈 여부: " + PhotonNetwork.CurrentRoom.IsOpen);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
