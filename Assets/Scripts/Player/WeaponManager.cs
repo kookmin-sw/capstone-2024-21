@@ -19,10 +19,28 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private bool chk = true;
     private Coroutine swingCoroutine; // 코루틴 참조를 저장하기 위한 변수
 
+    private void Start()
+    {
+        if (meleeArea == null)
+        {
+            Debug.LogError("meleeArea is not assigned!");
+        }
+        attackManager = transform.GetComponentInParent<AttackManager>(); 
+        if (attackManager == null)
+        {
+            Debug.LogError("AttackManager is not found in parent objects!");
+        }
+    }
+
     public void callAttack(){
-        StopCoroutine("Swing");
+        if(swingCoroutine != null)
+        {
+            StopCoroutine(swingCoroutine);
+        }
         if(type == Type.Melee)
-            attackManager = transform.GetParentComponent<AttackManager>(); 
+        {
+            attackManager = transform.GetComponentInParent<AttackManager>();
+        }
     }
 
     public void Use(){
@@ -37,14 +55,13 @@ public class WeaponManager : MonoBehaviour
             chk = false;
             Debug.Log("스타트스윙");
             Debug.Log(chk);
-            StopCoroutine("Swing");
-            StartCoroutine("Swing");
+            swingCoroutine = StartCoroutine(Swing());
         }
         else Debug.Log("실패");
     }
 
     void OnTriggerEnter(Collider other){
-        if((other.gameObject.tag == "Monster" || other.gameObject.tag == "Player") && meleeArea.enabled){
+        if((other.gameObject.tag == "Monster" || other.gameObject.tag == "Player") && meleeArea != null && meleeArea.enabled){
             meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
             PhotonView pv = other.GetComponent<PhotonView>();
@@ -72,9 +89,15 @@ public class WeaponManager : MonoBehaviour
         Debug.Log(chk);
         attackManager.AttackIn();
         yield return new WaitForSeconds(colliderOn);
-        meleeArea.enabled = true;
+        if (meleeArea != null)
+        {
+            meleeArea.enabled = true;
+        }
         yield return new WaitForSeconds(colliderOff);
-        meleeArea.enabled = false;
+        if (meleeArea != null)
+        {
+            meleeArea.enabled = false;
+        }
         yield return new WaitForSeconds(1.0f - colliderOn - colliderOff);
         chk = true; // 코루틴 종료 후 변수 초기화
         attackManager.AttackOut();

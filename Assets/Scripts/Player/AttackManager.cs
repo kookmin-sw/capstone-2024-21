@@ -335,10 +335,12 @@ public class AttackManager : MonoBehaviour
                 }
                 else if (equipItemIndex == -1)
                 {
+                    equipWeaponGameobject = weapons[9].GetComponent<WeaponManager>();
                     Debug.Log("아이템 칸 비어있음");
                     if (equipWeapon != weapons[9])
                     {
-                        RpcEquip(equipItemIndex);
+                        colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
+                        RpcEquip(9);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
                         equipWeapon = weapons[9];
