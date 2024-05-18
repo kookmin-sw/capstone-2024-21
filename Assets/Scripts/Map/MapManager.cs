@@ -122,9 +122,10 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        //이게 룸이 구성되기 전에 맵을 구성하라고 하니까 안됐음!! -> 포톤매니져에서 룸 생성이 되면 그 이후에 호출하도록 함 
         LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
-        LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
-        LocateItemSpawner();
+        //LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
+        //LocateItemSpawner();
 
     }
 
@@ -159,12 +160,12 @@ public class MapManager : MonoBehaviour
     }
 
 
-    void AddPV(int i)
-    {
+    //void AddPV(int i)
+    //{
 
-    }
+    //}
 
-    void LocateBatterySpawner()
+    public void LocateBatterySpawner()
     {
         int cnt = 0;
         while (cnt != BatterySpawnerCount)

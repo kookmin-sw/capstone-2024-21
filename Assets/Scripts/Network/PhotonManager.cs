@@ -70,6 +70,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 룸에 입장한 후 호출되는 콜백 함수
     public override void OnJoinedRoom()
     {
+        //맵 구성
+        MapManager.Instance.LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
+
+
         Debug.Log($"룸 입장 여부 = {PhotonNetwork.InRoom}");
         Debug.Log($"현재 룸의 인원수 = {PhotonNetwork.CurrentRoom.PlayerCount}");
 
