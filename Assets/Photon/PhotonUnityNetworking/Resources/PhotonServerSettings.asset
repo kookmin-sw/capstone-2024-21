@@ -61,6 +61,7 @@ MonoBehaviour:
   - SpawnItem_tmp
   - RPCLocateBatterySpawner
   - RpcGo2Map
+  - RpcExitState
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

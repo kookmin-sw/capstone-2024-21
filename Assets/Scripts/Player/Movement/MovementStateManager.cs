@@ -122,6 +122,8 @@ public class MovementStateManager : MonoBehaviour
 
             if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
                 ExitState();
+            else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting))
+                ExitStateCancle();
         }
     }
 
@@ -129,20 +131,12 @@ public class MovementStateManager : MonoBehaviour
     void RpcExitState(){   
         Debug.Log("hit");
 
-        
-              
-                anim.SetLayerWeight(7,1);
-                wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
-                Debug.Log(wasExiting);
-                anim.SetTrigger("Exiting");
-                dededede();
-                
-            if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting)){
-                anim.SetTrigger("Cancel");
-                anim.SetLayerWeight(7,0);
-                wasExiting = false;
-                Debug.Log(wasExiting);
-            }
+        anim.SetLayerWeight(7,1);
+        wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
+        Debug.Log(wasExiting);
+        anim.SetTrigger("Exiting");
+        dededede();
+            
         isExiting = interact.isExiting;
     }
 
@@ -150,6 +144,22 @@ public class MovementStateManager : MonoBehaviour
     {
         Debug.Log("RpcExitState 실행됨");
         pv.RPC("RpcExitState", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RpcExitStateCancle(){   
+        anim.SetTrigger("Cancel");
+        anim.SetLayerWeight(7,0);
+        wasExiting = false;
+        Debug.Log(wasExiting);
+
+        isExiting = interact.isExiting;
+    }
+
+    public void ExitStateCancle()
+    {
+        Debug.Log("RpcExitStateCancle 실행됨");
+        pv.RPC("RpcExitStateCancle", RpcTarget.All);
     }
 
     public void dededede(){
