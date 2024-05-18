@@ -132,6 +132,7 @@ public class MovementStateManager : MonoBehaviour
                 wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
                 Debug.Log(wasExiting);
                 anim.SetTrigger("Exiting");
+                dededede();
                 
             }
         else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting)){
@@ -149,6 +150,9 @@ public class MovementStateManager : MonoBehaviour
         pv.RPC("RpcExitState", RpcTarget.All);
     }
 
+    public void dededede(){
+        Debug.Log("RpcExitState 실행됨");
+    }
     public void OnDamage(float damage, string playerId)
     {
         Debug.Log("OnDamage는 실행됨");
