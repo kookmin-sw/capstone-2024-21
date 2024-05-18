@@ -52,7 +52,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         // 룸 속성 정의
         RoomOptions ro = new RoomOptions();
-        ro.MaxPlayers = 20;      // 최대 동접자 수: 20명
+        ro.MaxPlayers = 8;      // 최대 동접자 수: 8명
         ro.IsOpen = true;        // 룸의 오픈 여부
         ro.IsVisible = true;     // 로비에서 룸 목록 노출 여부
 
