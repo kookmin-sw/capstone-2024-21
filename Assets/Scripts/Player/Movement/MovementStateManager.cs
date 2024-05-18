@@ -120,24 +120,24 @@ public class MovementStateManager : MonoBehaviour
                 attackManager.Attack();
             }
 
-            ExitState();
+            if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
+                ExitState();
         }
     }
 
     [PunRPC]
     void RpcExitState(){   
         Debug.Log("hit");
+
         
-        if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
-            {   
+              
                 anim.SetLayerWeight(7,1);
                 wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
                 Debug.Log(wasExiting);
                 anim.SetTrigger("Exiting");
                 dededede();
                 
-            }
-        else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting)){
+            if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting)){
                 anim.SetTrigger("Cancel");
                 anim.SetLayerWeight(7,0);
                 wasExiting = false;
