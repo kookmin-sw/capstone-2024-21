@@ -58,9 +58,10 @@ MonoBehaviour:
   - SpawnItem
   - DestroyItem
   - ShowTimer
-  - SpawnItem_tmp
-  - RPCLocateBatterySpawner
+  - RpcMonsterDie
   - RpcGo2Map
+  - RPCLocateBatterySpawner
+  - SpawnItem_tmp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
