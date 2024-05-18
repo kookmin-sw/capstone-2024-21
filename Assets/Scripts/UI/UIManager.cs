@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI survivalTime;
 
     [SerializeField] private TextMeshProUGUI currentPlayers;
+    [SerializeField] private TextMeshProUGUI allPlayers;
+
 
 
     [SerializeField] private TextMeshProUGUI killPoint;
@@ -34,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     [HideInInspector] public bool isGameStart;
     [HideInInspector] public bool isGameOver;
+    [HideInInspector] public bool isFirst;
     [HideInInspector] public bool isUIActivate;
     [HideInInspector] public bool isComActivate;
 
@@ -46,6 +49,8 @@ public class UIManager : MonoBehaviour
         gameOverBoard.SetActive(false);
         isGameStart = false;
         isGameOver = false;
+        isFirst = false;
+
         isUIActivate = false;
         gameTime = 0;
         selectSlot = 0;
@@ -65,7 +70,13 @@ public class UIManager : MonoBehaviour
         if(isGameStart == true)
         {
             gameTime += Time.deltaTime;
-            currentPlayers.text = curPlayers.ToString() + "/" + totalPlayers.ToString();
+            isFirst = true;
+            if(isFirst == true)
+            {
+                allPlayers.text = "/" + totalPlayers.ToString();
+                isFirst = false;
+            }
+            currentPlayers.text = curPlayers.ToString();
         }
         if(isGameOver == false)
         {
