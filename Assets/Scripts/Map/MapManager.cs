@@ -34,7 +34,7 @@ public class MapManager : MonoBehaviour
     [Header("BatterySpawner")]
     [SerializeField] List<GameObject> BatterySpawnerTargets = new List<GameObject>();//배터리 스포너 후보들
     [SerializeField] int BatterySpawnerCount = 7;
-    [SerializeField] List<GameObject> BatterySpawners = new List<GameObject>();//배터리 스포너 후보들
+    [SerializeField] List<GameObject> BatterySpawners = new List<GameObject>();//배터리 스포너들
 
 
     //일시적으로 웨폰 스포너에서 아이템도 나오도록 함. 우선 아이템 스포너는 없다고 생각해도 무관 
@@ -81,8 +81,7 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
                 gameObjs[i].isStatic = false; // 이걸 해줘야 회전함!!
             }
-
-            //게임 오브젝트들 중에서 이름에 BatterySpawner가 들어가면 스포너 후보에 추가하고 태그와 레이어 설정 -> 배터리가 추출 당했어도 우선 상호작용은 되야하니까 
+            //BatterySpawner
             else if (gameObjs[i].name.Contains("BatterySpawner"))
             {
                 BatterySpawnerTargets.Add(gameObjs[i]);
@@ -90,8 +89,7 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
-
-            //게임 오브젝트들 중에서 이름에 WeaponSpawner가 들어가면 스포너 후보에 추가하고 태그와 레이어 설정 -> 배터리가 추출 당했어도 우선 상호작용은 되야하니까 
+            // WeaponSpawner
             else if (gameObjs[i].name.Contains("WeaponSpawner") || gameObjs[i].name.Contains("SheetRackCase") || gameObjs[i].name.Contains("SmallMetalicCase"))
             {
                 WeaponSpawnerTargets.Add(gameObjs[i]);
@@ -99,6 +97,7 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
+            //ItemSpawner
             else if (gameObjs[i].name.Contains("ItemSpawner"))
             {
                 ItemSpawnerTargets.Add(gameObjs[i]);
@@ -106,6 +105,7 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].tag = "ItemSpawner";
                 gameObjs[i].layer = LayerMask.NameToLayer("Interact");
             }
+            // 빛
             else if (gameObjs[i].name.Contains("Lamp") && gameObjs[i].GetComponentInChildren<Light>())
             {
                 Lights.Add(gameObjs[i]);
@@ -115,6 +115,7 @@ public class MapManager : MonoBehaviour
                 SetLight(light, 5, 1); //range=5, intensity =1로 초기화 
 
             }
+            // ground 레이어 달기
             else if (gameObjs[i].name.Contains("floor") || gameObjs[i].name.Contains("Stair"))
             {
                 gameObjs[i].layer = LayerMask.NameToLayer("Ground");
@@ -123,7 +124,7 @@ public class MapManager : MonoBehaviour
         }
 
         //이게 룸이 구성되기 전에 맵을 구성하라고 하니까 안됐음!! -> 포톤매니져에서 룸 생성이 되면 그 이후에 호출하도록 함 
-        LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
+        //LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
         //LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
         //LocateItemSpawner();
 
@@ -160,47 +161,44 @@ public class MapManager : MonoBehaviour
     }
 
 
-    //void AddPV(int i)
-    //{
-
-    //}
-
     public void LocateBatterySpawner()
     {
+        bool[] check = new bool[BatterySpawnerTargets.Count]; // false로 초기화됨 
+
         int cnt = 0;
+
         while (cnt != BatterySpawnerCount)
         {
             int i = Random.Range(0, BatterySpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
+            if (check[i]) continue; //이미 스포너로 지정한 오브젝트라면 continue
 
-            pv.RPC("RPCLocateBatterySpawner", RpcTarget.All, i);
-
+            pv.RPC("AddBatterySpawnerScriptRPC", RpcTarget.All, i);
+            check[i]=true;
             cnt++;
         }
     }
 
     
     [PunRPC]
-    void RPCLocateBatterySpawner(int i)
+    void AddBatterySpawnerScriptRPC(int i)
     {
+        // 포톤 없으면 포톤 달아주고 
+        if (BatterySpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
+        {
+            PhotonView targetPV = BatterySpawnerTargets[i].AddComponent<PhotonView>();
+            targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
+        }
+
+        // 배터리 스포너 스크립트 달아주고 
         if (BatterySpawnerTargets[i].gameObject.GetComponent<BatterySpawner>() == null)
         {
-            if (BatterySpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
-            {
-                PhotonView targetPV = BatterySpawnerTargets[i].AddComponent<PhotonView>();
-                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-            }
-
             BatterySpawner batterySpawner = BatterySpawnerTargets[i].AddComponent<BatterySpawner>();
             batterySpawner.enabled = true;
-
-
-            BatterySpawners.Add(BatterySpawnerTargets[i]);
         }
-        
+
+        BatterySpawners.Add(BatterySpawnerTargets[i]);
     }
-
-
-
+    
     void LocateWeaponSpawner()
     {
         int cnt = 0;
