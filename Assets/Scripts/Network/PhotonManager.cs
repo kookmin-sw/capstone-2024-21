@@ -71,7 +71,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //맵 구성
-        MapManager.Instance.LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MapManager.Instance.LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
+        }
+
 
 
         Debug.Log($"룸 입장 여부 = {PhotonNetwork.InRoom}");
