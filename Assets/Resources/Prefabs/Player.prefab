@@ -5323,7 +5323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c99401b29a56a04a9abdd21c9b3fd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   attackManager: {fileID: 0}
+  DroppedItem: {fileID: 0}
   healthPointBar: {fileID: 0}
   healthPointCount: {fileID: 0}
   uiManager: {fileID: 0}
