@@ -87,7 +87,6 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RpcOnDamage(float damage, string playerId)
     {
-        Debug.Log("TAG: " + gameObject.tag);
         if (gameObject.tag == "Player")
         {
             if (pv.IsMine && GameManager.Instance.UserId != playerId)
@@ -117,7 +116,6 @@ public class HpManager : MonoBehaviour
                 }
             }
         }
-
         if(gameObject.tag == "Monster")
         {
             if (pv.IsMine)
@@ -133,8 +131,13 @@ public class HpManager : MonoBehaviour
     }
     public void OnDamage(float damage, string playerId)
     {
-        Debug.Log("OnDamage는 실행됨");
+        //Debug.Log("OnDamage는 실행됨");
         pv.RPC("RpcOnDamage", RpcTarget.Others, damage, playerId);
+        if (gameObject.tag == "Monster")
+        {
+            Debug.Log("몬스터 OnDamage는 실행됨");
+            pv.RPC("RpcOnDamage", RpcTarget.All, damage, playerId);
+        }
     }
 
     // 체력 회복 함수
@@ -181,16 +184,12 @@ public class HpManager : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        if(pv.IsMine)
+        if (gameObject.tag == "Monster")
         {
-            if (gameObject.tag == "Monster")
-            {
-                DroppedItem = Instantiate(Resources.Load<GameObject>("Prefabs/battery")); //프리펩 생성
-                DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-                Destroy(gameObject);
-            }
+            DroppedItem = Instantiate(Resources.Load<GameObject>("Prefabs/battery")); //프리펩 생성
+            DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            Destroy(gameObject);
         }
-
     }
 
     // 사망 함수
