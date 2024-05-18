@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour
                 }
                 else
                 {
-                    addDoorRightScript(tmpObj);
+                    addDoorRightScript(tmpObj); 
                 }
 
                 tmpObj.tag = "door";
@@ -174,6 +174,30 @@ public class MapManager : MonoBehaviour
             door.enabled = true;
         }
     }
+
+
+
+    public void EnableBatterySpawner()
+    {
+        bool[] check = new bool[BatterySpawnerTargets.Count]; // false로 초기화됨 
+
+        int cnt = 0;
+
+        while (cnt != BatterySpawnerCount)
+        {
+            int i = Random.Range(0, BatterySpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
+            if (check[i]) continue; //이미 스포너로 지정한 오브젝트라면 continue
+
+            BatterySpawner batterySpawner = BatterySpawnerTargets[i].GetComponent<BatterySpawner>();
+            EnableSpawnerWorking();
+            check[i] = true;
+            cnt++;
+        }
+    }
+
+
+
+
 
 
     public void LocateBatterySpawner()
