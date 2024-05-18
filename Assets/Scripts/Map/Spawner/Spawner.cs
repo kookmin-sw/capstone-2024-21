@@ -109,28 +109,6 @@ public class Spawner : MonoBehaviour
         return finalVelocity;
     }
 
-    [PunRPC]
-    public void EnableSpawnerRPC()
-    {
-        gameObject.GetComponent<Spawner>().enabled = true;
-    }
-
-    public void EnableSpawner()
-    {
-        pv.RPC("EnableSpawnerRPC", RpcTarget.AllBuffered);
-    }
-
-
-    [PunRPC]
-    public void DisableSpawnerRPC()
-    {
-        gameObject.GetComponent<Spawner>().enabled = true;
-    }
-
-    public void DisableSpawner()
-    {
-        pv.RPC("DisableSpawnerRPC", RpcTarget.AllBuffered);
-    }
 
     [PunRPC]
     public void EnableSpawnerWorkingRPC()
