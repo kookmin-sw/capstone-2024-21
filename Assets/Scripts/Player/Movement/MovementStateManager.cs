@@ -124,7 +124,8 @@ public class MovementStateManager : MonoBehaviour
         }
     }
 
-    void ExitState(){   
+    [PunRPC]
+    void RpcExitState(){   
         if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
             {   
                 anim.SetLayerWeight(7,1);
@@ -140,6 +141,18 @@ public class MovementStateManager : MonoBehaviour
                 Debug.Log(wasExiting);
             }
         isExiting = interact.isExiting;
+    }
+
+    public void ExitState()
+    {
+        Debug.Log("RpcExitState 실행됨");
+        pv.RPC("RpcExitState", RpcTarget.All);
+    }
+
+    public void OnDamage(float damage, string playerId)
+    {
+        Debug.Log("OnDamage는 실행됨");
+        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, playerId);
     }
 
 
