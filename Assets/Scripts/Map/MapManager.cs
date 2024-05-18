@@ -100,7 +100,7 @@ public class MapManager : MonoBehaviour
                     tmpObj.gameObject.AddComponent<BatterySpawner>();
                 }
 
-                AddPv(tmpObj); // 뷰 아이디 일치하는거 확인함 
+                //AddPv(tmpObj); // pv 스크립트로 넣으면 뷰 아이디가 동일하게 안들어간다.... 하나하나 넣어줘야 일치함... 
 
                 tmpObj.tag = "ItemSpawner";
                 tmpObj.layer = LayerMask.NameToLayer("Interact");
