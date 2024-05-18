@@ -1336,10 +1336,10 @@ GameObject:
   - component: {fileID: 1066369557179284087}
   - component: {fileID: 940698859386536817}
   - component: {fileID: 68794782263992214}
-  - component: {fileID: 1299448854569868002}
   - component: {fileID: 1727389471787402388}
   - component: {fileID: 3178506410196195060}
   - component: {fileID: 346187708962678411}
+  - component: {fileID: 5905065481503223889}
   m_Layer: 0
   m_Name: HelperRobot
   m_TagString: Monster
@@ -1356,8 +1356,8 @@ Transform:
   m_GameObject: {fileID: 8478873387277266331}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.103, y: 0, z: 1.115}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalPosition: {x: -1.103, y: 0, z: -2.06}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6552225484015224433}
@@ -1471,20 +1471,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &1299448854569868002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8478873387277266331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cedbbc642a7bf784a95ca6562af6d18d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  DroppedItem: {fileID: 0}
 --- !u!114 &1727389471787402388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,6 +1529,24 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &5905065481503223889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478873387277266331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c99401b29a56a04a9abdd21c9b3fd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  attackManager: {fileID: 0}
+  DroppedItem: {fileID: 0}
+  healthPointBar: {fileID: 0}
+  healthPointCount: {fileID: 0}
+  uiManager: {fileID: 0}
 --- !u!1 &8831359430549197857
 GameObject:
   m_ObjectHideFlags: 0

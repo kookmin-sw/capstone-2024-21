@@ -11,10 +11,15 @@ using UnityEngine.UI;
 public class HpManager : MonoBehaviour
 {
     public float maxHp { get; set; } = 100;
-    public float hp { get; set; }
+
+    public float monMaxHp { get; set; } = 50;
+
+    public float hp;
     public bool isDead { get; set; } // 죽었는지 확인
 
     public AttackManager attackManager;
+    public GameObject DroppedItem;
+
 
     [SerializeField] private Slider healthPointBar;
     [SerializeField] private TMP_Text healthPointCount;
@@ -30,19 +35,45 @@ public class HpManager : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-        attackManager = GetComponent<AttackManager>();
-        uiManager = FindObjectOfType<UIManager>();
-        healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
-        healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
+        if(gameObject.tag == "Player")
+        {
+            attackManager = GetComponent<AttackManager>();
+            uiManager = FindObjectOfType<UIManager>();
+            healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
+            healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
+        }
     }
 
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
-    {   
-        hp = maxHp;
-        healthPointBar.value = hp;
-        healthPointCount.text = hp.ToString();
-        isDead = false;
+    {
+        if (gameObject.tag == "Monster")
+        {
+            hp = monMaxHp;
+        }
+
+        if (gameObject.tag == "Player")
+        {
+            hp = maxHp;
+            healthPointBar.value = hp;
+            healthPointCount.text = hp.ToString();
+            isDead = false;
+        }
+    }
+
+    private void Update()
+    {
+        if(pv.IsMine)
+        {
+            if (gameObject.tag == "Monster")
+            {
+                if (hp <= 0)
+                {
+                    Die();
+                }
+            }
+        }
+
     }
 
     public void AddKillCount(string playerId)
@@ -56,29 +87,47 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RpcOnDamage(float damage, string playerId)
     {
-        if (pv.IsMine && GameManager.Instance.UserId != playerId){
-            attackManager.OnDamaged();
-            Debug.Log("데미지 입음");
-            Debug.Log("내 이름: " + GameManager.Instance.UserId);
-            Debug.Log("나를 때린 사람 이름: " + playerId);
-
-            Debug.Log("받은 데미지: " + damage);
-            hp -= damage;
-            healthPointBar.value = hp;
-            healthPointCount.text = hp.ToString();
-            Debug.Log("남은 hp: " + hp);
-
-            // pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
-
-            // 체력이 0 이하이고 살아있으면 사망
-            if (hp <= 0 && !isDead)
+        Debug.Log("TAG: " + gameObject.tag);
+        if (gameObject.tag == "Player")
+        {
+            if (pv.IsMine && GameManager.Instance.UserId != playerId)
             {
-                hp = 0;
+                attackManager.OnDamaged();
+                Debug.Log("데미지 입음");
+                Debug.Log("내 이름: " + GameManager.Instance.UserId);
+                Debug.Log("나를 때린 사람 이름: " + playerId);
+
+                Debug.Log("받은 데미지: " + damage);
+                hp -= damage;
                 healthPointBar.value = hp;
                 healthPointCount.text = hp.ToString();
-                Debug.Log("나를 죽인 사람: " + playerId);
-                AddKillCount(playerId);
-                Die();
+                Debug.Log("남은 hp: " + hp);
+
+                // pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
+
+                // 체력이 0 이하이고 살아있으면 사망
+                if (hp <= 0 && !isDead)
+                {
+                    hp = 0;
+                    healthPointBar.value = hp;
+                    healthPointCount.text = hp.ToString();
+                    Debug.Log("나를 죽인 사람: " + playerId);
+                    AddKillCount(playerId);
+                    Die();
+                }
+            }
+        }
+
+        if(gameObject.tag == "Monster")
+        {
+            if (pv.IsMine)
+            {
+                Debug.Log("몬스터 맞음");
+                hp -= damage;
+                if (hp <= 0)
+                {
+                    Die();
+                }
             }
         }
     }
@@ -110,22 +159,38 @@ public class HpManager : MonoBehaviour
     public void RpcDie()
     {
         // 사망 이벤트 있으면 실행
-        if (onDeath != null)
+        if (gameObject.tag == "Player")
         {
-            onDeath();
+            if (onDeath != null)
+            {
+                onDeath();
+            }
+            if (pv.IsMine)
+            {
+                Debug.Log("사망");
+                uiManager.isGameOver = true;
+                uiManager.isUIActivate = true;
+
+
+            }
+            else
+            {
+                uiManager.curPlayers -= 1;
+            }
+            isDead = true;
+            gameObject.SetActive(false);
         }
-        if (pv.IsMine)
+
+        if(pv.IsMine)
         {
-            Debug.Log("사망");
-            uiManager.isGameOver = true;
-            uiManager.isUIActivate = true;
+            if (gameObject.tag == "Monster")
+            {
+                DroppedItem = Instantiate(Resources.Load<GameObject>("Prefabs/battery")); //프리펩 생성
+                DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                Destroy(gameObject);
+            }
         }
-        else
-        {
-            uiManager.curPlayers -= 1;
-        }
-        isDead = true;
-        gameObject.SetActive(false);
+
     }
 
     // 사망 함수
@@ -133,4 +198,5 @@ public class HpManager : MonoBehaviour
     {
         pv.RPC("RpcDie", RpcTarget.All);
     }
+
 }
