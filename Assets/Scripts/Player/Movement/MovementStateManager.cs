@@ -126,6 +126,8 @@ public class MovementStateManager : MonoBehaviour
 
     [PunRPC]
     void RpcExitState(){   
+        Debug.Log("hit");
+        
         if (!wasExiting && interact.isExiting && moveDir.magnitude < 0.1f) 
             {   
                 anim.SetLayerWeight(7,1);
