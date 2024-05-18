@@ -14512,6 +14512,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2480423684192764531, guid: 85783b33f847c8045b9b8da5b6da5244, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480423684192764531, guid: 85783b33f847c8045b9b8da5b6da5244, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2607101801122417275, guid: 85783b33f847c8045b9b8da5b6da5244, type: 3}
       propertyPath: m_SizeDelta.x
       value: 286.62
