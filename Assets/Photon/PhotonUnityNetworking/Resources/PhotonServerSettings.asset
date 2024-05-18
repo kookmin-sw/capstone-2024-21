@@ -64,6 +64,10 @@ MonoBehaviour:
   - SpawnItem_tmp
   - RpcExitState
   - RpcExitStateCancle
+  - AddBatterySpawnerScriptRPC
+  - EnableSpawnerRPC
+  - DisableSpawnerRPC
+  - EnableSpawnerWorkingRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

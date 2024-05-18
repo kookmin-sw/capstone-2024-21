@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.119178645, g: 0.119178645, b: 0.119178645, a: 1}
+  m_IndirectSpecularColor: {r: 0.11922146, g: 0.11922146, b: 0.11922146, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5513,7 +5513,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_4
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -5570,13 +5570,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 753840294}
   m_SourcePrefab: {fileID: 100100000, guid: 68a49296450cc5745a78c3895333111e, type: 3}
 --- !u!4 &753840292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
   m_PrefabInstance: {fileID: 753840291}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &753840293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+  m_PrefabInstance: {fileID: 753840291}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &753840294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753840293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 15
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &757398608
 GameObject:
   m_ObjectHideFlags: 0
@@ -7438,7 +7468,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_2
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -7495,13 +7525,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1052750820}
   m_SourcePrefab: {fileID: 100100000, guid: 68a49296450cc5745a78c3895333111e, type: 3}
 --- !u!4 &1052750818 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
   m_PrefabInstance: {fileID: 1052750817}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1052750819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+  m_PrefabInstance: {fileID: 1052750817}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1052750820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052750819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 13
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1053713780
 GameObject:
   m_ObjectHideFlags: 0
@@ -12985,7 +13045,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_1
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -13042,13 +13102,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1868265093}
   m_SourcePrefab: {fileID: 100100000, guid: 68a49296450cc5745a78c3895333111e, type: 3}
 --- !u!4 &1868265091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
   m_PrefabInstance: {fileID: 1868265090}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1868265092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+  m_PrefabInstance: {fileID: 1868265090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1868265093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868265092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 12
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1898214399
 GameObject:
   m_ObjectHideFlags: 0
@@ -13082,7 +13172,7 @@ MonoBehaviour:
   ExitChargedBattery: 0
   BatterySpawnerTargets: []
   BatterySpawnerCount: 7
-  BatterySpawners: []
+  WorkingBatterySpawners: []
   WeaponSpawnerTargets: []
   WeaponSpawnerCount: 50
   WeaponSpawners: []
@@ -13116,7 +13206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_Name
-      value: BatterySpawner
+      value: BatterySpawner_3
       objectReference: {fileID: 0}
     - target: {fileID: 4005733655707148, guid: 68a49296450cc5745a78c3895333111e, type: 3}
       propertyPath: m_LocalScale.x
@@ -13173,8 +13263,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1921184000}
   m_SourcePrefab: {fileID: 100100000, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+--- !u!1 &1921183999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1550487739604554, guid: 68a49296450cc5745a78c3895333111e, type: 3}
+  m_PrefabInstance: {fileID: 1921183998}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1921184000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921183999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 14
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1922412565
 GameObject:
   m_ObjectHideFlags: 0
@@ -21943,8 +22063,38 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3215469548777000727, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       insertIndex: -1
       addedObject: {fileID: 753840292}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 538901204508561281, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9008436246225949521}
   m_SourcePrefab: {fileID: 100100000, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+--- !u!1 &9008436246225949520 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 538901204508561281, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+  m_PrefabInstance: {fileID: 9008436246225949519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9008436246225949521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9008436246225949520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 16
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
