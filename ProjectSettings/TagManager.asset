@@ -14,6 +14,7 @@ TagManager:
   - ItemSpawner
   - SF_Door
   - Exit
+  - Monster
   layers:
   - Default
   - TransparentFX

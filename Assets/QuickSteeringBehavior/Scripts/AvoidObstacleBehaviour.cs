@@ -26,8 +26,7 @@ public class AvoidObstacleBehaviour : SeekAndFleeBehaviour
 
         _front = _left = _right = _up = _down = 0;
 
-
-        Physics.Raycast(transform.position, frontRaycast.normalized, out raycastHitFront, RaycastDistance*2, mask);
+        Physics.Raycast(transform.position, frontRaycast.normalized, out raycastHitFront, RaycastDistance * 2, mask);
         _front = raycastHitFront.distance;
         Physics.Raycast(transform.position, (transform.forward * verticalAngle + transform.up * (1 - verticalAngle)).normalized, out raycastHitUp, RaycastDistance, mask);
         _up = raycastHitUp.distance;
@@ -88,6 +87,9 @@ public class AvoidObstacleBehaviour : SeekAndFleeBehaviour
                 directionCalculated += -transform.up;
             }
         }
+
+        // Set the y component of directionCalculated to 0 to ensure y rotation is always 0
+        directionCalculated.y = 0;
 
         return directionCalculated;
     }
