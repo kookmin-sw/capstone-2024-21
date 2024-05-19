@@ -76,7 +76,7 @@ public class UIManager : MonoBehaviour
     {
         if(isGameStart == true)
         {
-            Debug.Log(gameTime);
+            // Debug.Log(gameTime);
             gameTime += Time.deltaTime;
             elapsedTime += Time.deltaTime;
 
