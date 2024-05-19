@@ -9,25 +9,32 @@ public class AudioManager : MonoBehaviour
     [Header("#BGM")]
     public AudioClip bgmClip;
     public float bgmVolume;
-    AudioSource bgmPlayer;
+    private AudioSource bgmPlayer;
 
     [Header("#SFX")]
     public AudioClip[] sfxClips;
     public float sfxVolume;
     public int channels;
-    AudioSource[] sfxPlayers;
-    int channelIndex;
+    private AudioSource[] sfxPlayers;
+    private int channelIndex;
 
     public enum Sfx { Four, Five, Two, Three, Nine, Eight, Six, Ten, Seven, Click, One }
 
-
-    void Awake()
+    private void Awake()    // singleton 구현
     {
-        instance = this;
-        Init();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            Init();
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void Init()
+    private void Init()
     {
         GameObject bgmObject = new GameObject("BgmPlayer");
         bgmObject.transform.parent = transform;
@@ -38,7 +45,7 @@ public class AudioManager : MonoBehaviour
         bgmPlayer.clip = bgmClip;
 
         GameObject sfxObject = new GameObject("SfxPlayer");
-        bgmObject.transform.parent = transform;
+        sfxObject.transform.parent = transform;
         sfxPlayers = new AudioSource[channels];
 
         for (int index = 0; index < sfxPlayers.Length; index++)
@@ -59,8 +66,8 @@ public class AudioManager : MonoBehaviour
                 continue;
 
             channelIndex = loopIndex;
-            sfxPlayers[0].clip = sfxClips[(int)sfx];
-            sfxPlayers[0].Play();
+            sfxPlayers[loopIndex].clip = sfxClips[(int)sfx];
+            sfxPlayers[loopIndex].Play();
             break;
         }
     }
