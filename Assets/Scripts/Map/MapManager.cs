@@ -102,7 +102,11 @@ public class MapManager : MonoBehaviour
             }
 
             // WeaponSpawner
-            else if (tmpObj.name.Contains("WeaponSpawner") || tmpObj.name.Contains("SheetRackCase") || tmpObj.name.Contains("SmallMetalicCase"))
+            else if (tmpObj.name.Contains("WeaponSpawner")
+                || tmpObj.name.Contains("SheetRackCase")
+                || tmpObj.name.Contains("SmallMetalicCase")
+                || tmpObj.name.Contains("TableOffice")
+                || tmpObj.name.Contains("Table_Bed"))
             {
                 WeaponSpawnerTargets.Add(tmpObj);
 
