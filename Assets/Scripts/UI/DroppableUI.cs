@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Data.SqlTypes;
 using ExitGames.Client.Photon;
-using static UnityEditor.Progress;
+// using static UnityEditor.Progress;
 
 
 public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler

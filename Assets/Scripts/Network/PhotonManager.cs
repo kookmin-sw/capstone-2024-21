@@ -11,6 +11,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
+
         Debug.Log("userID: " + GameManager.Instance.UserId);
         // 같은 룸의 유저들에게 자동으로 씬 로딩
         PhotonNetwork.AutomaticallySyncScene = true;
