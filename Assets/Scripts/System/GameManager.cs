@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         isPlaying = true;
+
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
 

@@ -34,12 +34,16 @@ public class UIManager : MonoBehaviour
     public int totalPlayers;
     public int curPlayers;
 
+    [HideInInspector] public bool isMonSpawn;
     [HideInInspector] public bool isGameStart;
     [HideInInspector] public bool isGameOver;
     [HideInInspector] public bool isFirst;
     [HideInInspector] public bool isUIActivate;
     [HideInInspector] public bool isComActivate;
 
+    private float elapsedTime = 0f;
+    private float interval = 300f;
+    Transform[] Monpoints;
 
     // Start is called before the first frame update
     void Awake()
@@ -50,14 +54,17 @@ public class UIManager : MonoBehaviour
         isGameStart = false;
         isGameOver = false;
         isFirst = false;
-
+        isMonSpawn = false;
         isUIActivate = false;
         gameTime = 0;
         selectSlot = 0;
+        elapsedTime = 0f;
+        interval = 300f;
         ChangeSlot(0);
 
         statePlayerName.text = GameManager.Instance.UserId;
         gameOverPlayerName.text = GameManager.Instance.UserId;
+        Monpoints = GameObject.Find("MonsterSpawns").GetComponentsInChildren<Transform>();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -69,14 +76,29 @@ public class UIManager : MonoBehaviour
     {
         if(isGameStart == true)
         {
+            Debug.Log(gameTime);
             gameTime += Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+
             isFirst = true;
-            if(isFirst == true)
+            if (isFirst == true)
             {
                 allPlayers.text = "/" + totalPlayers.ToString();
                 isFirst = false;
             }
             currentPlayers.text = curPlayers.ToString();
+
+            if (elapsedTime >= interval)
+            {
+                elapsedTime = 0f;
+                GameObject Robo = Instantiate(Resources.Load("Prefab/HelperRobot") as GameObject);
+                Robo.transform.position = Monpoints[Random.Range(1, Monpoints.Length)].position;
+            }
+
+            if (curPlayers == 1)
+            {
+                isGameOver = true;
+            }
         }
         if(isGameOver == false)
         {

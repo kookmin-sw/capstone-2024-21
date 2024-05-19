@@ -9,11 +9,18 @@ public abstract class SteeringBehaviourWithTargets : SteeringBehaviour
     public bool multipleTargets=false;
     public Transform Target;
     public List<Transform> targets;
+    GameObject[] playerObjects;
     protected float _targetDistance;
     protected int currrentTargetIndex = 0;
 
     protected virtual void Awake()
     {
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        for(int i = 0; i < playerObjects.Length; i++)
+        {
+            targets.Add(playerObjects[i].transform);
+        }
+        multipleTargets = true;
         if (multipleTargets)
             Target = targets[0];
     }
@@ -26,20 +33,32 @@ public abstract class SteeringBehaviourWithTargets : SteeringBehaviour
 
     protected virtual void CalculateTargets()
     {
-        if (multipleTargets)
+        if(Vector3.Distance(gameObject.transform.position, Target.position) < 0.1f)
         {
-            _targetDistance = Mathf.Infinity;
-            for (int i = 0; i < targets.Count; i++)
+            targets.Clear();
+            playerObjects = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < playerObjects.Length; i++)
             {
-                var tempDistance = Vector3.Distance(transform.position, targets[i].position);
-                if (tempDistance < _targetDistance)
-                {
-                    _targetDistance = tempDistance;
-                    currrentTargetIndex = i;
-                }
+                targets.Add(playerObjects[i].transform);
             }
-            Target = targets[currrentTargetIndex];
+            multipleTargets = true;
+
+            if (multipleTargets)
+            {
+                _targetDistance = 0;
+                for (int i = 0; i < targets.Count; i++)
+                {
+                    var tempDistance = Vector3.Distance(transform.position, targets[i].position);
+                    if (tempDistance > _targetDistance)
+                    {
+                        _targetDistance = tempDistance;
+                        currrentTargetIndex = i;
+                    }
+                }
+                Target = targets[currrentTargetIndex];
+            }
         }
+
     }
 
     protected override void OnDrawGizmosSelected()
