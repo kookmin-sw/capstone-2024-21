@@ -14,9 +14,11 @@ public class Escape : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("충돌은 일어남!");
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "Player")
         {
-            pv.RPC("GameOver", RpcTarget.Others);
+            pv.RPC("RpcGameOver", RpcTarget.Others);
             EscapeMe();
         }
     }
