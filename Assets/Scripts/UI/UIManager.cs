@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
     private float elapsedTime = 0f;
     private float interval = 300f;
     Transform[] Monpoints;
+    GameObject Robo;
 
     // Start is called before the first frame update
     void Awake()
@@ -65,6 +66,7 @@ public class UIManager : MonoBehaviour
         statePlayerName.text = GameManager.Instance.UserId;
         gameOverPlayerName.text = GameManager.Instance.UserId;
         Monpoints = GameObject.Find("MonsterSpawns").GetComponentsInChildren<Transform>();
+
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -91,11 +93,13 @@ public class UIManager : MonoBehaviour
             if (elapsedTime >= interval)
             {
                 elapsedTime = 0f;
-                GameObject Robo = Instantiate(Resources.Load("Prefab/HelperRobot") as GameObject);
-                Robo.transform.position = Monpoints[Random.Range(1, Monpoints.Length)].position;
+
+                Transform monSpawn = Monpoints[Random.Range(1, Monpoints.Length)];
+
+                Robo = Instantiate(Resources.Load("Prefabs/HelperRobot") as GameObject, monSpawn.position, Quaternion.identity);
             }
 
-            if (curPlayers == 1)
+            if (curPlayers == 1 && totalPlayers != 1)
             {
                 isGameOver = true;
             }
