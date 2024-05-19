@@ -49,6 +49,19 @@ public class MapManager : MonoBehaviour
     //[SerializeField] int ItemSpawnerCount = 1;
     //[SerializeField] List<GameObject> ItemSpawners = new List<GameObject>();//스포너 후보들
 
+    [Header("hiddenItem")] // 맵에 미리 스폰돼있는 아이템 
+    [SerializeField] List<GameObject> hiddenItemObj = new List<GameObject>();
+
+    GameObject posPrefeb; //hiddenItem이 스폰될 pos
+    [SerializeField] List<GameObject> hiddenItemPos = new List<GameObject>();
+
+    [SerializeField] int hiddenItemCnt = 20;
+    [SerializeField] List<GameObject> SpawnedHiddenItems = new List<GameObject>();
+
+    Vector3 offset = new Vector3(0, 0, 0.1f);
+
+
+
     [Header("Light")]
     float brightSpeed = 1f;
     [SerializeField] List<GameObject> Lights = new List<GameObject>();//lights
@@ -60,6 +73,8 @@ public class MapManager : MonoBehaviour
     {
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
+
+        posPrefeb = (GameObject)Resources.Load("Prefabs/hiddenItemPos");
 
         gameObjs = FindObjectsOfType<GameObject>();
 
@@ -83,6 +98,21 @@ public class MapManager : MonoBehaviour
                 tmpObj.tag = "door";
                 tmpObj.layer = LayerMask.NameToLayer("Interact");
                 tmpObj.isStatic = false; // 이걸 해줘야 회전함!!
+
+                //for hiddenItem
+                if (tmpObj.name.Contains("Case_Door"))
+                {
+                    hiddenItemObj.Add(tmpObj);
+                    //Vector3 pos = tmpObj.transform.position - offset;
+                    Debug.Log("position" + tmpObj.transform.position + "|| localPosition" + tmpObj.transform.localPosition);
+                    GameObject tmp = Instantiate(posPrefeb, tmpObj.transform.position, tmpObj.transform.rotation);
+                    Debug.Log("tmp's position" + tmp.transform.position + "|| tmp's localPosition" + tmp.transform.localPosition);
+
+                    tmp.transform.parent = tmpObj.transform;
+                    //tmp.transform.localPosition = offset;
+
+                    hiddenItemPos.Add(tmp); 
+                }
             }
 
             //BatterySpawner
@@ -153,6 +183,7 @@ public class MapManager : MonoBehaviour
         //LocateItemSpawner();
     }
 
+    
     void addDoorRightScript(GameObject obj)
     {
         //Door 컴포넌트가 있으면 그냥 활성화
