@@ -21,15 +21,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        if (meleeArea == null)
-        {
-            Debug.LogError("meleeArea is not assigned!");
-        }
         attackManager = transform.GetComponentInParent<AttackManager>(); 
-        if (attackManager == null)
-        {
-            Debug.LogError("AttackManager is not found in parent objects!");
-        }
     }
 
     public void callAttack(){
@@ -51,13 +43,9 @@ public class WeaponManager : MonoBehaviour
 
     void StartSwing(){
         if (chk == true){ // 이미 코루틴이 실행 중인지 확인
-            Debug.Log(chk);
             chk = false;
-            Debug.Log("스타트스윙");
-            Debug.Log(chk);
             swingCoroutine = StartCoroutine(Swing());
         }
-        else Debug.Log("실패");
     }
 
     void OnTriggerEnter(Collider other){
@@ -85,8 +73,6 @@ public class WeaponManager : MonoBehaviour
     }
 
     IEnumerator Swing(){
-        Debug.Log("스윙");
-        Debug.Log(chk);
         attackManager.AttackIn();
         yield return new WaitForSeconds(colliderOn);
         if (meleeArea != null)
@@ -101,7 +87,5 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(rate - colliderOn - colliderOff);
         chk = true; // 코루틴 종료 후 변수 초기화
         attackManager.AttackOut();
-        Debug.Log("스윙끝");
-        Debug.Log(chk);
     }
 }
