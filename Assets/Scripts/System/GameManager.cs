@@ -72,12 +72,12 @@ public class GameManager : MonoBehaviour
 
     public void Escape()
     {
-
+        Debug.Log("Escape 실행");
     }
 
     public void GameOver()
     {
-
+        Debug.Log("GameOver 실행");
     }
 
     public void Go2Map()
