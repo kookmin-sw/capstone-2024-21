@@ -39,7 +39,7 @@ public class AttackManager : MonoBehaviour
 
     public MovementStateManager movementStateManager;   
     [HideInInspector] public AttackManager attackManager;
-    [HideInInspector] public WeaponManager weaponManager;
+    [SerializeField] public WeaponManager weaponManager;
     [HideInInspector] public HpManager hpManager;
     private PhotonView pv;
     
@@ -92,8 +92,8 @@ public class AttackManager : MonoBehaviour
         fireDelay += Time.deltaTime;
         isFireReady = equipWeaponGameobject.rate < fireDelay; 
 
-        // 마우스 왼쪽 버튼을 누르고 공격이 가능한 상태이면 실행
-        if (Input.GetMouseButton(0) && isFireReady)
+        // 마우스 왼쪽 버튼을 누르고 공격이 가능한 상태이면 실행, 공격 중이 아닐 때
+        if (Input.GetMouseButton(0) && !isAttack && isFireReady)
         {
             // 무기를 사용하고 애니메이션을 트리거합니다.
             equipWeaponGameobject.Use(); // 무기 사용
@@ -281,7 +281,7 @@ public class AttackManager : MonoBehaviour
                     }
                 }
             }             // 아이템 슬롯 스왑/습득 시 애니메이션 처리 
-            else if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
+            else  if (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled))
             {
                 equipItemIndex = -1;
                 bool isFound = false;
@@ -335,10 +335,12 @@ public class AttackManager : MonoBehaviour
                 }
                 else if (equipItemIndex == -1)
                 {
+                    equipWeaponGameobject = weapons[9].GetComponent<WeaponManager>();
                     Debug.Log("아이템 칸 비어있음");
                     if (equipWeapon != weapons[9])
                     {
-                        RpcEquip(equipItemIndex);
+                        colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
+                        RpcEquip(9);
                         movementStateManager.anim.SetTrigger("doSwap");
                         isSwap = true;
                         equipWeapon = weapons[9];
@@ -401,10 +403,13 @@ public class AttackManager : MonoBehaviour
             equipWeapon = weapons[RpcEquipWeaponIndex];
             equipWeapon.SetActive(true);
         }
+        // weaponManager = equipWeapon.GetComponent<WeaponManager>();
+        // weaponManager.callAttack();
     }
 
     public void RpcEquip(int RpcEquipWeaponIndex){
         pv.RPC("RPCWeaponEquip", RpcTarget.All, RpcEquipWeaponIndex);
+        //weaponManager.callAttack();
     }
 
     [PunRPC]
