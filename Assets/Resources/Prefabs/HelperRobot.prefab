@@ -1405,7 +1405,7 @@ MonoBehaviour:
   _desiredDir: {x: 0, y: 0, z: 0}
   _desiredSpeed: 0
   ShowTargetsGizmos: 1
-  multipleTargets: 0
+  multipleTargets: 1
   Target: {fileID: 0}
   targets: []
   ShowSeekAndFleeGizmos: 0
