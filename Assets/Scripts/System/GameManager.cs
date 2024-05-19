@@ -70,6 +70,16 @@ public class GameManager : MonoBehaviour
         Go2Map();
     }
 
+    public void Escape()
+    {
+
+    }
+
+    public void GameOver()
+    {
+
+    }
+
     public void Go2Map()
     {
         Transform[] points = GameObject.Find("WarpPointGroup").GetComponentsInChildren<Transform>();
