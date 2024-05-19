@@ -173,8 +173,6 @@ public class HpManager : MonoBehaviour
                 Debug.Log("사망");
                 uiManager.isGameOver = true;
                 uiManager.isUIActivate = true;
-
-
             }
             else
             {
