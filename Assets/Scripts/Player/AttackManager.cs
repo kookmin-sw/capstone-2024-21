@@ -92,8 +92,8 @@ public class AttackManager : MonoBehaviour
         fireDelay += Time.deltaTime;
         isFireReady = equipWeaponGameobject.rate < fireDelay; 
 
-        // 마우스 왼쪽 버튼을 누르고 공격이 가능한 상태이면 실행
-        if (Input.GetMouseButton(0) && isFireReady)
+        // 마우스 왼쪽 버튼을 누르고 공격이 가능한 상태이면 실행, 공격 중이 아닐 때
+        if (Input.GetMouseButton(0) && !isAttack && isFireReady)
         {
             // 무기를 사용하고 애니메이션을 트리거합니다.
             equipWeaponGameobject.Use(); // 무기 사용

@@ -98,7 +98,7 @@ public class WeaponManager : MonoBehaviour
         {
             meleeArea.enabled = false;
         }
-        yield return new WaitForSeconds(1.0f - colliderOn - colliderOff);
+        yield return new WaitForSeconds(rate - colliderOn - colliderOff);
         chk = true; // 코루틴 종료 후 변수 초기화
         attackManager.AttackOut();
         Debug.Log("스윙끝");
