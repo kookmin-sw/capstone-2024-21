@@ -67,6 +67,11 @@ public class GameManager : MonoBehaviour
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
 
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        uiManager.isGameStart = true;
+        uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
         for (int i = 0; i < playerObjects.Length; i++)
         {
             players[i] = playerObjects[i].GetComponent<Player>();

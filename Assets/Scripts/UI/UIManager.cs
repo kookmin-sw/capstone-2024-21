@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private SelectedSlot[] slots;
@@ -190,6 +191,7 @@ public class UIManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
         }
+        isGameOver = false;
     }
 
     //퀵슬롯 1,2,3,4,5로 선택
