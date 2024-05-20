@@ -228,16 +228,16 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RpcAllDie()
     {
+        GameObject[] playerObjects = GameManager.Instance.playerObjects;
+
+
         Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
-            Debug.Log("RpcAllDie() 내부의 if문 실행 실행");
-            gameObject.SetActive(false);
-            GameManager.Instance.GameOver();
-            uiManager.isGameOver = true; 
+            uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
             isDead = true;
-            Debug.Log("RpcAllDie() 내부의 if문 뒷부분도 실행");
+            GameManager.Instance.GameOver();
         }
     }
 

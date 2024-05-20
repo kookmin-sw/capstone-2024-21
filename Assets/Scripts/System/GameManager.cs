@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
 
     public Timer timer;
-    GameObject[] playerObjects;
+    public GameObject[] playerObjects;
     Player[] players;
 
     void Awake()
@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
         uiManager = GameObject.FindObjectOfType<UIManager>();
         isPlaying = false;
         uiManager.isGameOver = true;
+        AllDie();
     }
 
     public void Go2Map()
@@ -127,6 +128,14 @@ public class GameManager : MonoBehaviour
             int randomIndex = Random.Range(0, deck.Length);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
+        }
+    }
+
+    void AllDie()
+    {
+        for (int i = 0; i < playerObjects.Length; i++)
+        {
+            playerObjects[i].SetActive(false);
         }
     }
 }
