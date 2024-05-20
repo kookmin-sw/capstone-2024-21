@@ -44,6 +44,16 @@ public class HpManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(pv.IsMine)
+        {
+            if(GameManager.Instance.isEscape == true)
+            {
+                Die();
+            }
+        }
+    }
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {
