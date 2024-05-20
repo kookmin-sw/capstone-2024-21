@@ -51,6 +51,8 @@ public class HpManager : MonoBehaviour
             if(GameManager.Instance.isEscape == true)
             {
                 Die();
+                AllDie();
+
             }
         }
     }
@@ -174,10 +176,6 @@ public class HpManager : MonoBehaviour
             {
                 uiManager.curPlayers -= 1;
             }
-            if (pv.IsMine && GameManager.Instance.isEscape == true)
-            {
-                AllDie();
-            }
             isDead = true;
             gameObject.SetActive(false);
         }
@@ -202,6 +200,7 @@ public class HpManager : MonoBehaviour
     {
         if (gameObject.tag == "Player")
         {
+            uiManager.curPlayers -= 1;
             GameManager.Instance.GameOver();
             uiManager.isUIActivate = true;
             isDead = true;
