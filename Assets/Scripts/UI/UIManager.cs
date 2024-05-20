@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGameStart == true)
+        if(GameManager.Instance.isPlaying == true)
         {
             // Debug.Log(gameTime);
             gameTime += Time.deltaTime;
@@ -101,9 +101,7 @@ public class UIManager : MonoBehaviour
             {
                 GameManager.Instance.GameOver();
             }
-        }
-        if(GameManager.Instance.isPlaying == true)
-        {
+
             ManageCombinationSlot();
             ManageSetting();
         }
