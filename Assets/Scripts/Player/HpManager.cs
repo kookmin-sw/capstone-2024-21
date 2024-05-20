@@ -201,7 +201,6 @@ public class HpManager : MonoBehaviour
         {
             if (pv.IsMine)
             {
-                Debug.Log("사망");
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
