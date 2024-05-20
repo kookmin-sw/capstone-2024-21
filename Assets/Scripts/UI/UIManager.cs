@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     [HideInInspector] public bool isMonSpawn;
     [HideInInspector] public bool isGameStart;
+    [HideInInspector] public bool isGameOver;
     [HideInInspector] public bool isFirst;
     [HideInInspector] public bool isUIActivate;
     [HideInInspector] public bool isComActivate;
@@ -53,6 +54,7 @@ public class UIManager : MonoBehaviour
         gameOverBoard.SetActive(false);
         isGameStart = false;
         isFirst = false;
+        isGameOver = false;
         isMonSpawn = false;
         isUIActivate = false;
         gameTime = 0;
@@ -107,7 +109,10 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            ManageGameOverBoard();
+            if(isGameOver == true)
+            {
+                ManageGameOverBoard();
+            }
         }
     }
 

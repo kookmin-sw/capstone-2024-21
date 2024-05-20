@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public bool isPlaying { get; set; } = false;
     public bool isEscape { get; set; } = false;
 
+    public UIManager uiManager;
+
     public Timer timer;
     GameObject[] playerObjects;
     Player[] players;
@@ -81,7 +83,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("GameOver 실행");
-
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        uiManager.isGameOver = true;
         isPlaying = false;
         isEscape = false;
     }
