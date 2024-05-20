@@ -36,7 +36,6 @@ public class UIManager : MonoBehaviour
 
     [HideInInspector] public bool isMonSpawn;
     [HideInInspector] public bool isGameStart;
-    [HideInInspector] public bool isGameOver;
     [HideInInspector] public bool isFirst;
     [HideInInspector] public bool isUIActivate;
     [HideInInspector] public bool isComActivate;
@@ -53,7 +52,6 @@ public class UIManager : MonoBehaviour
         systemEnvironment.SetActive(false);
         gameOverBoard.SetActive(false);
         isGameStart = false;
-        isGameOver = false;
         isFirst = false;
         isMonSpawn = false;
         isUIActivate = false;
@@ -101,10 +99,10 @@ public class UIManager : MonoBehaviour
 
             if (curPlayers == 1 && totalPlayers != 1)
             {
-                isGameOver = true;
+                GameManager.Instance.GameOver();
             }
         }
-        if(isGameOver == false)
+        if(GameManager.Instance.isPlaying == true)
         {
             ManageCombinationSlot();
             ManageSetting();
@@ -156,21 +154,40 @@ public class UIManager : MonoBehaviour
 
     void ManageGameOverBoard()
     {
-        if(isGameOver)
+        if(GameManager.Instance.isPlaying == false)
         {
-            isGameStart = false;
-            gameTime = Mathf.FloorToInt(gameTime);
-            survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
-            killScore.text = killCount.ToString(); //킬매니저에 killCount넣어줘야 한다!!!
-            rankScore.text = curPlayers.ToString() + "/" + totalPlayers.ToString();
+            if(GameManager.Instance.isEscape == true) //탈출한 경우 무조건 1등
+            {
+                isGameStart = false;
+                gameTime = Mathf.FloorToInt(gameTime);
+                survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
+                killScore.text = killCount.ToString();
+                rankScore.text = 1 + "/" + totalPlayers.ToString();
 
-            killPoint.text = "+" + (killCount * 5).ToString();
-            rankPoint.text = "+" + Mathf.FloorToInt(20 / curPlayers).ToString();
-            totalScore.text = ((killCount * 5) + Mathf.FloorToInt(20 / curPlayers)).ToString();
+                killPoint.text = "+" + (killCount * 5).ToString();
+                rankPoint.text = "+" + 20;
+                totalScore.text = ((killCount * 5) + 20).ToString();
 
-            gameOverBoard.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
+                gameOverBoard.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                isGameStart = false;
+                gameTime = Mathf.FloorToInt(gameTime);
+                survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
+                killScore.text = killCount.ToString(); //킬매니저에 killCount넣어줘야 한다!!!
+                rankScore.text = curPlayers.ToString() + "/" + totalPlayers.ToString();
+
+                killPoint.text = "+" + (killCount * 5).ToString();
+                rankPoint.text = "+" + Mathf.FloorToInt(20 / curPlayers).ToString();
+                totalScore.text = ((killCount * 5) + Mathf.FloorToInt(20 / curPlayers)).ToString();
+
+                gameOverBoard.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
         }
     }
 

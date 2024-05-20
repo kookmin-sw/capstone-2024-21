@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     public string UserId { get; set; } = "soldier";
     public bool isPlaying { get; set; } = false;
+    public bool isEscape { get; set; } = false;
+
     public Timer timer;
     GameObject[] playerObjects;
     Player[] players;
@@ -73,11 +75,15 @@ public class GameManager : MonoBehaviour
     public void Escape()
     {
         Debug.Log("Escape 실행");
+        isPlaying = false;
+        isEscape = true;
     }
 
     public void GameOver()
     {
         Debug.Log("GameOver 실행");
+
+        isPlaying = false;
     }
 
     public void Go2Map()

@@ -65,15 +65,12 @@ public class HpManager : MonoBehaviour
     {
         if(pv.IsMine)
         {
-            if (gameObject.tag == "Monster")
+            if(GameManager.Instance.isEscape == true)
             {
-                if (hp <= 0)
-                {
-                    Die();
-                }
+                Die();
+                AllDie();
             }
         }
-
     }
 
     public void AddKillCount(string playerId)
@@ -171,7 +168,7 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
-                uiManager.isGameOver = true;
+                GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
             else
@@ -194,6 +191,25 @@ public class HpManager : MonoBehaviour
     public void Die()
     {
         pv.RPC("RpcDie", RpcTarget.All);
+    }
+
+
+    [PunRPC]
+    public void RpcAllDie()
+    {
+        if (gameObject.tag == "Player")
+        {
+            GameManager.Instance.GameOver();
+            uiManager.isUIActivate = true;
+            isDead = true;
+            gameObject.SetActive(false);
+        }
+    }
+
+    // 사망 함수
+    public void AllDie()
+    {
+        pv.RPC("RpcDie", RpcTarget.Others);
     }
 
 }
