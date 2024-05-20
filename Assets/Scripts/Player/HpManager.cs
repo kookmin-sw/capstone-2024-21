@@ -212,7 +212,7 @@ public class HpManager : MonoBehaviour
     // 사망 함수
     public void EscapeWin()
     {
-        pv.RPC("RpcDie", RpcTarget.All);
+        pv.RPC("RPCEscapeWin", RpcTarget.All);
     }
 
 
