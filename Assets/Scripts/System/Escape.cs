@@ -18,7 +18,6 @@ public class Escape : MonoBehaviour
         Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "Player")
         {
-            pv.RPC("RpcGameOver", RpcTarget.Others);
             EscapeMe();
         }
     }
@@ -26,11 +25,5 @@ public class Escape : MonoBehaviour
     void EscapeMe()
     {
         GameManager.Instance.Escape();
-    }
-
-    [PunRPC]
-    void RpcGameOver()
-    {
-        GameManager.Instance.GameOver();
     }
 }

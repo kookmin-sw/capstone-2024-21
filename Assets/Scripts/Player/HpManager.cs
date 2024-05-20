@@ -44,6 +44,17 @@ public class HpManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(pv.IsMine)
+        {
+            if(GameManager.Instance.isEscape == true)
+            {
+                AllDie();
+                EscapeWin();
+            }
+        }
+    }
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {
@@ -59,21 +70,6 @@ public class HpManager : MonoBehaviour
             healthPointCount.text = hp.ToString();
             isDead = false;
         }
-    }
-
-    private void Update()
-    {
-        if(pv.IsMine)
-        {
-            if (gameObject.tag == "Monster")
-            {
-                if (hp <= 0)
-                {
-                    Die();
-                }
-            }
-        }
-
     }
 
     public void AddKillCount(string playerId)
@@ -171,7 +167,7 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
-                uiManager.isGameOver = true;
+                GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
             else
@@ -194,6 +190,62 @@ public class HpManager : MonoBehaviour
     public void Die()
     {
         pv.RPC("RpcDie", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RPCEscapeWin()
+    {
+        //if (gameObject.tag == "Player")
+        //{
+        //    if (pv.IsMine)
+        //    {
+        //        GameManager.Instance.GameOver();
+        //        uiManager.isUIActivate = true;
+        //    }
+        //    isDead = true;
+        //    gameObject.SetActive(false);
+        //}
+    }
+
+    // 사망 함수
+    public void EscapeWin()
+    {
+        // pv.RPC("RPCEscapeWin", RpcTarget.All);
+
+        if (gameObject.tag == "Player")
+        {
+            if (pv.IsMine)
+            {
+                GameManager.Instance.GameOver();
+                uiManager.isUIActivate = true;
+            }
+            isDead = true;
+            gameObject.SetActive(false);
+        }
+    }
+
+
+    [PunRPC]
+    public void RpcAllDie()
+    {
+        GameObject[] playerObjects = GameManager.Instance.playerObjects;
+
+
+        Debug.Log("RpcAllDie() 실행");
+        if (gameObject.tag == "Player")
+        {
+            uiManager.isGameOver = true;
+            uiManager.isUIActivate = true;
+            isDead = true;
+            GameManager.Instance.GameOver();
+        }
+    }
+
+    // 사망 함수
+    public void AllDie()
+    {
+        Debug.Log("AllDie() 실행");
+        pv.RPC("RpcAllDie", RpcTarget.Others);
     }
 
 }

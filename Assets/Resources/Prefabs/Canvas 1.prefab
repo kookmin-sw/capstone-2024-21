@@ -2164,6 +2164,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2480423684192764531}
+  - {fileID: 1578783709262621063}
   - {fileID: 1775216198737375963}
   - {fileID: 4844224407771837833}
   - {fileID: 7076103567308629965}
@@ -2173,8 +2175,6 @@ RectTransform:
   - {fileID: 8729092990102345519}
   - {fileID: 7692079592106740449}
   - {fileID: 569720881468979652}
-  - {fileID: 1578783709262621063}
-  - {fileID: 2480423684192764531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2279,8 +2279,8 @@ MonoBehaviour:
   killCount: 0
   totalPlayers: 0
   curPlayers: 0
+  isMonSpawn: 0
   isGameStart: 0
-  isGameOver: 0
   isFirst: 0
   isUIActivate: 0
   isComActivate: 0

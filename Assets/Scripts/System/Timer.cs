@@ -28,8 +28,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            Debug.Log("타이머 종료");
-            GameManager.Instance.GameStart();
+            pv.RPC("GameStart", RpcTarget.All);
             yield break;
         }
 
@@ -43,5 +42,12 @@ public class Timer : MonoBehaviour
     void ShowTimer(int time)
     {
         Debug.Log(time);
+    }
+
+    [PunRPC]
+    void GameStart()
+    {
+        Debug.Log("타이머 종료");
+        GameManager.Instance.GameStart();
     }
 }

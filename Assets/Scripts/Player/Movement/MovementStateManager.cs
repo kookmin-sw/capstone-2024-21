@@ -105,7 +105,7 @@ public class MovementStateManager : MonoBehaviour
                 DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
                 attackManager.weaponInventory.abandonedItem = null;
             }
-            if (uiManager.isGameOver == false && attackManager.isAttack == false)
+            if (GameManager.Instance.isPlaying == true && attackManager.isAttack == false)
             {
                 uiManager.SelectQuickSlot();
             }

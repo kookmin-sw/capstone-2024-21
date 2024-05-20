@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private SelectedSlot[] slots;
@@ -53,8 +54,8 @@ public class UIManager : MonoBehaviour
         systemEnvironment.SetActive(false);
         gameOverBoard.SetActive(false);
         isGameStart = false;
-        isGameOver = false;
         isFirst = false;
+        isGameOver = false;
         isMonSpawn = false;
         isUIActivate = false;
         gameTime = 0;
@@ -76,7 +77,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGameStart == true)
+        if(GameManager.Instance.isPlaying == true)
         {
             // Debug.Log(gameTime);
             gameTime += Time.deltaTime;
@@ -101,17 +102,18 @@ public class UIManager : MonoBehaviour
 
             if (curPlayers == 1 && totalPlayers != 1)
             {
-                isGameOver = true;
+                GameManager.Instance.GameOver();
             }
-        }
-        if(isGameOver == false)
-        {
+
             ManageCombinationSlot();
             ManageSetting();
         }
         else
         {
-            ManageGameOverBoard();
+            if(isGameOver == true)
+            {
+                ManageGameOverBoard();
+            }
         }
     }
 
@@ -156,7 +158,24 @@ public class UIManager : MonoBehaviour
 
     void ManageGameOverBoard()
     {
-        if(isGameOver)
+        if(GameManager.Instance.isPlaying == false && GameManager.Instance.isEscape == true)
+        {
+            isGameStart = false;
+            gameTime = Mathf.FloorToInt(gameTime);
+            survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
+            killScore.text = killCount.ToString();
+            rankScore.text = 1 + "/" + totalPlayers.ToString();
+
+            killPoint.text = "+" + (killCount * 5).ToString();
+            rankPoint.text = "+" + 20;
+            totalScore.text = ((killCount * 5) + 20).ToString();
+
+            gameOverBoard.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            GameManager.Instance.isEscape = false;
+        }
+        else
         {
             isGameStart = false;
             gameTime = Mathf.FloorToInt(gameTime);
@@ -172,6 +191,7 @@ public class UIManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
         }
+        isGameOver = false;
     }
 
     //퀵슬롯 1,2,3,4,5로 선택
