@@ -50,9 +50,8 @@ public class HpManager : MonoBehaviour
         {
             if(GameManager.Instance.isEscape == true)
             {
-                EscapeWin();
                 AllDie();
-
+                EscapeWin();
             }
         }
     }
