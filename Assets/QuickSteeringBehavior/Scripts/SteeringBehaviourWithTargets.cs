@@ -22,7 +22,19 @@ public abstract class SteeringBehaviourWithTargets : SteeringBehaviour
         }
         multipleTargets = true;
         if (multipleTargets)
-            Target = targets[0];
+        {
+            _targetDistance = 0;
+            for (int i = 0; i < targets.Count; i++)
+            {
+                var tempDistance = Vector3.Distance(transform.position, targets[i].position);
+                if (tempDistance > _targetDistance)
+                {
+                    _targetDistance = tempDistance;
+                    currrentTargetIndex = i;
+                }
+            }
+            Target = targets[currrentTargetIndex];
+        }
     }
 
     protected override void Update()
@@ -33,7 +45,7 @@ public abstract class SteeringBehaviourWithTargets : SteeringBehaviour
 
     protected virtual void CalculateTargets()
     {
-        if(Vector3.Distance(gameObject.transform.position, Target.position) < 0.1f)
+        if(Vector3.Distance(gameObject.transform.position, Target.position) <= 3f)
         {
             targets.Clear();
             playerObjects = GameObject.FindGameObjectsWithTag("Player");

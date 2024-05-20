@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +9,7 @@ public class PathFollowBehaviour : SeekAndFleeBehaviour
     public bool loop=false;
     public float distanceToChangeTarget=0.3f;
     private int currentTargetIndex=-1;
-    private void Awake()
-    {
-        Target = targets[0];
-    }
+
     protected override void CalculateTargets()
     {
         if (_targetDistance <= distanceToChangeTarget)
