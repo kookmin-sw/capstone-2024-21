@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private SelectedSlot[] slots;
@@ -11,9 +13,39 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject systemEnvironment;
     [SerializeField] private GameObject gameOverBoard;
 
-    private int selectSlot = 0;
+    [SerializeField] private TextMeshProUGUI statePlayerName;
+    [SerializeField] private TextMeshProUGUI gameOverPlayerName;
+    [SerializeField] private TextMeshProUGUI rankScore;
+    [SerializeField] private TextMeshProUGUI killScore;
+    [SerializeField] private TextMeshProUGUI survivalTime;
+
+    [SerializeField] private TextMeshProUGUI currentPlayers;
+    [SerializeField] private TextMeshProUGUI allPlayers;
+
+
+
+    [SerializeField] private TextMeshProUGUI killPoint;
+    [SerializeField] private TextMeshProUGUI rankPoint;
+    public TextMeshProUGUI totalScore;
+
+    private float gameTime;
+    private int selectSlot;
+
+    public int killCount;
+    public int totalPlayers;
+    public int curPlayers;
+
+    [HideInInspector] public bool isMonSpawn;
+    [HideInInspector] public bool isGameStart;
     [HideInInspector] public bool isGameOver;
+    [HideInInspector] public bool isFirst;
     [HideInInspector] public bool isUIActivate;
+    [HideInInspector] public bool isComActivate;
+
+    private float elapsedTime = 0f;
+    private float interval = 300f;
+    Transform[] Monpoints;
+    GameObject Robo;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,26 +53,67 @@ public class UIManager : MonoBehaviour
         combinationSlots.SetActive(false);
         systemEnvironment.SetActive(false);
         gameOverBoard.SetActive(false);
+        isGameStart = false;
+        isFirst = false;
         isGameOver = false;
+        isMonSpawn = false;
         isUIActivate = false;
+        gameTime = 0;
+        selectSlot = 0;
+        elapsedTime = 0f;
+        interval = 300f;
         ChangeSlot(0);
+
+        statePlayerName.text = GameManager.Instance.UserId;
+        gameOverPlayerName.text = GameManager.Instance.UserId;
+        Monpoints = GameObject.Find("MonsterSpawns").GetComponentsInChildren<Transform>();
+
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-         
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        if(isGameOver == false)
+        if(GameManager.Instance.isPlaying == true)
         {
+            // Debug.Log(gameTime);
+            gameTime += Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+
+            isFirst = true;
+            if (isFirst == true)
+            {
+                allPlayers.text = "/" + totalPlayers.ToString();
+                isFirst = false;
+            }
+            currentPlayers.text = curPlayers.ToString();
+
+            if (elapsedTime >= interval)
+            {
+                elapsedTime = 0f;
+
+                Transform monSpawn = Monpoints[Random.Range(1, Monpoints.Length)];
+
+                Robo = Instantiate(Resources.Load("Prefabs/HelperRobot") as GameObject, monSpawn.position, Quaternion.identity);
+            }
+
+            if (curPlayers == 1 && totalPlayers != 1)
+            {
+                GameManager.Instance.GameOver();
+            }
+
             ManageCombinationSlot();
             ManageSetting();
-            SelectQuickSlot();
         }
         else
         {
-            ManageGameOverBoard();
+            if(isGameOver == true)
+            {
+                ManageGameOverBoard();
+            }
         }
     }
 
@@ -51,7 +124,7 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            isUIActivate = true;
+            isComActivate = true;
 
         }
         if (Input.GetKeyUp(KeyCode.Tab))
@@ -59,7 +132,7 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            isUIActivate = false;
+            isComActivate = false;
         }
     }
     void ManageSetting()
@@ -79,23 +152,50 @@ public class UIManager : MonoBehaviour
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 isUIActivate = false;
-
             }
         }
     }
 
     void ManageGameOverBoard()
     {
-        if(isGameOver)
+        if(GameManager.Instance.isPlaying == false && GameManager.Instance.isEscape == true)
         {
+            isGameStart = false;
+            gameTime = Mathf.FloorToInt(gameTime);
+            survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
+            killScore.text = killCount.ToString();
+            rankScore.text = 1 + "/" + totalPlayers.ToString();
+
+            killPoint.text = "+" + (killCount * 5).ToString();
+            rankPoint.text = "+" + 20;
+            totalScore.text = ((killCount * 5) + 20).ToString();
+
+            gameOverBoard.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            GameManager.Instance.isEscape = false;
+        }
+        else
+        {
+            isGameStart = false;
+            gameTime = Mathf.FloorToInt(gameTime);
+            survivalTime.text = (gameTime / 60).ToString("00") + ":" + (gameTime % 60).ToString("00");
+            killScore.text = killCount.ToString(); //킬매니저에 killCount넣어줘야 한다!!!
+            rankScore.text = curPlayers.ToString() + "/" + totalPlayers.ToString();
+
+            killPoint.text = "+" + (killCount * 5).ToString();
+            rankPoint.text = "+" + Mathf.FloorToInt(20 / curPlayers).ToString();
+            totalScore.text = ((killCount * 5) + Mathf.FloorToInt(20 / curPlayers)).ToString();
+
             gameOverBoard.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
         }
+        isGameOver = false;
     }
 
     //퀵슬롯 1,2,3,4,5로 선택
-    void SelectQuickSlot()
+    public void SelectQuickSlot()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeSlot(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeSlot(1);

@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: kr
     Server: 
     Port: 0
     ProxyServer: 
@@ -45,6 +45,31 @@ MonoBehaviour:
   - ChangeDoorStateRPC
   - Swap
   - RPCWeaponEquip
+  - ChangeDoorState
+  - ChangeExitDoorState
+  - RpcOnDamage
+  - RpcRename
+  - RpcAddKillCount
+  - RpcDie
+  - RpcTakingPill
+  - RPCFlashLight
+  - AddChargeBattery
+  - StartCoroutineBightenLight
+  - SpawnItem
+  - DestroyItem
+  - ShowTimer
+  - RpcMonsterDie
+  - RpcGo2Map
+  - RPCLocateBatterySpawner
+  - SpawnItem_tmp
+  - RpcExitState
+  - RpcExitStateCancle
+  - AddBatterySpawnerScriptRPC
+  - EnableSpawnerRPC
+  - DisableSpawnerRPC
+  - EnableSpawnerWorkingRPC
+  - RpcGameOver
+  - RpcAllDie
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

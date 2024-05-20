@@ -1,43 +1,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class WeaponManager : MonoBehaviour
 {
     public enum Type { Melee, Range };
     public Type type;
     public int damage;
-    public float rate;
-    public BoxCollider meleeArea;
-    public TrailRenderer trailEffect;
+    [SerializeField] public float rate = 1.0f;
+    public float colliderOn;
+    public float colliderOff;
+    [SerializeField] public BoxCollider meleeArea;
+    [HideInInspector] public AttackManager attackManager;
 
-    // public void Use(){
-    //     if(type == Type.Melee){
-    //         StopCoroutine("Swing");
-    //         StartCoroutine("Swing");
-    //     }
-    // }
+    public KillManager killManager;
+
+    [SerializeField] private bool chk = true;
+    private Coroutine swingCoroutine; // 코루틴 참조를 저장하기 위한 변수
+
+    private void Start()
+    {
+        attackManager = transform.GetComponentInParent<AttackManager>(); 
+    }
+
+    public void callAttack(){
+        if(swingCoroutine != null)
+        {
+            StopCoroutine(swingCoroutine);
+        }
+        if(type == Type.Melee)
+        {
+            attackManager = transform.GetComponentInParent<AttackManager>();
+        }
+    }
+
+    public void Use(){
+        if(type == Type.Melee){
+            StartSwing();
+        }
+    }
+
+    void StartSwing(){
+        if (chk == true){ // 이미 코루틴이 실행 중인지 확인
+            chk = false;
+            swingCoroutine = StartCoroutine(Swing());
+        }
+    }
 
     void OnTriggerEnter(Collider other){
-        Debug.Log("collision");
-        Debug.Log(other.gameObject.name);
-        if(other.gameObject.tag == "Player"){
+        if((other.gameObject.tag == "Monster" || other.gameObject.tag == "Player") && meleeArea != null && meleeArea.enabled){
+            meleeArea.enabled = false;
             HpManager hpManager = other.GetComponent<HpManager>();
-            MovementStateManager Enemy = other.GetComponent<MovementStateManager>();
+            PhotonView pv = other.GetComponent<PhotonView>();
 
-            if (Enemy != null) {
-                Enemy.AttackEnd();
-                Enemy.OnDamaged();
+            if (hpManager != null && GameManager.Instance.isPlaying) 
+            {
+                if (other.gameObject.tag == "Monster")
+                {
+                    Debug.Log("Hit : " + damage);
+                    hpManager.OnDamage(damage, killManager.playerId);
+                }
+                else
+                {
+                    if (pv.Owner.NickName != GameManager.Instance.UserId)
+                    {
+                        Debug.Log("Hit : " + damage);
+                        hpManager.OnDamage(damage, killManager.playerId);
+                    }
+                }
             }
-
-            Debug.Log("Hit : " + damage);
-            hpManager.OnDamage(damage);
         }
     }
 
     IEnumerator Swing(){
-        yield return null;
-        yield return new WaitForSeconds(0.1f);
-        
+        attackManager.AttackIn();
+        yield return new WaitForSeconds(colliderOn);
+        if (meleeArea != null)
+        {
+            meleeArea.enabled = true;
+        }
+        yield return new WaitForSeconds(colliderOff);
+        if (meleeArea != null)
+        {
+            meleeArea.enabled = false;
+        }
+        yield return new WaitForSeconds(rate - colliderOn - colliderOff);
+        chk = true; // 코루틴 종료 후 변수 초기화
+        attackManager.AttackOut();
     }
 }

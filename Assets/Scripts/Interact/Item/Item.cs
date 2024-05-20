@@ -9,6 +9,7 @@ public class Item : ScriptableObject
 
     public int ItemType;
     public float ItemDamage;
+    public float ItemRecovery;
     public float ItemRange;
-
+    public bool craftCompleted = false;
 }
