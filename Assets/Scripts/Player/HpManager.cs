@@ -236,6 +236,7 @@ public class HpManager : MonoBehaviour
             uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
             isDead = true;
+            Debug.Log("RpcAllDie() 내부의 if문 뒷부분도 실행");
             gameObject.SetActive(false);
         }
     }
