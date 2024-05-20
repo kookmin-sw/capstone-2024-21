@@ -170,7 +170,6 @@ public class HpManager : MonoBehaviour
                 Debug.Log("사망");
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
-                if (GameManager.Instance.isEscape == true)
             }
             else
             {
