@@ -195,7 +195,23 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RPCEscapeWin()
     {
-        // 사망 이벤트 있으면 실행
+        //if (gameObject.tag == "Player")
+        //{
+        //    if (pv.IsMine)
+        //    {
+        //        GameManager.Instance.GameOver();
+        //        uiManager.isUIActivate = true;
+        //    }
+        //    isDead = true;
+        //    gameObject.SetActive(false);
+        //}
+    }
+
+    // 사망 함수
+    public void EscapeWin()
+    {
+        // pv.RPC("RPCEscapeWin", RpcTarget.All);
+
         if (gameObject.tag == "Player")
         {
             if (pv.IsMine)
@@ -208,18 +224,14 @@ public class HpManager : MonoBehaviour
         }
     }
 
-    // 사망 함수
-    public void EscapeWin()
-    {
-        pv.RPC("RPCEscapeWin", RpcTarget.All);
-    }
-
 
     [PunRPC]
     public void RpcAllDie()
     {
+        Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
+            Debug.Log("RpcAllDie() 내부의 if문 실행 실행");
             GameManager.Instance.GameOver();
             uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
@@ -231,6 +243,7 @@ public class HpManager : MonoBehaviour
     // 사망 함수
     public void AllDie()
     {
+        Debug.Log("AllDie() 실행");
         pv.RPC("RpcAllDie", RpcTarget.Others);
     }
 
