@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour
     public void Escape()
     {
         Debug.Log("Escape 실행");
-        isPlaying = false;
         isEscape = true;
     }
 
@@ -84,6 +83,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameOver 실행");
 
         isPlaying = false;
+        isEscape = false;
     }
 
     public void Go2Map()

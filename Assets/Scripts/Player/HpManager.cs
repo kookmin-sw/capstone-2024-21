@@ -61,19 +61,6 @@ public class HpManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(pv.IsMine)
-        {
-            if(GameManager.Instance.isEscape == true)
-            {
-                Die();
-                AllDie();
-                GameManager.Instance.isEscape = false;
-            }
-        }
-    }
-
     public void AddKillCount(string playerId)
     {
         GameObject obj = GameObject.Find(playerId);
@@ -171,10 +158,15 @@ public class HpManager : MonoBehaviour
                 Debug.Log("사망");
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
+
             }
             else
             {
                 uiManager.curPlayers -= 1;
+            }
+            if (pv.IsMine && GameManager.Instance.isEscape == true)
+            {
+                AllDie();
             }
             isDead = true;
             gameObject.SetActive(false);
@@ -210,7 +202,7 @@ public class HpManager : MonoBehaviour
     // 사망 함수
     public void AllDie()
     {
-        pv.RPC("RpcDie", RpcTarget.Others);
+        pv.RPC("RpcAllDie", RpcTarget.Others);
     }
 
 }

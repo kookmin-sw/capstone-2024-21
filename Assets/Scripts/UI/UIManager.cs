@@ -169,6 +169,7 @@ public class UIManager : MonoBehaviour
                 gameOverBoard.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
+                GameManager.Instance.isEscape = false;
             }
             else
             {
