@@ -69,6 +69,7 @@ public class HpManager : MonoBehaviour
             {
                 Die();
                 AllDie();
+                GameManager.Instance.isEscape = false;
             }
         }
     }
