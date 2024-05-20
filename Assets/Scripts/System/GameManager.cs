@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
 
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        uiManager.isGameStart = true;
+        uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
 
@@ -71,7 +76,13 @@ public class GameManager : MonoBehaviour
         {
             players[i] = playerObjects[i].GetComponent<Player>();
         }
-        Go2Map();
+
+        Debug.Log("일단 GameStart 함수는 실행");
+        Debug.Log("내가 마스터 클라이언트의 상인가? :" + PhotonNetwork.IsMasterClient);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Go2Map();
+        }
     }
 
     public void Escape()
@@ -90,11 +101,6 @@ public class GameManager : MonoBehaviour
 
     public void Go2Map()
     {
-        uiManager = GameObject.FindObjectOfType<UIManager>();
-        uiManager.isGameStart = true;
-        uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-
         Transform[] points = GameObject.Find("WarpPointGroup").GetComponentsInChildren<Transform>();
 
         int[] idx = new int[points.Length];
