@@ -200,8 +200,8 @@ public class HpManager : MonoBehaviour
     {
         if (gameObject.tag == "Player")
         {
-            uiManager.curPlayers -= 1;
             GameManager.Instance.GameOver();
+            uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
             isDead = true;
             gameObject.SetActive(false);
