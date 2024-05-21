@@ -26,8 +26,12 @@ public class GameManager : MonoBehaviour
 
     public string UserId { get; set; } = "soldier";
     public bool isPlaying { get; set; } = false;
+    public bool isEscape { get; set; } = false;
+
+    public UIManager uiManager;
+
     public Timer timer;
-    GameObject[] playerObjects;
+    public GameObject[] playerObjects;
     Player[] players;
 
     void Awake()
@@ -60,6 +64,11 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
 
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        uiManager.isGameStart = true;
+        uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
 
@@ -67,17 +76,28 @@ public class GameManager : MonoBehaviour
         {
             players[i] = playerObjects[i].GetComponent<Player>();
         }
-        Go2Map();
+
+        Debug.Log("일단 GameStart 함수는 실행");
+        Debug.Log("내가 마스터 클라이언트의 상인가? :" + PhotonNetwork.IsMasterClient);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Go2Map();
+        }
     }
 
     public void Escape()
     {
-
+        Debug.Log("Escape 실행");
+        isEscape = true;
     }
 
     public void GameOver()
     {
-
+        Debug.Log("GameOver 실행");
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        isPlaying = false;
+        uiManager.isGameOver = true;
+        AllDie();
     }
 
     public void Go2Map()
@@ -108,6 +128,14 @@ public class GameManager : MonoBehaviour
             int randomIndex = Random.Range(0, deck.Length);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
+        }
+    }
+
+    void AllDie()
+    {
+        for (int i = 0; i < playerObjects.Length; i++)
+        {
+            playerObjects[i].SetActive(false);
         }
     }
 }

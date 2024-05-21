@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
+// using static UnityEditor.Progress;
 
 //ItemQuickSlots에 들어가 있음
 public class Inventory : MonoBehaviour

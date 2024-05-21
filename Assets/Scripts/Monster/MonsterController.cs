@@ -7,14 +7,11 @@ public class MonsterController : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float groundYOffset;
     [SerializeField] LayerMask groundMask;
-    CharacterController controller;
     Vector3 spherePos;
     Vector3 velocity;
 
-    void Start()
+    void Awake()
     {
-        controller = GetComponent<CharacterController>();
-
     }
 
     // Update is called once per frame
@@ -26,7 +23,7 @@ public class MonsterController : MonoBehaviour
     public bool IsGrounded()
     {
         spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
-        if (Physics.CheckSphere(spherePos, controller.radius + 0.05f, groundMask))
+        if (Physics.CheckSphere(spherePos, 0.55f, groundMask))
         {
             return true;
         }
@@ -37,8 +34,9 @@ public class MonsterController : MonoBehaviour
     void Gravity()
     {
         if (!IsGrounded()) velocity.y += gravity * Time.deltaTime;
-        else if (velocity.y < 0) velocity.y = -2;
+        else if (velocity.y < 0) velocity.y = -0.5f;
 
-        controller.Move(velocity * Time.deltaTime);
+        transform.position += velocity * Time.deltaTime;
     }
+
 }

@@ -6,21 +6,34 @@ public class WalkState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
+        movement.currentMoveSpeed = movement.walkSpeed;
         movement.anim.SetBool("Walking", true);
     }
 
     public override void UpdateState(MovementStateManager movement)
-    {
-        if (Input.GetKey(KeyCode.LeftShift)) ExitState(movement, movement.Run);
-        else if (Input.GetKeyDown(KeyCode.C)) ExitState(movement, movement.Crouch);
-        else if (movement.moveDir.magnitude < 0.1f) ExitState(movement, movement.Idle);
+    {   
+        if(!movement.jumped){
+            if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.staminaBar.value >= movement.staminaManager.jumpValue)
+            {
+                movement.previousState = this;
+                ExitState(movement, movement.Jump);
+                return;
+            }
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                ExitState(movement, movement.Run);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.C)) {
+                ExitState(movement, movement.Crouch);
+                return;
+            }
+            else if (movement.moveDir.magnitude < 0.1f) {
+                ExitState(movement, movement.Idle);
+                return;
+            }
 
-        if (movement.zAxis < 0) movement.currentMoveSpeed = movement.walkBackSpeed;
-        else movement.currentMoveSpeed = movement.walkSpeed;
-        if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.staminaBar.value >= movement.staminaManager.jumpValue)
-        {
-            movement.previousState = this;
-            ExitState(movement, movement.Jump);
+            if (movement.zAxis < 0) movement.currentMoveSpeed = movement.walkBackSpeed;
+            else movement.currentMoveSpeed = movement.walkSpeed;
         }
     }
 
