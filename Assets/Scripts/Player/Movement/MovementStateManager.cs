@@ -3,7 +3,6 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
-using System;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -126,19 +125,6 @@ public class MovementStateManager : MonoBehaviour
             else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting))
                 ExitStateCancle();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LogWithTimestamp("Space key pressed");
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift)){
-            LogWithTimestamp("Shift key pressed");
-        }
-    }
-
-    void LogWithTimestamp(string message)
-    {
-        string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
-        Debug.Log($"[{timestamp}] {message}");
     }
 
     [PunRPC]
