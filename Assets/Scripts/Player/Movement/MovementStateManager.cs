@@ -99,8 +99,8 @@ public class MovementStateManager : MonoBehaviour
                     {
                         DroppedItem.GetComponent<Weapon>().settedLightning = false;
                     }
+                    attackManager.weaponInventory.abandonedItem.craftCompleted = false;
                 }
-
                 DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
                 attackManager.weaponInventory.abandonedItem = null;
             }

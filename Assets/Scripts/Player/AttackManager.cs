@@ -61,8 +61,10 @@ public class AttackManager : MonoBehaviour
         if (qDown)
             if(pv.IsMine)
                 FlashLight();
-        if ((sDown1 || weaponInventory.isWeaponAdded == true) || (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)) || gDown || eDown)
-            RpcSwap(); 
+        if ((sDown1 || weaponInventory.isWeaponAdded == true || weaponInventory.isCrafted == true) || (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)) || gDown || eDown)
+        {
+            RpcSwap();
+        }
     }
 
     void getInput(){
@@ -123,23 +125,7 @@ public class AttackManager : MonoBehaviour
     void Swap(){
         if (pv.IsMine)
         {   
-            if (equipWeapon != weapons[9]) // 착용된 장비가 있고
-            {
-                if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
-                {
-                    if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
-                    {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
-                    }
-                    else if (weaponInventory.weaponSlot.item.craftCompleted == false)
-                    {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
-                    }
-                }
-            }
-
             if (isAttack) return; // 공격 중에는 스왑 불가
-
 
             if(eDown)
             {
@@ -351,6 +337,22 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetLayerWeight(2, 0);
                     movementStateManager.anim.SetBool("OHW", false);
                     movementStateManager.anim.SetBool("THW", false);
+                }
+            }
+
+            if (equipWeapon != weapons[9]) // 착용된 장비가 있고
+            {
+                if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
+                {
+                    if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+                    {
+                        equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+                    }
+                    else if (weaponInventory.weaponSlot.item.craftCompleted == false)
+                    {
+                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
+                    }
+                    weaponInventory.isCrafted = false;
                 }
             }
         }
