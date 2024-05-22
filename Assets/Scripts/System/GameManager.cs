@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("내가 마스터 클라이언트의 상인가? :" + PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
         {
+            MapManager.Instance.SpawndItemInMapRPC();
             Go2Map();
         }
     }

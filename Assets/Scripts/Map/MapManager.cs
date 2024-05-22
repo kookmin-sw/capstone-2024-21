@@ -448,7 +448,6 @@ public class MapManager : MonoBehaviour
         Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
         GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-        Debug.Log("ItemPrefab.id :" + ItemPrefab.GetComponent<PhotonView>().ViewID);
 
         Transform idxTransform = hiddenItemPosAll[idx].transform;
         Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성

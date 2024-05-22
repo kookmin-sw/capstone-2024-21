@@ -112,9 +112,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-
-            MapManager.Instance.SpawndItemInMapRPC();
-
             GameManager.Instance.TimerStart();
 
             Debug.Log("현재 방 오픈 여부: " + PhotonNetwork.CurrentRoom.IsOpen);
