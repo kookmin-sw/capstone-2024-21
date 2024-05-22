@@ -96,9 +96,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameOver 실행");
         uiManager = GameObject.FindObjectOfType<UIManager>();
-        isPlaying = false;
-        uiManager.isGameOver = true;
-        AllDie();
+        if (uiManager.isGameOver == false)
+        {
+            isPlaying = false;
+            uiManager.isGameOver = true;
+        }
     }
 
     public void Go2Map()
@@ -121,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void Shuffle(int[] deck)
+    void Shuffle(int[] deck)
     {
         for (int i = 0; i < deck.Length; i++)
         {
