@@ -50,6 +50,8 @@ public class MapManager : MonoBehaviour
     //[SerializeField] List<GameObject> ItemSpawners = new List<GameObject>();//스포너 후보들
 
 
+    [Header("hiddenItem")] // 맵에 미리 스폰돼있는 아이템
+    //Spawner spawner;
     GameObject posPrefeb; //hiddenItem이 스폰될 pos
     [Header("hiddenItemAll")] // 맵에 미리 스폰돼있는 아이템
     [SerializeField] List<GameObject> hiddenItemTargetObjAll = new List<GameObject>();
@@ -82,6 +84,8 @@ public class MapManager : MonoBehaviour
     // 모든 오브젝트들을 이름 기준으로 살펴보며 적절한 스크립트를 넣어줌 
     private void Awake()
     {
+        //spawner = GetComponent<Spawner>();
+
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
 
@@ -467,11 +471,13 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < hiddenItemCntAll; i++)
         {
             int itemNum = Random.Range(0, itemsAll.Count);
-            GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-            Transform idxTransform = hiddenItemPosAll[idx_all[i]].transform;
-            GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+            int idx = idx_all[i];
 
-            SpawnedHiddenItemsAll.Add(item);
+            SpawnItem_AllRPC(itemNum, idx);
+            //GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
+            //Transform idxTransform = hiddenItemPosAll[idx_all[i]].transform;
+            //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+            //SpawnedHiddenItemsAll.Add(item);
         }
 
 
@@ -495,6 +501,24 @@ public class MapManager : MonoBehaviour
     {
         pv.RPC("SpawndItemInMapRPC", RpcTarget.All);
     }
+
+
+
+
+    [PunRPC]
+    public void SpawnItem_All(int itemNum, int idx)
+    {
+        GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
+        Transform idxTransform = hiddenItemPosAll[idx].transform;
+        GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+        SpawnedHiddenItemsAll.Add(item);
+    }
+
+    public void SpawnItem_AllRPC(int itemNum, int idx)
+    {
+        pv.RPC("SpawnItem_All", RpcTarget.AllBuffered, itemNum, idx);
+    }
+
 
 
     public IEnumerator BightenLight(Light light, int range)
