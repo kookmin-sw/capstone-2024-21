@@ -129,12 +129,15 @@ public class MovementStateManager : MonoBehaviour
     
     [PunRPC]
     void RpcAudio(int idx){   
-        if(idx == 1) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpend);
-        if(idx == 2) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpstart);
-        if(idx == 3) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_run);
-        if(idx == 4) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_walk);
-        if(idx == 5) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_tempgethit);
-        if(idx == 6) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
+        if(pv.IsMine){
+            if(idx == 1) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpend);
+            if(idx == 2) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpstart);
+            if(idx == 3) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_run);
+            if(idx == 4) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_walk);
+            if(idx == 5) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_tempgethit);
+            if(idx == 6) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
+        }
+        
     }
 
     public void audioState(int idx)
