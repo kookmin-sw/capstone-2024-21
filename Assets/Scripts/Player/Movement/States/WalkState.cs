@@ -6,6 +6,7 @@ public class WalkState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
+        movement.currentMoveSpeed = movement.walkSpeed;
         movement.anim.SetBool("Walking", true);
     }
 
