@@ -136,31 +136,10 @@ public class MapManager : MonoBehaviour
                 if (tmpObj.name.Contains("Case_Door"))
                 {
                     InstantiatePosPrefeb_All(tmpObj, Case_Door_offset);
-                    //hiddenItemTargetObjAll.Add(tmpObj);
-
-                    //Vector3 pos = tmpObj.transform.position;
-                    //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                    //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                    //tmp.transform.Translate(Case_Door_offset);
-
-                    //hiddenItemPosAll.Add(tmp);
                 }
                 else if (tmpObj.name.Contains("ToiletDoor"))
                 {
                     InstantiatePosPrefeb_All(tmpObj, ToiletDoor_offset);
-
-                    //hiddenItemTargetObjAll.Add(tmpObj);
-
-                    //Vector3 pos = tmpObj.transform.position;
-                    //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                    //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                    //tmp.transform.Translate(ToiletDoor_offset);
-
-                    //hiddenItemPosAll.Add(tmp);
                 }
 
             }
@@ -230,76 +209,33 @@ public class MapManager : MonoBehaviour
             //hiddenItem
             else if (tmpObj.name.Contains("MirrorShelf_Case"))
             {
-
                 InstantiatePosPrefeb_Small(tmpObj, MirrorShelf_offset);
-                //hiddenItemTargetObjSmall.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(MirrorShelf_offset); // 위랑 여기만 다름 (offset만 다름!! )
-
-                //hiddenItemPosSmall.Add(tmp);
             }
             else if (tmpObj.name.Contains("Fridge_Case"))
             {
                 InstantiatePosPrefeb_All(tmpObj, Fridge_offset);
-                //hiddenItemTargetObjAll.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(Fridge_offset); //offset만 다름 !! 
-
-                //hiddenItemPosAll.Add(tmp);
 
             }
             else if (tmpObj.name.Contains("MedRack_case"))
             {
                 InstantiatePosPrefeb_All(tmpObj, MedRack_offset);
-                //hiddenItemTargetObjAll.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
-
-                //hiddenItemPosAll.Add(tmp);
 
             }
             else if (tmpObj.name.Contains("TableWhiteKitchen"))
             {
                 InstantiatePosPrefeb_All(tmpObj, TableWhiteKitchen_offset);
-
-                //hiddenItemTargetObjAll.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
-
-                //hiddenItemPosAll.Add(tmp);
-
             }
         }
 
-            //이게 룸이 구성되기 전에 맵을 구성하라고 하니까 안됐음!! -> 포톤매니져에서 룸 생성이 되면 그 이후에 호출하도록 함 
-            //LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
-            //LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
-            //LocateItemSpawner();
+        //이게 룸이 구성되기 전에 맵을 구성하라고 하니까 안됐음!! -> 포톤매니져에서 룸 생성이 되면 그 이후에 호출하도록 함 
+        //LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
+        //LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
+        //LocateItemSpawner();
 
-            //SpawndItemInMap();
-        }
+        //SpawndItemInMap(); -> Instantiate는 딱 같은 시간에 동시에 진행해야 view ID가 같게 할당됨. 그래서 모든 플레이어가 존재하는 시점에서 실행돼야 함 !
+    }
 
-    
+
     void addDoorRightScript(GameObject obj)
     {
         //Door 컴포넌트가 있으면 그냥 활성화
@@ -348,10 +284,8 @@ public class MapManager : MonoBehaviour
 
         Vector3 pos = tmpObj.transform.position;
         GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
         tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-        tmp.transform.Translate(offset); 
+        tmp.transform.Translate(offset);
 
         hiddenItemPosSmall.Add(tmp);
     }
@@ -414,11 +348,6 @@ public class MapManager : MonoBehaviour
             int idx = idx_all[i];
 
             pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
-            //GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-            //Transform idxTransform = hiddenItemPosAll[idx_all[i]].transform;
-            //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
-
-            //SpawnedHiddenItemsAll.Add(item);
         }
 
 
@@ -433,11 +362,6 @@ public class MapManager : MonoBehaviour
             int idx = idx_all[i];
 
             pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
-            //GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
-            //Transform idxTransform = hiddenItemPosSmall[idx_small[i]].transform;
-            //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
-
-            //SpawnedHiddenItemsSmall.Add(item);
         }
     }
 
@@ -445,12 +369,12 @@ public class MapManager : MonoBehaviour
     [PunRPC]
     public void SpawnItem(int itemNum, int idx)
     {
-        Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
+        //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
         GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-
         Transform idxTransform = hiddenItemPosAll[idx].transform;
-        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+
+        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
     }
 
 
