@@ -2283,7 +2283,7 @@ GameObject:
   - component: {fileID: 175931461}
   - component: {fileID: 175931460}
   m_Layer: 6
-  m_Name: TableWhiteKitchen
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11780,7 +11780,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1115447403126146, guid: c8cedd07f9c0b814b9e331a2d713786f, type: 3}
       propertyPath: m_Name
-      value: FilmProjector
+      value: BatterySpawner_FilmProjector
       objectReference: {fileID: 0}
     - target: {fileID: 1115447403126146, guid: c8cedd07f9c0b814b9e331a2d713786f, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16089,14 +16089,10 @@ MonoBehaviour:
   WorkingWeaponSpawners: []
   hiddenItemTargetObjAll: []
   itemsAll: []
-  hiddenItemPosAll: []
   hiddenItemCntAll: 5
-  SpawnedHiddenItemsAll: []
   hiddenItemTargetObjSmall: []
   itemsSmall: []
-  hiddenItemPosSmall: []
   hiddenItemCntSmall: 5
-  SpawnedHiddenItemsSmall: []
   Lights: []
   pv: {fileID: 0}
 --- !u!4 &1898214401
