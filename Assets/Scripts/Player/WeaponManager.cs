@@ -56,6 +56,8 @@ public class WeaponManager : MonoBehaviour
 
             if (hpManager != null && GameManager.Instance.isPlaying) 
             {
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
+
                 if (other.gameObject.tag == "Monster")
                 {
                     Debug.Log("Hit : " + damage);
