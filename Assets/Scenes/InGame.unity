@@ -2177,7 +2177,7 @@ GameObject:
   - component: {fileID: 158617392}
   - component: {fileID: 158617391}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (4)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3311,7 +3311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 326531104}
   m_Layer: 6
-  m_Name: DoorD_V2 (1)
+  m_Name: D_V2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4190,7 +4190,7 @@ GameObject:
   - component: {fileID: 480791590}
   - component: {fileID: 480791589}
   m_Layer: 6
-  m_Name: DoorD_V2_Frame
+  m_Name: D_V2_Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5566,7 +5566,7 @@ GameObject:
   - component: {fileID: 675975536}
   - component: {fileID: 675975535}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (1)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9288,7 +9288,7 @@ GameObject:
   - component: {fileID: 1088314823}
   - component: {fileID: 1088314822}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (6)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9522,7 +9522,7 @@ GameObject:
   - component: {fileID: 1114015168}
   - component: {fileID: 1114015167}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (5)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9734,7 +9734,7 @@ GameObject:
   - component: {fileID: 1125441044}
   - component: {fileID: 1125441043}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (7)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9901,7 +9901,7 @@ GameObject:
   - component: {fileID: 1131299181}
   - component: {fileID: 1131299180}
   m_Layer: 6
-  m_Name: DoorD_V2_Right
+  m_Name: D_V2_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10785,7 +10785,7 @@ GameObject:
   - component: {fileID: 1274978910}
   - component: {fileID: 1274978909}
   m_Layer: 6
-  m_Name: DoorD_V2_L
+  m_Name: D_V2_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11396,7 +11396,7 @@ GameObject:
   - component: {fileID: 1343908472}
   - component: {fileID: 1343908471}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (10)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12009,7 +12009,7 @@ GameObject:
   - component: {fileID: 1447273290}
   - component: {fileID: 1447273289}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (8)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13307,7 +13307,7 @@ GameObject:
   - component: {fileID: 1584901238}
   - component: {fileID: 1584901237}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (2)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15269,7 +15269,7 @@ GameObject:
   - component: {fileID: 1819671623}
   - component: {fileID: 1819671622}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (3)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15725,7 +15725,7 @@ GameObject:
   - component: {fileID: 1848602030}
   - component: {fileID: 1848602029}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (11)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16391,7 +16391,7 @@ GameObject:
   - component: {fileID: 1944992411}
   - component: {fileID: 1944992410}
   m_Layer: 6
-  m_Name: TableWhiteKitchen (9)
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
