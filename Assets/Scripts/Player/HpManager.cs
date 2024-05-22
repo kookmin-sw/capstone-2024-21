@@ -232,7 +232,6 @@ public class HpManager : MonoBehaviour
         Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
-            uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
             isDead = true;
             GameManager.Instance.GameOver();
