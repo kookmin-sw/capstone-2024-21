@@ -46,12 +46,12 @@ public class HpManager : MonoBehaviour
 
     private void Update()
     {
-        if(pv.IsMine)
+        if (pv.IsMine)
         {
-            if(GameManager.Instance.isEscape == true)
+            if (GameManager.Instance.isEscape == true)
             {
-                AllDie();
                 EscapeWin();
+                Debug.Log("탈출 성공공");
             }
         }
     }
@@ -219,6 +219,7 @@ public class HpManager : MonoBehaviour
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
+            AllDie();
             isDead = true;
             gameObject.SetActive(false);
         }
@@ -228,16 +229,19 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RpcAllDie()
     {
-        GameObject[] playerObjects = GameManager.Instance.playerObjects;
-
-
         Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
-            uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
             isDead = true;
             GameManager.Instance.GameOver();
+
+            GameObject[] playerObjects = GameManager.Instance.playerObjects;
+
+            for (int i = 0; i < playerObjects.Length; i++)
+            {
+                playerObjects[i].SetActive(false);
+            }
         }
     }
 
