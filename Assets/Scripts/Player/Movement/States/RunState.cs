@@ -6,7 +6,7 @@ public class RunState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_run);
+        movement.audioState((int)AudioManager.Sfx.SFX_move_run);      
 
         movement.anim.SetBool("Running", true);
     }

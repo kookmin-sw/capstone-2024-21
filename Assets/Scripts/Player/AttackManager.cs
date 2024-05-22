@@ -95,8 +95,6 @@ public class AttackManager : MonoBehaviour
         // 마우스 왼쪽 버튼을 누르고 공격이 가능한 상태이면 실행, 공격 중이 아닐 때
         if (Input.GetMouseButton(0) && !isAttack && isFireReady)
         {
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
-
             // 무기를 사용하고 애니메이션을 트리거합니다.
             equipWeaponGameobject.Use(); // 무기 사용
             movementStateManager.anim.SetBool("Attack", true); // 애니메이션 트리거
