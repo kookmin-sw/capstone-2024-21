@@ -34,46 +34,20 @@ public class MapManager : MonoBehaviour
 
     [Header("BatterySpawner")]
     [SerializeField] List<GameObject> BatterySpawnerTargets = new List<GameObject>();//배터리 스포너 후보들
-    [SerializeField] int BatterySpawnerCount = 4;
+    [SerializeField] int BatterySpawnerCount = 7;
     [SerializeField] List<GameObject> WorkingBatterySpawners = new List<GameObject>();//배터리 스포너들
 
 
     //일시적으로 웨폰 스포너에서 아이템도 나오도록 함. 우선 아이템 스포너는 없다고 생각해도 무관 
     [Header("WeaponSpawner")]
     [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//스포너 후보들
-    [SerializeField] int WeaponSpawnerCount = 10;
+    [SerializeField] int WeaponSpawnerCount = 50;
     [SerializeField] List<GameObject> WorkingWeaponSpawners = new List<GameObject>();//스포너들 
 
     //[Header("ItemSpawner")]
     //[SerializeField] List<GameObject> ItemSpawnerTargets = new List<GameObject>();//스포너 후보들
     //[SerializeField] int ItemSpawnerCount = 1;
     //[SerializeField] List<GameObject> ItemSpawners = new List<GameObject>();//스포너 후보들
-
-
-    [Header("hiddenItem")] // 맵에 미리 스폰돼있는 아이템
-    //Spawner spawner;
-    GameObject posPrefeb; //hiddenItem이 스폰될 pos
-    [Header("hiddenItemAll")] // 맵에 미리 스폰돼있는 아이템
-    [SerializeField] List<GameObject> hiddenItemTargetObjAll = new List<GameObject>();
-    [SerializeField] List<Item> itemsAll = new List<Item>();//스폰될 아이템 후보들
-    [SerializeField] List<GameObject> hiddenItemPosAll = new List<GameObject>();
-    [SerializeField] int hiddenItemCntAll = 5;
-    [SerializeField] List<GameObject> SpawnedHiddenItemsAll = new List<GameObject>();
-
-    [Header("hiddenItemSmall")] // 맵에 미리 스폰돼있는 아이템
-    [SerializeField] List<GameObject> hiddenItemTargetObjSmall = new List<GameObject>();
-    [SerializeField] List<Item> itemsSmall = new List<Item>();//스폰될 아이템 후보들
-    [SerializeField] List<GameObject> hiddenItemPosSmall = new List<GameObject>();
-    [SerializeField] int hiddenItemCntSmall = 5;
-    [SerializeField] List<GameObject> SpawnedHiddenItemsSmall = new List<GameObject>();
-
-    Vector3 Case_Door_offset = new Vector3(-0.2f, -1.0f, 0.2f);
-    Vector3 ToiletDoor_offset = new Vector3(0.6f, -1.0f, 1.0f);
-    Vector3 MirrorShelf_offset = new Vector3(0f,0.35f, -0.1f);
-    Vector3 Fridge_offset = new Vector3(0f, 0.3f, 0f);
-    Vector3 MedRack_offset = new Vector3(0f, 1.5f, 0f);
-    Vector3 TableWhiteKitchen_offset = new Vector3(0f, 1.5f, 0f);
-
 
     [Header("Light")]
     float brightSpeed = 1f;
@@ -84,30 +58,8 @@ public class MapManager : MonoBehaviour
     // 모든 오브젝트들을 이름 기준으로 살펴보며 적절한 스크립트를 넣어줌 
     private void Awake()
     {
-        //spawner = GetComponent<Spawner>();
-
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
-
-        posPrefeb = (GameObject)Resources.Load("Prefabs/hiddenItemPos");
-
-        //itemsAll
-        itemsAll.Add((Item)Resources.Load("Item/Axe"));
-        itemsAll.Add((Item)Resources.Load("Item/BaseballBat"));
-        itemsAll.Add((Item)Resources.Load("Item/Butcher Knife"));
-        itemsAll.Add((Item)Resources.Load("Item/Crowbar"));
-        itemsAll.Add((Item)Resources.Load("Item/Hammer"));
-        itemsAll.Add((Item)Resources.Load("Item/HeavyWrench"));
-        itemsAll.Add((Item)Resources.Load("Item/Machete"));
-        itemsAll.Add((Item)Resources.Load("Item/Shovel"));
-        itemsAll.Add((Item)Resources.Load("Item/TacticalKnife"));
-
-        itemsAll.Add((Item)Resources.Load("Item/Painkiller"));
-
-
-        //itemsSmall
-        itemsSmall.Add((Item)Resources.Load("Item/Painkiller"));
-
 
         gameObjs = FindObjectsOfType<GameObject>();
 
@@ -131,38 +83,6 @@ public class MapManager : MonoBehaviour
                 tmpObj.tag = "door";
                 tmpObj.layer = LayerMask.NameToLayer("Interact");
                 tmpObj.isStatic = false; // 이걸 해줘야 회전함!!
-
-                //for hiddenItem
-                if (tmpObj.name.Contains("Case_Door"))
-                {
-                    InstantiatePosPrefeb_All(tmpObj, Case_Door_offset);
-                    //hiddenItemTargetObjAll.Add(tmpObj);
-
-                    //Vector3 pos = tmpObj.transform.position;
-                    //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                    //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                    //tmp.transform.Translate(Case_Door_offset);
-
-                    //hiddenItemPosAll.Add(tmp);
-                }
-                else if (tmpObj.name.Contains("ToiletDoor"))
-                {
-                    InstantiatePosPrefeb_All(tmpObj, ToiletDoor_offset);
-
-                    //hiddenItemTargetObjAll.Add(tmpObj);
-
-                    //Vector3 pos = tmpObj.transform.position;
-                    //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                    //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                    //tmp.transform.Translate(ToiletDoor_offset);
-
-                    //hiddenItemPosAll.Add(tmp);
-                }
-
             }
 
             //BatterySpawner
@@ -225,81 +145,14 @@ public class MapManager : MonoBehaviour
                 tmpObj.layer = LayerMask.NameToLayer("Ground");
 
             }
-
-
-            //hiddenItem
-            else if (tmpObj.name.Contains("MirrorShelf_Case"))
-            {
-
-                InstantiatePosPrefeb_Small(tmpObj, MirrorShelf_offset);
-                //hiddenItemTargetObjSmall.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(MirrorShelf_offset); // 위랑 여기만 다름 (offset만 다름!! )
-
-                //hiddenItemPosSmall.Add(tmp);
-            }
-            else if (tmpObj.name.Contains("Fridge_Case"))
-            {
-                InstantiatePosPrefeb_All(tmpObj, Fridge_offset);
-                //hiddenItemTargetObjAll.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(Fridge_offset); //offset만 다름 !! 
-
-                //hiddenItemPosAll.Add(tmp);
-
-            }
-            else if (tmpObj.name.Contains("MedRack_case"))
-            {
-                InstantiatePosPrefeb_All(tmpObj, MedRack_offset);
-                //hiddenItemTargetObjAll.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
-
-                //hiddenItemPosAll.Add(tmp);
-
-            }
-            else if (tmpObj.name.Contains("TableWhiteKitchen"))
-            {
-                InstantiatePosPrefeb_All(tmpObj, TableWhiteKitchen_offset);
-
-                //hiddenItemTargetObjAll.Add(tmpObj);
-
-                //Vector3 pos = tmpObj.transform.position;
-                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-                //tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
-
-                //hiddenItemPosAll.Add(tmp);
-
-            }
         }
 
-            //이게 룸이 구성되기 전에 맵을 구성하라고 하니까 안됐음!! -> 포톤매니져에서 룸 생성이 되면 그 이후에 호출하도록 함 
-            //LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
-            //LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
-            //LocateItemSpawner();
+        //이게 룸이 구성되기 전에 맵을 구성하라고 하니까 안됐음!! -> 포톤매니져에서 룸 생성이 되면 그 이후에 호출하도록 함 
+        //LocateBatterySpawner();//BatterySpawnerTargets 중 랜덤으로 스포너로 활성화 
+        //LocateWeaponSpawner();//WeaponSpawnerTargets 중 랜덤으로 스포너로 활성화
+        //LocateItemSpawner();
+    }
 
-            //SpawndItemInMap();
-        }
-
-    
     void addDoorRightScript(GameObject obj)
     {
         //Door 컴포넌트가 있으면 그냥 활성화
@@ -330,31 +183,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    void InstantiatePosPrefeb_All(GameObject tmpObj, Vector3 offset)
-    {
-        hiddenItemTargetObjAll.Add(tmpObj);
-
-        Vector3 pos = tmpObj.transform.position;
-        GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-        tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-        tmp.transform.Translate(offset);
-
-        hiddenItemPosAll.Add(tmp);
-    }
-
-    void InstantiatePosPrefeb_Small(GameObject tmpObj, Vector3 offset)
-    {
-        hiddenItemTargetObjSmall.Add(tmpObj);
-
-        Vector3 pos = tmpObj.transform.position;
-        GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
-
-        tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
-
-        tmp.transform.Translate(offset); 
-
-        hiddenItemPosSmall.Add(tmp);
-    }
 
 
     public void EnableBatterySpawner()
@@ -372,12 +200,23 @@ public class MapManager : MonoBehaviour
             BatterySpawner batterySpawner = BatterySpawnerTargets[i].GetComponent<BatterySpawner>();
             batterySpawner.EnableSpawnerWorking();
 
-            WorkingBatterySpawners.Add(BatterySpawnerTargets[i]); //마스터만 보임 
+            WorkingBatterySpawners.Add(BatterySpawnerTargets[i]);
 
             check[i] = true;
             cnt++;
         }
     }
+
+
+
+    //void AddPv(GameObject obj)
+    //{
+    //    if (obj.gameObject.GetComponent<PhotonView>() == null)
+    //    {
+    //        PhotonView targetPV = obj.AddComponent<PhotonView>();
+    //        targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
+    //    }
+    //}
 
     public void EnableWeaponSpawner()
     {
@@ -401,59 +240,52 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void SpawndItemInMapRPC()
-    {
-        //All
-        int[] idx_all = new int[hiddenItemPosAll.Count];
-        for (int i = 0; i < hiddenItemPosAll.Count; i++) idx_all[i] = i;
-        GameManager.Instance.Shuffle(idx_all);
+    //void LocateWeaponSpawner()
+    //{
+    //    int cnt = 0;
+    //    while (cnt != WeaponSpawnerCount)
+    //    {
+    //        int i = Random.Range(0, WeaponSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
 
-        for (int i = 0; i < hiddenItemCntAll; i++)
-        {
-            int itemNum = Random.Range(0, itemsAll.Count);
-            int idx = idx_all[i];
+    //        if (WeaponSpawnerTargets[i].gameObject.GetComponent<WeaponSpawner>() == null)
+    //        {
+    //            if (WeaponSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
+    //            {
+    //                PhotonView targetPV = WeaponSpawnerTargets[i].AddComponent<PhotonView>();
+    //                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
+    //            }
 
-            pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
-            //GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-            //Transform idxTransform = hiddenItemPosAll[idx_all[i]].transform;
-            //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+    //            WeaponSpawner weaponSpawner = WeaponSpawnerTargets[i].AddComponent<WeaponSpawner>();
+    //            weaponSpawner.enabled = true;
+    //            cnt++;
 
-            //SpawnedHiddenItemsAll.Add(item);
-        }
+    //            WeaponSpawners.Add(WeaponSpawnerTargets[i]);
+    //        }
+    //    }
+    //}
 
+    //void LocateItemSpawner()
+    //{
+    //    int cnt = 0;
+    //    while (cnt != ItemSpawnerCount)
+    //    {
+    //        int i = Random.Range(0, ItemSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
+    //        if (ItemSpawnerTargets[i].gameObject.GetComponent<ItemSpawner>() == null)
+    //        {
+    //            if (ItemSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
+    //            {
+    //                PhotonView targetPV = ItemSpawnerTargets[i].AddComponent<PhotonView>();
+    //                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
+    //            }
 
-        //Small
-        int[] idx_small = new int[hiddenItemPosSmall.Count];
-        for (int i = 0; i < hiddenItemPosSmall.Count; i++) idx_small[i] = i;
-        GameManager.Instance.Shuffle(idx_small);
+    //            ItemSpawner itemSpawner = ItemSpawnerTargets[i].AddComponent<ItemSpawner>();
+    //            itemSpawner.enabled = true;
+    //            cnt++;
 
-        for (int i = 0; i < hiddenItemCntSmall; i++)
-        {
-            int itemNum = Random.Range(0, itemsSmall.Count);
-            int idx = idx_all[i];
-
-            pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
-            //GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
-            //Transform idxTransform = hiddenItemPosSmall[idx_small[i]].transform;
-            //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
-
-            //SpawnedHiddenItemsSmall.Add(item);
-        }
-    }
-
-
-    [PunRPC]
-    public void SpawnItem(int itemNum, int idx)
-    {
-        Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
-
-        GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-        Debug.Log("ItemPrefab.id :" + ItemPrefab.GetComponent<PhotonView>().ViewID);
-
-        Transform idxTransform = hiddenItemPosAll[idx].transform;
-        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
-    }
-
+    //            ItemSpawners.Add(ItemSpawnerTargets[i]);
+    //        }
+    //    }
+    //}
 
 
     public IEnumerator BightenLight(Light light, int range)
