@@ -53,7 +53,6 @@ public class HpManager : MonoBehaviour
                 EscapeWin();
                 Debug.Log("탈출 성공공");
             }
-
         }
     }
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
@@ -230,14 +229,6 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RpcAllDie()
     {
-        GameObject[] playerObjects = GameManager.Instance.playerObjects;
-
-        for (int i = 0; i < playerObjects.Length; i++)
-        {
-            playerObjects[i].SetActive(false);
-        }
-
-
         Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
@@ -245,6 +236,13 @@ public class HpManager : MonoBehaviour
             uiManager.isUIActivate = true;
             isDead = true;
             GameManager.Instance.GameOver();
+
+            GameObject[] playerObjects = GameManager.Instance.playerObjects;
+
+            for (int i = 0; i < playerObjects.Length; i++)
+            {
+                playerObjects[i].SetActive(false);
+            }
         }
     }
 
