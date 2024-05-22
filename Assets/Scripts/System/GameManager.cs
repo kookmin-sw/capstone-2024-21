@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Shuffle(int[] deck)
+    public void Shuffle(int[] deck)
     {
         for (int i = 0; i < deck.Length; i++)
         {

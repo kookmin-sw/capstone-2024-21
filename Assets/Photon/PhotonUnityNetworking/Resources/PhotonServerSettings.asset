@@ -70,6 +70,9 @@ MonoBehaviour:
   - EnableSpawnerWorkingRPC
   - RpcGameOver
   - RpcAllDie
+  - GameStart
+  - RPCEscapeWin
+  - SpawndItemInMapRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

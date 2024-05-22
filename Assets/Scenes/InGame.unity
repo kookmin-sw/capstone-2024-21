@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.119178645, g: 0.119178645, b: 0.119178645, a: 1}
+  m_IndirectSpecularColor: {r: 0.11922146, g: 0.11922146, b: 0.11922146, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11671,7 +11671,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -15936,11 +15936,21 @@ MonoBehaviour:
   ExitNeedBattery: 2
   ExitChargedBattery: 0
   BatterySpawnerTargets: []
-  BatterySpawnerCount: 7
+  BatterySpawnerCount: 4
   WorkingBatterySpawners: []
   WeaponSpawnerTargets: []
-  WeaponSpawnerCount: 50
+  WeaponSpawnerCount: 10
   WorkingWeaponSpawners: []
+  hiddenItemTargetObjAll: []
+  itemsAll: []
+  hiddenItemPosAll: []
+  hiddenItemCntAll: 5
+  SpawnedHiddenItemsAll: []
+  hiddenItemTargetObjSmall: []
+  itemsSmall: []
+  hiddenItemPosSmall: []
+  hiddenItemCntSmall: 5
+  SpawnedHiddenItemsSmall: []
   Lights: []
   pv: {fileID: 0}
 --- !u!4 &1898214401
@@ -18451,6 +18461,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 59008156148711196, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 59008156148711196, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -18537,6 +18551,10 @@ PrefabInstance:
     - target: {fileID: 142823033467438921, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 147541714266846353, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
       objectReference: {fileID: 0}
     - target: {fileID: 147541714266846353, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -18763,6 +18781,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 501636526075901015, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 501636526075901015, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -18953,6 +18975,10 @@ PrefabInstance:
     - target: {fileID: 829342145177485981, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840337218758665816, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
       objectReference: {fileID: 0}
     - target: {fileID: 840337218758665816, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -19351,6 +19377,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1325007802525801419, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325007802525801419, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -19461,6 +19491,10 @@ PrefabInstance:
     - target: {fileID: 1432526992358070011, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436290984600336733, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
       objectReference: {fileID: 0}
     - target: {fileID: 1436290984600336733, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -19695,6 +19729,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1762938497644178878, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762938497644178878, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -19732,6 +19770,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1807090497010051701, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1807090497010051701, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1813530684420231605, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
@@ -19785,6 +19827,10 @@ PrefabInstance:
     - target: {fileID: 1871768941951465177, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873589194583465295, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
       objectReference: {fileID: 0}
     - target: {fileID: 1873589194583465295, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -19915,6 +19961,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2087477389943609705, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
+      objectReference: {fileID: 0}
+    - target: {fileID: 2087477389943609705, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -20009,6 +20059,10 @@ PrefabInstance:
     - target: {fileID: 2227383659557783397, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227764338311775152, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 2227764338311775152, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -20257,6 +20311,10 @@ PrefabInstance:
     - target: {fileID: 2570082117242481991, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575248228087099934, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
       objectReference: {fileID: 0}
     - target: {fileID: 2575248228087099934, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -20675,6 +20733,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147942337950913906, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147942337950913906, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -20735,6 +20797,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3242590430627907572, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242590430627907572, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -20755,6 +20821,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3279877633831802292, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279877633831802292, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -20765,6 +20835,10 @@ PrefabInstance:
     - target: {fileID: 3289795979625538084, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293761264636542606, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 3293761264636542606, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -20979,6 +21053,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3619012902325770416, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3619012902325770416, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -21001,6 +21079,10 @@ PrefabInstance:
     - target: {fileID: 3659764879408664179, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671068787828812755, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 3671068787828812755, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21143,8 +21225,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3838314273974407196, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838314273974407196, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841795292615677029, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
       objectReference: {fileID: 0}
     - target: {fileID: 3841795292615677029, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21297,6 +21387,10 @@ PrefabInstance:
     - target: {fileID: 4052693486363199117, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053816353775619680, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 4053816353775619680, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21453,6 +21547,10 @@ PrefabInstance:
     - target: {fileID: 4230815349293274216, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235208707663606940, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
       objectReference: {fileID: 0}
     - target: {fileID: 4235208707663606940, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21639,11 +21737,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4494903173039076206, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494903173039076206, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4495065309649191137, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495065309649191137, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4504342371829318459, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
@@ -21661,6 +21767,10 @@ PrefabInstance:
     - target: {fileID: 4514278317977985734, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515519637935719944, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
       objectReference: {fileID: 0}
     - target: {fileID: 4515519637935719944, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21681,6 +21791,10 @@ PrefabInstance:
     - target: {fileID: 4560581556408093045, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4561589934062218089, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
       objectReference: {fileID: 0}
     - target: {fileID: 4561589934062218089, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21793,6 +21907,10 @@ PrefabInstance:
     - target: {fileID: 4724642907556904375, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735936110320628385, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 4735936110320628385, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -21999,6 +22117,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5019548727696548656, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019548727696548656, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -22043,6 +22165,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5063676983099446686, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063676983099446686, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -22055,12 +22181,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5070348745425895251, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070348745425895251, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5070605272491927901, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072760198756191912, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
       objectReference: {fileID: 0}
     - target: {fileID: 5072760198756191912, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -22180,6 +22314,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5232198396158250687, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232198396158250687, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5232511346224028173, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
@@ -22555,6 +22693,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5694460614321642561, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694460614321642561, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -22649,6 +22791,10 @@ PrefabInstance:
     - target: {fileID: 5805723382082745480, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5812133912502010963, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
       objectReference: {fileID: 0}
     - target: {fileID: 5812133912502010963, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -22922,6 +23068,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6238836022386890900, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6248220561085079833, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -23065,6 +23215,10 @@ PrefabInstance:
     - target: {fileID: 6416366901900987846, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418188736131895764, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
       objectReference: {fileID: 0}
     - target: {fileID: 6418188736131895764, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -23271,6 +23425,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6634195011365897946, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634195011365897946, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -23463,6 +23621,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6873506882716700870, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873506882716700870, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -23485,6 +23647,10 @@ PrefabInstance:
     - target: {fileID: 6916273123403671220, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942219556829430621, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 6942219556829430621, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -23533,6 +23699,10 @@ PrefabInstance:
     - target: {fileID: 6972391571249873746, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973491386035577199, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
       objectReference: {fileID: 0}
     - target: {fileID: 6973491386035577199, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -23667,6 +23837,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7173187433087149194, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173187433087149194, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -23748,6 +23922,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7294258699638847000, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7294258699638847000, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7300373517026994775, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
@@ -23847,6 +24025,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7407729611984125124, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407729611984125124, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -23909,6 +24091,10 @@ PrefabInstance:
     - target: {fileID: 7469267040257483100, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474335957994100210, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
       objectReference: {fileID: 0}
     - target: {fileID: 7474335957994100210, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -24159,6 +24345,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7829070659691614383, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
+      objectReference: {fileID: 0}
+    - target: {fileID: 7829070659691614383, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -24181,6 +24371,10 @@ PrefabInstance:
     - target: {fileID: 7852067399227018800, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854355515736252942, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 7854355515736252942, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -24255,6 +24449,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7958106195713508896, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958106195713508896, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -24321,6 +24519,10 @@ PrefabInstance:
     - target: {fileID: 8014559098085077586, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8016594029929051827, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorL
       objectReference: {fileID: 0}
     - target: {fileID: 8016594029929051827, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -24513,6 +24715,10 @@ PrefabInstance:
     - target: {fileID: 8277493296509487271, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280824850212451717, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
       objectReference: {fileID: 0}
     - target: {fileID: 8280824850212451717, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -24783,6 +24989,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8524807883466145014, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: Door_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524807883466145014, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -24901,6 +25111,10 @@ PrefabInstance:
     - target: {fileID: 8661382786850418031, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676472432084835307, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: DoorR
       objectReference: {fileID: 0}
     - target: {fileID: 8676472432084835307, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
@@ -25105,6 +25319,10 @@ PrefabInstance:
     - target: {fileID: 8947801787188807941, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8950876438555333965, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
+      propertyPath: m_Name
+      value: MedRack_case
       objectReference: {fileID: 0}
     - target: {fileID: 8950876438555333965, guid: 33fc89281bd99b44eb51ae88a3eb5316, type: 3}
       propertyPath: m_Layer
