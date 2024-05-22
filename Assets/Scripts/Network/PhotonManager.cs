@@ -78,7 +78,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("IsMasterClient 로써 맵 구성");
             MapManager.Instance.EnableBatterySpawner();
             MapManager.Instance.EnableWeaponSpawner();
-            MapManager.Instance.SpawndItemInMap();
+            MapManager.Instance.SpawndItemInMapRPC();
 
 
         }

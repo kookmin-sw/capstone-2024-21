@@ -372,7 +372,7 @@ public class MapManager : MonoBehaviour
             BatterySpawner batterySpawner = BatterySpawnerTargets[i].GetComponent<BatterySpawner>();
             batterySpawner.EnableSpawnerWorking();
 
-            WorkingBatterySpawners.Add(BatterySpawnerTargets[i]);
+            WorkingBatterySpawners.Add(BatterySpawnerTargets[i]); //마스터만 보임 
 
             check[i] = true;
             cnt++;
@@ -412,55 +412,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //legacy
-    //void LocateWeaponSpawner()
-    //{
-    //    int cnt = 0;
-    //    while (cnt != WeaponSpawnerCount)
-    //    {
-    //        int i = Random.Range(0, WeaponSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
-
-    //        if (WeaponSpawnerTargets[i].gameObject.GetComponent<WeaponSpawner>() == null)
-    //        {
-    //            if (WeaponSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
-    //            {
-    //                PhotonView targetPV = WeaponSpawnerTargets[i].AddComponent<PhotonView>();
-    //                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-    //            }
-
-    //            WeaponSpawner weaponSpawner = WeaponSpawnerTargets[i].AddComponent<WeaponSpawner>();
-    //            weaponSpawner.enabled = true;
-    //            cnt++;
-
-    //            WeaponSpawners.Add(WeaponSpawnerTargets[i]);
-    //        }
-    //    }
-    //}
-
-    //void LocateItemSpawner()
-    //{
-    //    int cnt = 0;
-    //    while (cnt != ItemSpawnerCount)
-    //    {
-    //        int i = Random.Range(0, ItemSpawnerTargets.Count); //랜덤으로 인덱스 뽑아서
-    //        if (ItemSpawnerTargets[i].gameObject.GetComponent<ItemSpawner>() == null)
-    //        {
-    //            if (ItemSpawnerTargets[i].gameObject.GetComponent<PhotonView>() == null)
-    //            {
-    //                PhotonView targetPV = ItemSpawnerTargets[i].AddComponent<PhotonView>();
-    //                targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-    //            }
-
-    //            ItemSpawner itemSpawner = ItemSpawnerTargets[i].AddComponent<ItemSpawner>();
-    //            itemSpawner.enabled = true;
-    //            cnt++;
-
-    //            ItemSpawners.Add(ItemSpawnerTargets[i]);
-    //        }
-    //    }
-    //}
-
-    [PunRPC]
     public void SpawndItemInMapRPC()
     {
         //All
@@ -473,7 +424,7 @@ public class MapManager : MonoBehaviour
             int itemNum = Random.Range(0, itemsAll.Count);
             int idx = idx_all[i];
 
-            SpawnItem_AllRPC(itemNum, idx);
+            pv.RPC("SpawnItem_All", RpcTarget.AllBuffered, itemNum, idx);
             //GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
             //Transform idxTransform = hiddenItemPosAll[idx_all[i]].transform;
             //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
@@ -497,13 +448,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void SpawndItemInMap()
-    {
-        pv.RPC("SpawndItemInMapRPC", RpcTarget.All);
-    }
-
-
-
 
     [PunRPC]
     public void SpawnItem_All(int itemNum, int idx)
@@ -512,11 +456,6 @@ public class MapManager : MonoBehaviour
         Transform idxTransform = hiddenItemPosAll[idx].transform;
         GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
         SpawnedHiddenItemsAll.Add(item);
-    }
-
-    public void SpawnItem_AllRPC(int itemNum, int idx)
-    {
-        pv.RPC("SpawnItem_All", RpcTarget.AllBuffered, itemNum, idx);
     }
 
 
