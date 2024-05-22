@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void Shuffle(int[] deck)
+    void Shuffle(int[] deck)
     {
         for (int i = 0; i < deck.Length; i++)
         {
