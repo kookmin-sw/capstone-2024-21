@@ -97,7 +97,6 @@ public class GameManager : MonoBehaviour
         uiManager = GameObject.FindObjectOfType<UIManager>();
         isPlaying = false;
         uiManager.isGameOver = true;
-        AllDie();
     }
 
     public void Go2Map()
