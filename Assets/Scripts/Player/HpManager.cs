@@ -46,17 +46,12 @@ public class HpManager : MonoBehaviour
 
     private void Update()
     {
-
-        if(GameManager.Instance.isEscape == true)
+        if (pv.IsMine)
         {
-            if (pv.IsMine)
+            if (GameManager.Instance.isEscape == true)
             {
-            EscapeWin();
-            Debug.Log("탈출 성공공");
-            }
-            else
-            {
-                AllDie();
+                EscapeWin();
+                Debug.Log("탈출 성공공");
             }
 
         }
@@ -225,6 +220,7 @@ public class HpManager : MonoBehaviour
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
+            AllDie();
             isDead = true;
             gameObject.SetActive(false);
         }
