@@ -70,6 +70,7 @@ public class MapManager : MonoBehaviour
     Vector3 MirrorShelf_offset = new Vector3(0f,0.35f, -0.1f);
     Vector3 Fridge_offset = new Vector3(0f, 0.3f, 0f);
     Vector3 MedRack_offset = new Vector3(0f, 1.5f, 0f);
+    Vector3 TableWhiteKitchen_offset = new Vector3(0f, 1.5f, 0f);
 
 
     [Header("Light")]
@@ -130,29 +131,32 @@ public class MapManager : MonoBehaviour
                 //for hiddenItem
                 if (tmpObj.name.Contains("Case_Door"))
                 {
-                    hiddenItemTargetObjAll.Add(tmpObj);
+                    InstantiatePosPrefeb_All(tmpObj, Case_Door_offset);
+                    //hiddenItemTargetObjAll.Add(tmpObj);
 
-                    Vector3 pos = tmpObj.transform.position;
-                    GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+                    //Vector3 pos = tmpObj.transform.position;
+                    //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
 
-                    tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+                    //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
 
-                    tmp.transform.Translate(Case_Door_offset);
+                    //tmp.transform.Translate(Case_Door_offset);
 
-                    hiddenItemPosAll.Add(tmp);
+                    //hiddenItemPosAll.Add(tmp);
                 }
                 else if (tmpObj.name.Contains("ToiletDoor"))
                 {
-                    hiddenItemTargetObjAll.Add(tmpObj);
+                    InstantiatePosPrefeb_All(tmpObj, ToiletDoor_offset);
 
-                    Vector3 pos = tmpObj.transform.position;
-                    GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+                    //hiddenItemTargetObjAll.Add(tmpObj);
 
-                    tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+                    //Vector3 pos = tmpObj.transform.position;
+                    //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
 
-                    tmp.transform.Translate(ToiletDoor_offset);
+                    //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
 
-                    hiddenItemPosAll.Add(tmp);
+                    //tmp.transform.Translate(ToiletDoor_offset);
+
+                    //hiddenItemPosAll.Add(tmp);
                 }
 
             }
@@ -222,45 +226,63 @@ public class MapManager : MonoBehaviour
             //hiddenItem
             else if (tmpObj.name.Contains("MirrorShelf_Case"))
             {
-                hiddenItemTargetObjSmall.Add(tmpObj);
 
-                Vector3 pos = tmpObj.transform.position;
-                GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+                InstantiatePosPrefeb_Small(tmpObj, MirrorShelf_offset);
+                //hiddenItemTargetObjSmall.Add(tmpObj);
 
-                tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+                //Vector3 pos = tmpObj.transform.position;
+                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
 
-                tmp.transform.Translate(MirrorShelf_offset); // 위랑 여기만 다름 (offset만 다름!! )
+                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
 
-                hiddenItemPosSmall.Add(tmp);
+                //tmp.transform.Translate(MirrorShelf_offset); // 위랑 여기만 다름 (offset만 다름!! )
+
+                //hiddenItemPosSmall.Add(tmp);
             }
             else if (tmpObj.name.Contains("Fridge_Case"))
             {
+                InstantiatePosPrefeb_All(tmpObj, Fridge_offset);
+                //hiddenItemTargetObjAll.Add(tmpObj);
 
-                hiddenItemTargetObjAll.Add(tmpObj);
+                //Vector3 pos = tmpObj.transform.position;
+                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
 
-                Vector3 pos = tmpObj.transform.position;
-                GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
 
-                tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+                //tmp.transform.Translate(Fridge_offset); //offset만 다름 !! 
 
-                tmp.transform.Translate(Fridge_offset); //offset만 다름 !! 
-
-                hiddenItemPosAll.Add(tmp);
+                //hiddenItemPosAll.Add(tmp);
 
             }
             else if (tmpObj.name.Contains("MedRack_case"))
             {
+                InstantiatePosPrefeb_All(tmpObj, MedRack_offset);
+                //hiddenItemTargetObjAll.Add(tmpObj);
 
-                hiddenItemTargetObjAll.Add(tmpObj);
+                //Vector3 pos = tmpObj.transform.position;
+                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
 
-                Vector3 pos = tmpObj.transform.position;
-                GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
 
-                tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+                //tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
 
-                tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
+                //hiddenItemPosAll.Add(tmp);
 
-                hiddenItemPosAll.Add(tmp);
+            }
+            else if (tmpObj.name.Contains("TableWhiteKitchen"))
+            {
+                InstantiatePosPrefeb_All(tmpObj, TableWhiteKitchen_offset);
+
+                //hiddenItemTargetObjAll.Add(tmpObj);
+
+                //Vector3 pos = tmpObj.transform.position;
+                //GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+
+                //tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+
+                //tmp.transform.Translate(MedRack_offset); //offset만 다름 !! 
+
+                //hiddenItemPosAll.Add(tmp);
 
             }
         }
@@ -304,6 +326,31 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    void InstantiatePosPrefeb_All(GameObject tmpObj, Vector3 offset)
+    {
+        hiddenItemTargetObjAll.Add(tmpObj);
+
+        Vector3 pos = tmpObj.transform.position;
+        GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+        tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+        tmp.transform.Translate(offset);
+
+        hiddenItemPosAll.Add(tmp);
+    }
+
+    void InstantiatePosPrefeb_Small(GameObject tmpObj, Vector3 offset)
+    {
+        hiddenItemTargetObjSmall.Add(tmpObj);
+
+        Vector3 pos = tmpObj.transform.position;
+        GameObject tmp = Instantiate(posPrefeb, pos, tmpObj.transform.rotation);
+
+        tmp.transform.parent = tmpObj.transform;//자식으로 넣어줌
+
+        tmp.transform.Translate(offset); 
+
+        hiddenItemPosSmall.Add(tmp);
+    }
 
 
     public void EnableBatterySpawner()
