@@ -105,6 +105,7 @@ public class AttackManager : MonoBehaviour
 
     [PunRPC]
     void AttackTrig(){   
+        Debug.Log("공격공격");
         movementStateManager.anim.SetTrigger("AttackTrig");
     }
 
