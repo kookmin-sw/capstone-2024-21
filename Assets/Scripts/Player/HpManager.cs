@@ -87,6 +87,8 @@ public class HpManager : MonoBehaviour
         {
             if (pv.IsMine && GameManager.Instance.UserId != playerId)
             {
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_tempgethit);
+
                 attackManager.OnDamaged();
                 Debug.Log("데미지 입음");
                 Debug.Log("내 이름: " + GameManager.Instance.UserId);

@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource[] sfxPlayers;
     private int channelIndex;
 
-    public enum Sfx { Click, Eight, Five, Four, Nine, One, Seveb, Six, Ten, Three, Two }
+    public enum Sfx { SFX_Door, SFX_move_jumpend, SFX_move_jumpstart, SFX_move_run, SFX_move_walk, SFX_tempgethit, SFX_temphit }
 
     private void Awake()    // singleton 구현
     {

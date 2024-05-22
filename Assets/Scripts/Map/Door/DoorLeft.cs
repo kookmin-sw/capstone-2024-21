@@ -35,6 +35,8 @@ public class DoorLeft : MonoBehaviour
     public IEnumerator OpenDoor(Transform obsTransform)
     {
         Debug.Log("OpenDoor() 코루틴 실행됨 ");
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_Door);
+
         float timecnt = 0.0f;
 
         while (open && Quaternion.Angle(obsTransform.rotation, Quaternion.Euler(OpenDoorAngle)) > 0)  //문이 열려야하고 두사이각이 0보다 큰 경우 실행
@@ -51,6 +53,8 @@ public class DoorLeft : MonoBehaviour
     {
 
         Debug.Log("CloseDoor() 코루틴 실행됨 ");
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_Door);
+
         float timecnt = 0.0f;
 
         while (!open && Quaternion.Angle(obsTransform.rotation, Quaternion.Euler(CloseDoorAngle)) > 0) //문이 닫혀야 하고 두사이각이 0보다 큰 경우 실행

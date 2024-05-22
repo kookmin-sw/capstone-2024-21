@@ -9,7 +9,7 @@
 
        if (movement.previousState == movement.Run || movement.previousState == movement.Walk || movement.previousState == movement.Idle) movement.anim.SetTrigger("Jump");
 
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.One);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpstart);
     }
 
      public override void UpdateState(MovementStateManager movement)
@@ -18,7 +18,7 @@
         {
             movement.jumped = false;
 
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Two);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpend);
 
             if (movement.moveDir.magnitude > 0.1f){
               if (Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.Run);
