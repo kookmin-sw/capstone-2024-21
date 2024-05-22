@@ -379,17 +379,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-
-
-    //void AddPv(GameObject obj)
-    //{
-    //    if (obj.gameObject.GetComponent<PhotonView>() == null)
-    //    {
-    //        PhotonView targetPV = obj.AddComponent<PhotonView>();
-    //        targetPV.ViewID = PhotonNetwork.AllocateViewID(0);
-    //    }
-    //}
-
     public void EnableWeaponSpawner()
     {
         bool[] check = new bool[WeaponSpawnerTargets.Count]; // false로 초기화됨 
@@ -424,10 +413,11 @@ public class MapManager : MonoBehaviour
             int itemNum = Random.Range(0, itemsAll.Count);
             int idx = idx_all[i];
 
-            pv.RPC("SpawnItem_All", RpcTarget.AllBuffered, itemNum, idx);
+            pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
             //GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
             //Transform idxTransform = hiddenItemPosAll[idx_all[i]].transform;
             //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+
             //SpawnedHiddenItemsAll.Add(item);
         }
 
@@ -440,22 +430,28 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < hiddenItemCntSmall; i++)
         {
             int itemNum = Random.Range(0, itemsSmall.Count);
-            GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
-            Transform idxTransform = hiddenItemPosSmall[idx_small[i]].transform;
-            GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+            int idx = idx_all[i];
 
-            SpawnedHiddenItemsSmall.Add(item);
+            pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
+            //GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
+            //Transform idxTransform = hiddenItemPosSmall[idx_small[i]].transform;
+            //GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
+
+            //SpawnedHiddenItemsSmall.Add(item);
         }
     }
 
 
     [PunRPC]
-    public void SpawnItem_All(int itemNum, int idx)
+    public void SpawnItem(int itemNum, int idx)
     {
+        Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
+
         GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
+        Debug.Log("ItemPrefab.id :" + ItemPrefab.GetComponent<PhotonView>().ViewID);
+
         Transform idxTransform = hiddenItemPosAll[idx].transform;
-        GameObject item = Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
-        SpawnedHiddenItemsAll.Add(item);
+        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation); //item 복제본 생성
     }
 
 
