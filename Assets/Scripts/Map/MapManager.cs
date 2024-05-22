@@ -55,17 +55,15 @@ public class MapManager : MonoBehaviour
     GameObject posPrefeb; //hiddenItem이 스폰될 pos
     [Header("hiddenItemAll")] // 맵에 미리 스폰돼있는 아이템
     [SerializeField] List<GameObject> hiddenItemTargetObjAll = new List<GameObject>();
-    [SerializeField] List<Item> itemsAll = new List<Item>();//스폰될 아이템 후보들
-    [SerializeField] List<GameObject> hiddenItemPosAll = new List<GameObject>();
+    [SerializeField] public List<Item> itemsAll = new List<Item>();//스폰될 아이템 후보들. 아이템 버릴때에도 가져다 쓰신댔음 
+                     List<GameObject> hiddenItemPosAll = new List<GameObject>();
     [SerializeField] int hiddenItemCntAll = 5;
-    [SerializeField] List<GameObject> SpawnedHiddenItemsAll = new List<GameObject>();
 
     [Header("hiddenItemSmall")] // 맵에 미리 스폰돼있는 아이템
     [SerializeField] List<GameObject> hiddenItemTargetObjSmall = new List<GameObject>();
     [SerializeField] List<Item> itemsSmall = new List<Item>();//스폰될 아이템 후보들
-    [SerializeField] List<GameObject> hiddenItemPosSmall = new List<GameObject>();
+                     List<GameObject> hiddenItemPosSmall = new List<GameObject>();
     [SerializeField] int hiddenItemCntSmall = 5;
-    [SerializeField] List<GameObject> SpawnedHiddenItemsSmall = new List<GameObject>();
 
     Vector3 Case_Door_offset = new Vector3(-0.2f, -1.0f, 0.2f);
     Vector3 ToiletDoor_offset = new Vector3(0.6f, -1.0f, 1.0f);
@@ -89,7 +87,7 @@ public class MapManager : MonoBehaviour
         pv = gameObject.AddComponent<PhotonView>();
         pv.ViewID = PhotonNetwork.AllocateViewID(0);
 
-        posPrefeb = (GameObject)Resources.Load("Prefabs/hiddenItemPos");
+        posPrefeb = (GameObject)Resources.Load("Prefabs/Point");
 
         //itemsAll
         itemsAll.Add((Item)Resources.Load("Item/Axe"));
