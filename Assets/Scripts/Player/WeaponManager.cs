@@ -54,7 +54,8 @@ public class WeaponManager : MonoBehaviour
             HpManager hpManager = other.GetComponent<HpManager>();
             PhotonView pv = other.GetComponent<PhotonView>();
 
-            if (hpManager != null) {
+            if (hpManager != null && GameManager.Instance.isPlaying) 
+            {
                 if (other.gameObject.tag == "Monster")
                 {
                     Debug.Log("Hit : " + damage);

@@ -4,8 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using static UnityEditor.FilePathAttribute;
-using UnityEditor.PackageManager;
+// using static UnityEditor.FilePathAttribute;
+// using UnityEditor.PackageManager;
 using System.Linq;
 
 public class LobbyPagePlayfab : MonoBehaviour

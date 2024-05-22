@@ -3,6 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
+using System;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -104,7 +105,7 @@ public class MovementStateManager : MonoBehaviour
                 DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
                 attackManager.weaponInventory.abandonedItem = null;
             }
-            if (uiManager.isGameOver == false && attackManager.isAttack == false)
+            if (GameManager.Instance.isPlaying == true && attackManager.isAttack == false)
             {
                 uiManager.SelectQuickSlot();
             }
@@ -125,6 +126,19 @@ public class MovementStateManager : MonoBehaviour
             else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting))
                 ExitStateCancle();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            LogWithTimestamp("Space key pressed");
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift)){
+            LogWithTimestamp("Shift key pressed");
+        }
+    }
+
+    void LogWithTimestamp(string message)
+    {
+        string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
+        Debug.Log($"[{timestamp}] {message}");
     }
 
     [PunRPC]
@@ -135,7 +149,6 @@ public class MovementStateManager : MonoBehaviour
         wasExiting = true; // 한 번 실행된 후 다시 false로 설정될 때까지 실행되지 않도록 설정
         Debug.Log(wasExiting);
         anim.SetTrigger("Exiting");
-        dededede();
             
         isExiting = interact.isExiting;
     }
@@ -162,9 +175,6 @@ public class MovementStateManager : MonoBehaviour
         pv.RPC("RpcExitStateCancle", RpcTarget.All);
     }
 
-    public void dededede(){
-        Debug.Log("RpcExitState 실행됨");
-    }
     public void OnDamage(float damage, string playerId)
     {
         Debug.Log("OnDamage는 실행됨");
