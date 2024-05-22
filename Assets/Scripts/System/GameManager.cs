@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("내가 마스터 클라이언트의 상인가? :" + PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
         {
+            MapManager.Instance.SpawndItemInMapRPC();//일단 여기는 잘 실행됨 ! 
             Go2Map();
         }
     }
@@ -122,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Shuffle(int[] deck)
+    public void Shuffle(int[] deck)
     {
         for (int i = 0; i < deck.Length; i++)
         {
