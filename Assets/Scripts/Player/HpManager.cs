@@ -50,8 +50,10 @@ public class HpManager : MonoBehaviour
         {
             if(GameManager.Instance.isEscape == true)
             {
+
                 AllDie();
                 EscapeWin();
+                Debug.Log("탈출 성공공");
             }
         }
     }
@@ -229,6 +231,11 @@ public class HpManager : MonoBehaviour
     public void RpcAllDie()
     {
         GameObject[] playerObjects = GameManager.Instance.playerObjects;
+
+        for (int i = 0; i < playerObjects.Length; i++)
+        {
+            playerObjects[i].SetActive(false);
+        }
 
 
         Debug.Log("RpcAllDie() 실행");
