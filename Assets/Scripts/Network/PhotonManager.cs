@@ -82,6 +82,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 
         }
+        else
+        {
+            Debug.Log("넌 클라이언트다 ");
+        }
 
 
 
