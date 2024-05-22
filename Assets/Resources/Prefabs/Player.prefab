@@ -5292,6 +5292,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: Cancel
+  - Type: 9
+    SynchronizeType: 1
+    Name: AttackTrig
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -5412,7 +5415,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: []
-  uiManager: {fileID: 0}
 --- !u!1 &486837474902890276
 GameObject:
   m_ObjectHideFlags: 0
