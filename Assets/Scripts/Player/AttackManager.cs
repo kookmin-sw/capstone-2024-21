@@ -97,9 +97,15 @@ public class AttackManager : MonoBehaviour
         {
             // 무기를 사용하고 애니메이션을 트리거합니다.
             equipWeaponGameobject.Use(); // 무기 사용
-            movementStateManager.anim.SetTrigger("AttackTrig"); // 애니메이션 트리거
+            pv.RPC("AttackTrig", RpcTarget.All);
+            //movementStateManager.anim.SetTrigger("AttackTrig"); // 애니메이션 트리거
             fireDelay = 0; // 공격 딜레이 초기화
         } // 애니메이션 트리거
+    }
+
+    [PunRPC]
+    void AttackTrig(){   
+        movementStateManager.anim.SetTrigger("AttackTrig");
     }
 
     // 공격 시작
