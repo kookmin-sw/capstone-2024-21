@@ -89,7 +89,7 @@ public class MovementStateManager : MonoBehaviour
             if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
             {
                 // DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
-
+                Debug.Log("아이템 버림");
                 Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z + 1);
 
                 DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + attackManager.weaponInventory.abandonedItem.itemName, SpawnPos, transform.rotation);

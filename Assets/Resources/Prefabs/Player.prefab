@@ -5345,6 +5345,8 @@ MonoBehaviour:
   healthPointBar: {fileID: 0}
   healthPointCount: {fileID: 0}
   uiManager: {fileID: 0}
+  quickSlot: {fileID: 0}
+  weaponSlot: {fileID: 0}
 --- !u!114 &2338498939151246857
 MonoBehaviour:
   m_ObjectHideFlags: 0
