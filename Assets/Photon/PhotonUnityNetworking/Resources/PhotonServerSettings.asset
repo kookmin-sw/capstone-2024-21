@@ -77,6 +77,8 @@ MonoBehaviour:
   - AttackTrig
   - SpawnItemAll
   - SpawnItemSmall
+  - RpcAudio
+  - RpcHit
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
