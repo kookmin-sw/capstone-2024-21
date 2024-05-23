@@ -473,9 +473,9 @@ public class AttackManager : MonoBehaviour
     {   
         Debug.Log("doDamaged");
 
-        movementStateManager.anim.SetLayerWeight(6, 1);
-        movementStateManager.anim.SetTrigger("doDamaged");
+        //movementStateManager.anim.SetLayerWeight(6, 1);
+        movementStateManager.anim.SetTrigger("Hit");
         
-        Invoke("hitOut", 1.16f);
+        //Invoke("hitOut", 1.16f);
     }
 }
