@@ -40,7 +40,8 @@ public class Spawner : MonoBehaviour
         if (!working)
         {
             Vector3 spawnPosition = GetRandomPosition();
-            SpawnItem_tmpRPC(GetRandomItemNumber(), spawnPosition.x, spawnPosition.y, spawnPosition.z);
+            // SpawnItem_tmpRPC(GetRandomItemNumber(), spawnPosition.x, spawnPosition.y, spawnPosition.z);
+            SpawnItem_tmp(GetRandomItemNumber(), spawnPosition.x, spawnPosition.y, spawnPosition.z);
         }
         else
         {
@@ -63,23 +64,23 @@ public class Spawner : MonoBehaviour
     [PunRPC]
     public void SpawnItem_tmp(int itemNum, float x, float y, float z)
     {
-        ItemPrefab = items[itemNum].itemPrefab;
+        string ItemName = items[itemNum].itemName;
 
-        Vector3 spawnPosition = new Vector3(x, y, z);
-
-        GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
+        Vector3 SpawnPosition = new Vector3(x, y, z);
+        Debug.Log("여기 맞아요");
+        GameObject item = PhotonNetwork.Instantiate("Prefabs/" + ItemName, SpawnPosition, transform.rotation);
         itemRigidbody = item.GetComponent<Rigidbody>();
-        Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
+        Vector3 velocity = GetVelocity(transform.position, SpawnPosition, m_InitialAngle);
         itemRigidbody.velocity = velocity;
 
         Debug.Log("item is spawned");
         working = true;
     }
 
-    public void SpawnItem_tmpRPC(int itemNum, float x, float y, float z)
-    {
-        pv.RPC("SpawnItem_tmp", RpcTarget.AllBuffered, itemNum, x, y, z);
-    }
+    //public void SpawnItem_tmpRPC(int itemNum, float x, float y, float z)
+    //{
+    //    pv.RPC("SpawnItem_tmp", RpcTarget.AllBuffered, itemNum, x, y, z);
+    //}
 
 
 
