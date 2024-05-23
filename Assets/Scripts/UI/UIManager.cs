@@ -26,6 +26,10 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI killPoint;
     [SerializeField] private TextMeshProUGUI rankPoint;
+
+    [SerializeField] private TextMeshProUGUI countDownNum;
+    [SerializeField] private GameObject countDownNumObj;
+    [SerializeField] private Timer timer;
     public TextMeshProUGUI totalScore;
 
     private float gameTime;
@@ -66,6 +70,7 @@ public class UIManager : MonoBehaviour
 
         statePlayerName.text = GameManager.Instance.UserId;
         gameOverPlayerName.text = GameManager.Instance.UserId;
+        timer = GameObject.Find("Timer").GetComponent<Timer>();
         Monpoints = GameObject.Find("MonsterSpawns").GetComponentsInChildren<Transform>();
 
 
@@ -79,6 +84,7 @@ public class UIManager : MonoBehaviour
     {
         if(GameManager.Instance.isPlaying == true)
         {
+            countDownNumObj.SetActive(false);
             // Debug.Log(gameTime);
             gameTime += Time.deltaTime;
             elapsedTime += Time.deltaTime;
@@ -110,7 +116,14 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            if(isGameOver == true)
+            if(isGameOver == false)
+            {
+                if(timer.time != 0)
+                {
+                    countDownNum.text = timer.time.ToString();
+                }
+            }
+            if (isGameOver == true)
             {
                 ManageGameOverBoard();
             }

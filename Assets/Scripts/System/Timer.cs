@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class Timer : MonoBehaviour
 {
-    int time;
+    public int time;
     private PhotonView pv;
 
     private void Awake()
