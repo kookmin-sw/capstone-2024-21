@@ -7,9 +7,11 @@ public class Timer : MonoBehaviour
 {
     public int time;
     private PhotonView pv;
+    UIManager uiManager;
 
     private void Awake()
     {
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         pv = GetComponent<PhotonView>();
         GameManager.Instance.timer = this;
     }
@@ -41,6 +43,13 @@ public class Timer : MonoBehaviour
     [PunRPC]
     void ShowTimer(int time)
     {
+        if (uiManager.isGameOver == false)
+        {
+            if (uiManager.timer.time != 0)
+            {
+                uiManager.countDownNum.text = uiManager.timer.time.ToString();
+            }
+        }
         Debug.Log(time);
     }
 

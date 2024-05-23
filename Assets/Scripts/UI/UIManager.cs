@@ -27,9 +27,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI killPoint;
     [SerializeField] private TextMeshProUGUI rankPoint;
 
-    [SerializeField] private TextMeshProUGUI countDownNum;
-    [SerializeField] private GameObject countDownNumObj;
-    [SerializeField] private Timer timer;
+    public TextMeshProUGUI countDownNum;
+    public GameObject countDownNumObj;
+    public Timer timer;
     public TextMeshProUGUI totalScore;
 
     private float gameTime;
@@ -116,13 +116,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            if(isGameOver == false)
-            {
-                if(timer.time != 0)
-                {
-                    countDownNum.text = timer.time.ToString();
-                }
-            }
             if (isGameOver == true)
             {
                 ManageGameOverBoard();
