@@ -72,6 +72,11 @@ MonoBehaviour:
   - RpcAllDie
   - GameStart
   - RPCEscapeWin
+  - RPCOnLightening
+  - RpcAbandonedItem
+  - AttackTrig
+  - SpawnItemAll
+  - SpawnItemSmall
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

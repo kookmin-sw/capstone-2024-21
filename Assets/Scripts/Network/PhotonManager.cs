@@ -78,6 +78,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("IsMasterClient 로써 맵 구성");
             MapManager.Instance.EnableBatterySpawner();
             MapManager.Instance.EnableWeaponSpawner();
+            
+
+
+        }
+        else
+        {
+            Debug.Log("넌 클라이언트다 ");
         }
 
 
