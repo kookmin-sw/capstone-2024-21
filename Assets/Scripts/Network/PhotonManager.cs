@@ -104,7 +104,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 캐릭터 생성
         PhotonNetwork.Instantiate("Prefabs/Player", points[idx].position, points[idx].rotation, 0);
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 4)
         {
             Debug.Log("현재 인원수: " + PhotonNetwork.CurrentRoom.PlayerCount);
             Debug.Log("Game Start!");
