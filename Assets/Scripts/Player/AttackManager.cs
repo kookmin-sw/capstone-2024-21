@@ -344,13 +344,13 @@ public class AttackManager : MonoBehaviour
             {
                 if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
                 {
-                    if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+                    if (weaponInventory.weaponSlot.item.craftCompleted == true)
                     {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+                        OnLightening(true);
                     }
-                    else if (weaponInventory.weaponSlot.item.craftCompleted == false)
+                    else
                     {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
+                        OnLightening(false);
                     }
                     weaponInventory.isCrafted = false;
                 }
@@ -386,6 +386,23 @@ public class AttackManager : MonoBehaviour
                 }
             }
         }
+    }
+    [PunRPC]
+    void RPCOnLightening(bool isLightening)
+    {
+        if (isLightening == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+        {
+            equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+        }
+        else if (isLightening == false)
+        {
+            equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
+        }
+    }
+
+    public void OnLightening(bool isLightening)
+    {
+        pv.RPC("RPCOnLightening", RpcTarget.All, isLightening);
     }
 
     [PunRPC]
