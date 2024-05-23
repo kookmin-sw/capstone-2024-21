@@ -206,11 +206,9 @@ public class HpManager : MonoBehaviour
 
         if (gameObject.tag == "Monster")
         {
-            if (pv.IsMine)
-            {
-                DroppedItem = PhotonNetwork.Instantiate("Prefabs/battery", new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity); //프리펩 생성
-                Destroy(gameObject);
-            }
+            
+            DroppedItem = PhotonNetwork.Instantiate("Prefabs/battery", new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity); //프리펩 생성
+            Destroy(gameObject);
         }
     }
 
