@@ -297,6 +297,7 @@ public class AttackManager : MonoBehaviour
                     if (weaponInventory.weaponSlot.item.craftCompleted == true)
                     {
                         OnLightening(true);
+                        equipWeaponGameobject.damage *= 2;
                     }
                     else
                     {
@@ -317,6 +318,7 @@ public class AttackManager : MonoBehaviour
             {
                 if (equipWeapon != weapons[9])
                 {
+                    equipWeaponGameobject.damage /= 2;
                     equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
                     weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
                     if (weaponInventory.abandonedItem.craftCompleted == true)
