@@ -307,55 +307,58 @@ public class AttackManager : MonoBehaviour
     [PunRPC]
     void RpcAbandonedItem()
     {
-        if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
+        if (pv.IsMine)
         {
-            if (equipWeapon != weapons[9])
+            if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
             {
-                equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
-                weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
-                if (weaponInventory.abandonedItem.craftCompleted == true)
+                if (equipWeapon != weapons[9])
                 {
-                    weaponInventory.abandonedItem.ItemDamage /= 2;
-                }
-                weaponInventory.weaponSlot.item = null;
-                weaponInventory.craftCompletedMark.SetActive(false);
-
-                RpcEquip(9);
-                equipWeapon = weapons[9];
-                movementStateManager.anim.SetTrigger("doSwap");
-                isSwap = true;
-                Invoke("SwapOut", 0.3f);
-
-                movementStateManager.anim.SetBool(Armed, false);
-                movementStateManager.anim.SetLayerWeight(1, 0);
-                movementStateManager.anim.SetLayerWeight(2, 0);
-                Armed = "";
-            }
-        }
-        else //아이템 버릴 때
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
-                {
-                    if (equipWeapon != weapons[9])
+                    equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                    if (weaponInventory.abandonedItem.craftCompleted == true)
                     {
-                        Debug.Log("아이템 버림");
+                        weaponInventory.abandonedItem.ItemDamage /= 2;
+                    }
+                    weaponInventory.weaponSlot.item = null;
+                    weaponInventory.craftCompletedMark.SetActive(false);
 
-                        weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
-                        itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
-                        itemQuickSlots.GetComponent<Inventory>().FreshSlot();
-                        RpcEquip(9);
-                        equipWeapon = weapons[9];
-                        movementStateManager.anim.SetTrigger("doSwap");
-                        isSwap = true;
-                        Invoke("SwapOut", 0.3f);
+                    RpcEquip(9);
+                    equipWeapon = weapons[9];
+                    movementStateManager.anim.SetTrigger("doSwap");
+                    isSwap = true;
+                    Invoke("SwapOut", 0.3f);
 
-                        movementStateManager.anim.SetBool(Armed, false);
-                        movementStateManager.anim.SetLayerWeight(1, 0);
-                        movementStateManager.anim.SetLayerWeight(2, 0);
-                        Armed = "";
-                        break;
+                    movementStateManager.anim.SetBool(Armed, false);
+                    movementStateManager.anim.SetLayerWeight(1, 0);
+                    movementStateManager.anim.SetLayerWeight(2, 0);
+                    Armed = "";
+                }
+            }
+            else //아이템 버릴 때
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
+                    {
+                        if (equipWeapon != weapons[9])
+                        {
+                            Debug.Log("아이템 버림");
+
+                            weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
+                            itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
+                            itemQuickSlots.GetComponent<Inventory>().FreshSlot();
+                            RpcEquip(9);
+                            equipWeapon = weapons[9];
+                            movementStateManager.anim.SetTrigger("doSwap");
+                            isSwap = true;
+                            Invoke("SwapOut", 0.3f);
+
+                            movementStateManager.anim.SetBool(Armed, false);
+                            movementStateManager.anim.SetLayerWeight(1, 0);
+                            movementStateManager.anim.SetLayerWeight(2, 0);
+                            Armed = "";
+                            break;
+                        }
                     }
                 }
             }
