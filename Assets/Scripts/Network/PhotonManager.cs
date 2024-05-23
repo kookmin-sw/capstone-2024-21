@@ -78,6 +78,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("IsMasterClient 로써 맵 구성");
             MapManager.Instance.EnableBatterySpawner();
             MapManager.Instance.EnableWeaponSpawner();
+            
+
+
+        }
+        else
+        {
+            Debug.Log("넌 클라이언트다 ");
         }
 
 
@@ -97,7 +104,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 캐릭터 생성
         PhotonNetwork.Instantiate("Prefabs/Player", points[idx].position, points[idx].rotation, 0);
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 4)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             Debug.Log("현재 인원수: " + PhotonNetwork.CurrentRoom.PlayerCount);
             Debug.Log("Game Start!");
