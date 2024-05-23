@@ -12,9 +12,11 @@ public class ItemData : MonoBehaviour
 
     void Start()
     {
-        pv = gameObject.AddComponent<PhotonView>();
-        pv.ViewID = PhotonNetwork.AllocateViewID(0);
-
+        if (!GetComponent<PhotonView>())
+        {
+            pv = gameObject.AddComponent<PhotonView>();
+            pv.ViewID = PhotonNetwork.AllocateViewID(0);
+        }
     }
 
     Item getItemData()
