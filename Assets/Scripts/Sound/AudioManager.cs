@@ -71,4 +71,23 @@ public class AudioManager : MonoBehaviour
             break;
         }
     }
+    public void StopSfx(Sfx sfx)
+    {
+        foreach (var player in sfxPlayers)
+        {
+            if (player.clip == sfxClips[(int)sfx] && player.isPlaying)
+            {
+                player.Stop();
+                break;
+            }
+        }
+    }
+
+    public void StopAllSfx()
+    {
+        foreach (var player in sfxPlayers)
+        {
+            player.Stop();
+        }
+    }
 }
