@@ -17,7 +17,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 같은 룸의 유저들에게 자동으로 씬 로딩 <- 이거 안되도록 수정
         PhotonNetwork.AutomaticallySyncScene = false;
         // 같은 버전의 유저끼리 접속 허용
-        PhotonNetwork.GameVersion = version;
+        PhotonNetwork.GameVersion = version; 
         // 유저 아이디 할당
         PhotonNetwork.NickName = GameManager.Instance.UserId;
         // 포톤 서버와 통신 횟수 확인. 초당 30회
@@ -54,7 +54,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         // 룸 속성 정의
         RoomOptions ro = new RoomOptions();
-        ro.MaxPlayers = 8;      // 최대 동접자 수: 8명
+        ro.MaxPlayers = 4;      // 최대 동접자 수: 4명
         ro.IsOpen = true;        // 룸의 오픈 여부
         ro.IsVisible = true;     // 로비에서 룸 목록 노출 여부
 
@@ -78,16 +78,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("IsMasterClient 로써 맵 구성");
             MapManager.Instance.EnableBatterySpawner();
             MapManager.Instance.EnableWeaponSpawner();
-            
-
-
         }
         else
         {
             Debug.Log("넌 클라이언트다 ");
         }
-
-
 
         Debug.Log($"룸 입장 여부 = {PhotonNetwork.InRoom}");
         Debug.Log($"현재 룸의 인원수 = {PhotonNetwork.CurrentRoom.PlayerCount}");
