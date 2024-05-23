@@ -34,14 +34,14 @@ public class MapManager : MonoBehaviour
 
     [Header("BatterySpawner")]
     [SerializeField] List<GameObject> BatterySpawnerTargets = new List<GameObject>();//배터리 스포너 후보들
-    [SerializeField] int BatterySpawnerCount = 4;
+    [SerializeField] int BatterySpawnerCount = 5;
     [SerializeField] List<GameObject> WorkingBatterySpawners = new List<GameObject>();//배터리 스포너들
 
 
     //일시적으로 웨폰 스포너에서 아이템도 나오도록 함. 우선 아이템 스포너는 없다고 생각해도 무관 
     [Header("WeaponSpawner")]
     [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//스포너 후보들
-    [SerializeField] int WeaponSpawnerCount = 10;
+    [SerializeField] int WeaponSpawnerCount = 5;
     [SerializeField] List<GameObject> WorkingWeaponSpawners = new List<GameObject>();//스포너들 
 
     //[Header("ItemSpawner")]
@@ -70,7 +70,7 @@ public class MapManager : MonoBehaviour
     Vector3 MirrorShelf_offset = new Vector3(0f,0.35f, -0.1f);
     Vector3 Fridge_offset = new Vector3(0f, 0.3f, 0f);
     Vector3 MedRack_offset = new Vector3(0f, 1.5f, 0f);
-    Vector3 TableWhiteKitchen_offset = new Vector3(0f, 1.5f, 0f);
+    Vector3 TableWhite_offset = new Vector3(0f, 1.5f, 0f);
 
 
     [Header("Light")]
@@ -219,9 +219,9 @@ public class MapManager : MonoBehaviour
                 InstantiatePosPrefeb_All(tmpObj, MedRack_offset);
 
             }
-            else if (tmpObj.name.Contains("TableWhiteKitchen"))
+            else if (tmpObj.name.Contains("TableWhite"))
             {
-                InstantiatePosPrefeb_All(tmpObj, TableWhiteKitchen_offset);
+                InstantiatePosPrefeb_All(tmpObj, TableWhite_offset);
             }
         }
 
@@ -345,7 +345,7 @@ public class MapManager : MonoBehaviour
             int itemNum = Random.Range(0, itemsAll.Count);
             int idx = idx_all[i];
 
-            pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
+            pv.RPC("SpawnItemAll", RpcTarget.AllBuffered, itemNum, idx);
         }
 
 
@@ -357,15 +357,15 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < hiddenItemCntSmall; i++)
         {
             int itemNum = Random.Range(0, itemsSmall.Count);
-            int idx = idx_all[i];
+            int idx = idx_small[i];
 
-            pv.RPC("SpawnItem", RpcTarget.AllBuffered, itemNum, idx);
+            pv.RPC("SpawnItemSmall", RpcTarget.AllBuffered, itemNum, idx);
         }
     }
 
 
     [PunRPC]
-    public void SpawnItem(int itemNum, int idx)
+    public void SpawnItemAll(int itemNum, int idx)
     {
         //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
@@ -374,6 +374,18 @@ public class MapManager : MonoBehaviour
 
         Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
     }
+
+    [PunRPC]
+    public void SpawnItemSmall(int itemNum, int idx)
+    {
+        //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
+
+        GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
+        Transform idxTransform = hiddenItemPosSmall[idx].transform;
+
+        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+    }
+
 
 
 
