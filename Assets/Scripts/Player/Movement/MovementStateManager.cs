@@ -90,7 +90,7 @@ public class MovementStateManager : MonoBehaviour
             {
                 // DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
 
-                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z + 1);
 
                 DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + attackManager.weaponInventory.abandonedItem.itemName, SpawnPos, transform.rotation);
                 if (attackManager.weaponInventory.abandonedItem.ItemType < 11)
