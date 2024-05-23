@@ -177,22 +177,6 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
-                WeaponInventory weaponInventory = weaponSlot.GetComponent<WeaponInventory>();
-                Inventory inventory = quickSlot.GetComponent<Inventory>();
-                if(weaponInventory.weaponSlot.item != null)
-                {
-                    attackManager.weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
-                    weaponInventory.weaponSlot.item = null;
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    if (inventory.slots[i].item != null)
-                    {
-                        attackManager.weaponInventory.abandonedItem = inventory.slots[i].item;
-                        inventory.slots[i].item = null;
-                        inventory.FreshSlot();
-                    }
-                }
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
@@ -206,8 +190,11 @@ public class HpManager : MonoBehaviour
 
         if (gameObject.tag == "Monster")
         {
-            DroppedItem = PhotonNetwork.Instantiate("Prefabs/battery", new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),Quaternion.identity); //프리펩 생성
-            Destroy(gameObject);
+            if (pv.IsMine)
+            {
+                DroppedItem = PhotonNetwork.Instantiate("Prefabs/battery", new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity); //프리펩 생성
+                Destroy(gameObject);
+            }
         }
     }
 
