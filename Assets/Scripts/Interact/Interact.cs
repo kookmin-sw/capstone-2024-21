@@ -136,7 +136,6 @@ public class Interact : MonoBehaviour
                             if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == true) //습득하는 무기가 조합무기면 
                             {
                                 WeaponQuickslot.weaponSlot.item.craftCompleted = true; //아이템 정보도 조합무기로
-                                WeaponQuickslot.weaponSlot.item.ItemDamage *= 2; //아이템 데미지도 조합무기 데미지로
                                 WeaponQuickslot.craftCompletedMark.SetActive(true);
                                 WeaponQuickslot.isWeaponAdded = true;
                                 WeaponQuickslot.isCrafted = true;
