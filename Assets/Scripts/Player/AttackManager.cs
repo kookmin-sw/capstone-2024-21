@@ -138,61 +138,7 @@ public class AttackManager : MonoBehaviour
 
             if (gDown) // G는 버리는 키
             {
-                if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
-                {
-                    if (equipWeapon != weapons[9])
-                    {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
-                        weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
-                        if (weaponInventory.abandonedItem.craftCompleted == true)
-                        {
-                            weaponInventory.abandonedItem.ItemDamage /= 2;
-                        }
-                        weaponInventory.weaponSlot.item = null;
-                        weaponInventory.craftCompletedMark.SetActive(false);
-
-                        RpcEquip(9);
-                        equipWeapon = weapons[9];
-                        movementStateManager.anim.SetTrigger("doSwap");
-                        isSwap = true;
-                        Invoke("SwapOut", 0.3f);
-
-                        movementStateManager.anim.SetBool(Armed, false);
-                        movementStateManager.anim.SetLayerWeight(1, 0);
-                        movementStateManager.anim.SetLayerWeight(2, 0);
-                        Armed = "";
-                    }
-                }
-                else //아이템 버릴 때
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
-                        {
-                            if (equipWeapon != weapons[9])
-                            {
-                                Debug.Log("아이템 버림");
-
-                                weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
-                                itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
-                                itemQuickSlots.GetComponent<Inventory>().FreshSlot();
-                                RpcEquip(9);
-                                equipWeapon = weapons[9];
-                                movementStateManager.anim.SetTrigger("doSwap");
-                                isSwap = true;
-                                Invoke("SwapOut", 0.3f);
-
-                                movementStateManager.anim.SetBool(Armed, false);
-                                movementStateManager.anim.SetLayerWeight(1, 0);
-                                movementStateManager.anim.SetLayerWeight(2, 0);
-                                Armed = "";
-                                break;
-                            }
-
-                        }
-                    }
-                }
-
+                AbandonedItem();
             }
             // 무기 슬롯 스왑/습득 시 애니메이션 처리 
             if (sDown1 || weaponInventory.isWeaponAdded == true)
@@ -357,6 +303,75 @@ public class AttackManager : MonoBehaviour
             }
         }
     }
+
+    [PunRPC]
+    void RpcAbandonedItem()
+    {
+        if (pv.IsMine)
+        {
+            if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
+            {
+                if (equipWeapon != weapons[9])
+                {
+                    equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                    if (weaponInventory.abandonedItem.craftCompleted == true)
+                    {
+                        weaponInventory.abandonedItem.ItemDamage /= 2;
+                    }
+                    weaponInventory.weaponSlot.item = null;
+                    weaponInventory.craftCompletedMark.SetActive(false);
+
+                    RpcEquip(9);
+                    equipWeapon = weapons[9];
+                    movementStateManager.anim.SetTrigger("doSwap");
+                    isSwap = true;
+                    Invoke("SwapOut", 0.3f);
+
+                    movementStateManager.anim.SetBool(Armed, false);
+                    movementStateManager.anim.SetLayerWeight(1, 0);
+                    movementStateManager.anim.SetLayerWeight(2, 0);
+                    Armed = "";
+                }
+            }
+            else //아이템 버릴 때
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
+                    {
+                        if (equipWeapon != weapons[9])
+                        {
+                            Debug.Log("아이템 버림");
+
+                            weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
+                            itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
+                            itemQuickSlots.GetComponent<Inventory>().FreshSlot();
+                            RpcEquip(9);
+                            equipWeapon = weapons[9];
+                            movementStateManager.anim.SetTrigger("doSwap");
+                            isSwap = true;
+                            Invoke("SwapOut", 0.3f);
+
+                            movementStateManager.anim.SetBool(Armed, false);
+                            movementStateManager.anim.SetLayerWeight(1, 0);
+                            movementStateManager.anim.SetLayerWeight(2, 0);
+                            Armed = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void AbandonedItem()
+    {
+        pv.RPC("RpcAbandonedItem", RpcTarget.All);
+    }
+
+    
+
 
     void PillTaked(){
         if (movementStateManager.pillTaked == true)
