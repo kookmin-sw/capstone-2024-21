@@ -135,13 +135,16 @@ public class Interact : MonoBehaviour
                         {
                             if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == true) //습득하는 무기가 조합무기면 
                             {
-                                item.craftCompleted = true; //아이템 정보도 조합무기로
-                                item.ItemDamage *= 2; //아이템 데미지도 조합무기 데미지로
+                                WeaponQuickslot.weaponSlot.item.craftCompleted = true; //아이템 정보도 조합무기로
+                                WeaponQuickslot.weaponSlot.item.ItemDamage *= 2; //아이템 데미지도 조합무기 데미지로
                                 WeaponQuickslot.craftCompletedMark.SetActive(true);
+                                WeaponQuickslot.isWeaponAdded = true;
+                                WeaponQuickslot.isCrafted = true;
                             }
                             else if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == false) //습득하는 무기가 일반무기면 
                             {
-                                item.craftCompleted = false;  //아이템 정보도 일반무기로
+                                WeaponQuickslot.weaponSlot.item.craftCompleted = false;
+                                WeaponQuickslot.isWeaponAdded = true; //아이템 정보도 일반무기로
                             }
                             //무기 넣기에 성공할때만 디스트로이
                             itemdata.DestroyItemRPC();
