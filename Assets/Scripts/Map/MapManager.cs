@@ -369,10 +369,11 @@ public class MapManager : MonoBehaviour
     {
         //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
-        GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
+        // GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
         Transform idxTransform = hiddenItemPosAll[idx].transform;
 
-        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+        // Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+        PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
     }
 
     [PunRPC]
@@ -380,10 +381,11 @@ public class MapManager : MonoBehaviour
     {
         //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
-        GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
+        // GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
         Transform idxTransform = hiddenItemPosSmall[idx].transform;
 
-        Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+        // Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+        PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
     }
 
 
