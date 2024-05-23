@@ -24,6 +24,7 @@ public class HpManager : MonoBehaviour
     [SerializeField] private Slider healthPointBar;
     [SerializeField] private TMP_Text healthPointCount;
     [SerializeField] private UIManager uiManager;
+    private MovementStateManager movementStateManager;
 
     // 죽었을 때 작동할 함수들을 저장하는 변수
     // onDeath += 함수이름; 이렇게 이벤트 등록 가능
@@ -41,6 +42,7 @@ public class HpManager : MonoBehaviour
             uiManager = FindObjectOfType<UIManager>();
             healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
             healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
+            movementStateManager = GetComponent<MovementStateManager>();
         }
     }
 
@@ -87,6 +89,8 @@ public class HpManager : MonoBehaviour
         {
             if (pv.IsMine && GameManager.Instance.UserId != playerId)
             {
+                movementStateManager.audioState((int)AudioManager.Sfx.SFX_tempgethit); 
+
                 attackManager.OnDamaged();
                 Debug.Log("데미지 입음");
                 Debug.Log("내 이름: " + GameManager.Instance.UserId);

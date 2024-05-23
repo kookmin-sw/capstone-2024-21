@@ -6,6 +6,8 @@ public class WalkState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
+        movement.audioState((int)AudioManager.Sfx.SFX_move_walk);  
+
         movement.currentMoveSpeed = movement.walkSpeed;
         movement.anim.SetBool("Walking", true);
     }
@@ -39,6 +41,8 @@ public class WalkState : MovementBaseState
 
     void ExitState(MovementStateManager movement, MovementBaseState state)
     {
+        AudioManager.instance.StopSfx(AudioManager.Sfx.SFX_move_walk);
+
         movement.anim.SetBool("Walking", false);
         movement.SwitchState(state);
     }

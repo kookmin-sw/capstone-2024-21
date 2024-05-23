@@ -130,6 +130,25 @@ public class MovementStateManager : MonoBehaviour
                 ExitStateCancle();
         }
     }
+    
+    [PunRPC]
+    void RpcAudio(int idx){   
+        if(pv.IsMine){
+            if(idx == 1) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpend);
+            if(idx == 2) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpstart);
+            if(idx == 3) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_run);
+            if(idx == 4) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_walk);
+            if(idx == 5) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_tempgethit);
+            if(idx == 6) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
+        }
+        
+    }
+
+    public void audioState(int idx)
+    {
+        Debug.Log("RpcAudio 실행됨");
+        pv.RPC("RpcAudio", RpcTarget.All, idx);
+    }
 
     [PunRPC]
     void RpcExitState(){   

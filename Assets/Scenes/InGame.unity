@@ -9425,7 +9425,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6abaac1f05a6b4e14b3a695f8d839aed, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -12566,11 +12566,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a078138d3704b95a069f21a2c892fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmSource: {fileID: 0}
-  sfxSource: {fileID: 1598222335}
-  bgmClips:
-  - {fileID: 0}
-  sfxClips: []
+  bgmClip: {fileID: 8300000, guid: 6abaac1f05a6b4e14b3a695f8d839aed, type: 3}
+  bgmVolume: 0.2
+  sfxClips:
+  - {fileID: 8300000, guid: 20a09908e761048fdbfc9c883f7d74dd, type: 3}
+  - {fileID: 8300000, guid: 7b6a6208ebdbb41e4b40a953ee92074c, type: 3}
+  - {fileID: 8300000, guid: d7249220daadb41fdbe10d14e52c213c, type: 3}
+  - {fileID: 8300000, guid: 79f88c31e6f3c49519a27d92cb5dca88, type: 3}
+  - {fileID: 8300000, guid: cb6c9538e067d41d499ed2bc5906b93f, type: 3}
+  - {fileID: 8300000, guid: 9fa350e5c60884b8ead6fa0aca61114f, type: 3}
+  - {fileID: 8300000, guid: b47e2eea93d73405daea2bce7c2110f7, type: 3}
+  sfxVolume: 1
+  channels: 16
 --- !u!1 &1505236013
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,57 +6,88 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    public AudioSource bgmSource; // 음악을 재생할 오디오 소스
-    public AudioSource sfxSource; // 효과음을 재생할 오디오 소스
+    [Header("#BGM")]
+    public AudioClip bgmClip;
+    public float bgmVolume;
+    private AudioSource bgmPlayer;
 
-    public AudioClip[] bgmClips;  // bgm, 음악 소스 배열
-    public AudioClip[] sfxClips; // 효과음 소스 배열
+    [Header("#SFX")]
+    public AudioClip[] sfxClips;
+    public float sfxVolume;
+    public int channels;
+    private AudioSource[] sfxPlayers;
+    private int channelIndex;
+
+    public enum Sfx { SFX_Door, SFX_move_jumpend, SFX_move_jumpstart, SFX_move_run, SFX_move_walk, SFX_tempgethit, SFX_temphit }
 
     private void Awake()    // singleton 구현
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            Init();
         }
         else if (instance != this)
         {
             Destroy(gameObject);
         }
-
-        DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayBGM(int bgmIndex)   // bgm, 음악 소스 재생 
+    private void Init()
     {
-        if (bgmIndex < 0 || bgmIndex >= bgmClips.Length)
+        GameObject bgmObject = new GameObject("BgmPlayer");
+        bgmObject.transform.parent = transform;
+        bgmPlayer = bgmObject.AddComponent<AudioSource>();
+        bgmPlayer.playOnAwake = false;
+        bgmPlayer.loop = true;
+        bgmPlayer.volume = bgmVolume;
+        bgmPlayer.clip = bgmClip;
+
+        GameObject sfxObject = new GameObject("SfxPlayer");
+        sfxObject.transform.parent = transform;
+        sfxPlayers = new AudioSource[channels];
+
+        for (int index = 0; index < sfxPlayers.Length; index++)
         {
-            Debug.LogWarning("Invalid bgm index!");
-            return;
+            sfxPlayers[index] = sfxObject.AddComponent<AudioSource>();
+            sfxPlayers[index].playOnAwake = false;
+            sfxPlayers[index].volume = sfxVolume;
         }
-
-        bgmSource.clip = bgmClips[bgmIndex];
-        bgmSource.Play();
     }
 
-    public void PlaySFX(int sfxIndex)   // 효과음 재생
+    public void PlaySfx(Sfx sfx)
     {
-        if (sfxIndex < 0 || sfxIndex >= sfxClips.Length)
+        for (int index = 0; index < sfxPlayers.Length; index++)
         {
-            Debug.LogWarning("Invalid SFX index!");
-            return;
+            int loopIndex = (index + channelIndex) % sfxPlayers.Length;
+
+            if (sfxPlayers[loopIndex].isPlaying)
+                continue;
+
+            channelIndex = loopIndex;
+            sfxPlayers[loopIndex].clip = sfxClips[(int)sfx];
+            sfxPlayers[loopIndex].Play();
+            break;
         }
-
-        sfxSource.clip = sfxClips[sfxIndex];
-        sfxSource.Play();
+    }
+    public void StopSfx(Sfx sfx)
+    {
+        foreach (var player in sfxPlayers)
+        {
+            if (player.clip == sfxClips[(int)sfx] && player.isPlaying)
+            {
+                player.Stop();
+                break;
+            }
+        }
     }
 
-    public void SetBGMVolume(float volume)  // 음악 음량 조절
+    public void StopAllSfx()
     {
-        bgmSource.volume = volume;
-    }
-
-    public void SetSFXVolume(float volume)  // 효과음 음량 조절
-    {
-        sfxSource.volume = volume;
+        foreach (var player in sfxPlayers)
+        {
+            player.Stop();
+        }
     }
 }
