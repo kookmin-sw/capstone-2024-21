@@ -473,9 +473,15 @@ public class AttackManager : MonoBehaviour
     {   
         Debug.Log("doDamaged");
 
-        movementStateManager.anim.SetLayerWeight(6, 1);
-        movementStateManager.anim.SetTrigger("doDamaged");
+        //movementStateManager.anim.SetLayerWeight(6, 1);
+        if(pv.IsMine)
+            pv.RPC("RpcHit", RpcTarget.All);
         
-        Invoke("hitOut", 1.16f);
+        //Invoke("hitOut", 1.16f);
+    }
+
+    [PunRPC]
+    void RpcHit(){
+        movementStateManager.anim.SetTrigger("Hit");
     }
 }
