@@ -367,6 +367,8 @@ public class AttackManager : MonoBehaviour
         pv.RPC("RpcAbandonedItem", RpcTarget.All);
     }
 
+    
+
 
     void PillTaked(){
         if (movementStateManager.pillTaked == true)
