@@ -43,13 +43,12 @@ public class Timer : MonoBehaviour
     [PunRPC]
     void ShowTimer(int time)
     {
-        if (uiManager.isGameOver == false)
+
+        if (time != 0)
         {
-            if (time != 0)
-            {
-                uiManager.countDownNum.text = time.ToString();
-            }
+            uiManager.countDownNum.text = time.ToString();
         }
+        
         Debug.Log(time);
     }
 
