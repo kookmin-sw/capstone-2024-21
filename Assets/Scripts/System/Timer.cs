@@ -45,9 +45,9 @@ public class Timer : MonoBehaviour
     {
         if (uiManager.isGameOver == false)
         {
-            if (uiManager.timer.time != 0)
+            if (time != 0)
             {
-                uiManager.countDownNum.text = uiManager.timer.time.ToString();
+                uiManager.countDownNum.text = time.ToString();
             }
         }
         Debug.Log(time);
