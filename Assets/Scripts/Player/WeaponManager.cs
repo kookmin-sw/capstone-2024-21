@@ -28,6 +28,7 @@ public class WeaponManager : MonoBehaviour
         if(swingCoroutine != null)
         {
             StopCoroutine(swingCoroutine);
+            swingCoroutine = null;
         }
         if(type == Type.Melee)
         {
@@ -87,6 +88,7 @@ public class WeaponManager : MonoBehaviour
         }
         yield return new WaitForSeconds(rate - colliderOn - colliderOff);
         chk = true; // 코루틴 종료 후 변수 초기화
+        swingCoroutine = null;
         attackManager.AttackOut();
     }
 }
