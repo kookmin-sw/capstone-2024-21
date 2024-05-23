@@ -61,8 +61,10 @@ public class AttackManager : MonoBehaviour
         if (qDown)
             if(pv.IsMine)
                 FlashLight();
-        if ((sDown1 || weaponInventory.isWeaponAdded == true) || (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)) || gDown || eDown)
-            RpcSwap(); 
+        if ((sDown1 || weaponInventory.isWeaponAdded == true || weaponInventory.isCrafted == true) || (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)) || gDown || eDown)
+        {
+            RpcSwap();
+        }
     }
 
     void getInput(){
@@ -127,23 +129,7 @@ public class AttackManager : MonoBehaviour
     void Swap(){
         if (pv.IsMine)
         {   
-            if (equipWeapon != weapons[9]) // 착용된 장비가 있고
-            {
-                if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
-                {
-                    if (weaponInventory.weaponSlot.item.craftCompleted == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
-                    {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
-                    }
-                    else if (weaponInventory.weaponSlot.item.craftCompleted == false)
-                    {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
-                    }
-                }
-            }
-
             if (isAttack) return; // 공격 중에는 스왑 불가
-
 
             if(eDown)
             {
@@ -156,61 +142,7 @@ public class AttackManager : MonoBehaviour
 
             if (gDown) // G는 버리는 키
             {
-                if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
-                {
-                    if (equipWeapon != weapons[9])
-                    {
-                        equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
-                        weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
-                        if (weaponInventory.abandonedItem.craftCompleted == true)
-                        {
-                            weaponInventory.abandonedItem.ItemDamage /= 2;
-                        }
-                        weaponInventory.weaponSlot.item = null;
-                        weaponInventory.craftCompletedMark.SetActive(false);
-
-                        RpcEquip(9);
-                        equipWeapon = weapons[9];
-                        movementStateManager.anim.SetTrigger("doSwap");
-                        isSwap = true;
-                        Invoke("SwapOut", 0.3f);
-
-                        movementStateManager.anim.SetBool(Armed, false);
-                        movementStateManager.anim.SetLayerWeight(1, 0);
-                        movementStateManager.anim.SetLayerWeight(2, 0);
-                        Armed = "";
-                    }
-                }
-                else //아이템 버릴 때
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
-                        {
-                            if (equipWeapon != weapons[9])
-                            {
-                                Debug.Log("아이템 버림");
-
-                                weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
-                                itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
-                                itemQuickSlots.GetComponent<Inventory>().FreshSlot();
-                                RpcEquip(9);
-                                equipWeapon = weapons[9];
-                                movementStateManager.anim.SetTrigger("doSwap");
-                                isSwap = true;
-                                Invoke("SwapOut", 0.3f);
-
-                                movementStateManager.anim.SetBool(Armed, false);
-                                movementStateManager.anim.SetLayerWeight(1, 0);
-                                movementStateManager.anim.SetLayerWeight(2, 0);
-                                Armed = "";
-                                break;
-                            }
-
-                        }
-                    }
-                }
-
+                AbandonedItem();
             }
             // 무기 슬롯 스왑/습득 시 애니메이션 처리 
             if (sDown1 || weaponInventory.isWeaponAdded == true)
@@ -357,8 +289,93 @@ public class AttackManager : MonoBehaviour
                     movementStateManager.anim.SetBool("THW", false);
                 }
             }
+
+            if (equipWeapon != weapons[9]) // 착용된 장비가 있고
+            {
+                if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
+                {
+                    if (weaponInventory.weaponSlot.item.craftCompleted == true)
+                    {
+                        OnLightening(true);
+                    }
+                    else
+                    {
+                        OnLightening(false);
+                    }
+                    weaponInventory.isCrafted = false;
+                }
+            }
         }
     }
+
+    [PunRPC]
+    void RpcAbandonedItem()
+    {
+        if (pv.IsMine)
+        {
+            if (weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled) //무기 버릴 때
+            {
+                if (equipWeapon != weapons[9])
+                {
+                    equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                    if (weaponInventory.abandonedItem.craftCompleted == true)
+                    {
+                        weaponInventory.abandonedItem.ItemDamage /= 2;
+                    }
+                    weaponInventory.weaponSlot.item = null;
+                    weaponInventory.craftCompletedMark.SetActive(false);
+
+                    RpcEquip(9);
+                    equipWeapon = weapons[9];
+                    movementStateManager.anim.SetTrigger("doSwap");
+                    isSwap = true;
+                    Invoke("SwapOut", 0.3f);
+
+                    movementStateManager.anim.SetBool(Armed, false);
+                    movementStateManager.anim.SetLayerWeight(1, 0);
+                    movementStateManager.anim.SetLayerWeight(2, 0);
+                    Armed = "";
+                }
+            }
+            else //아이템 버릴 때
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (itemQuickSlots.GetComponentsInChildren<SelectedSlot>()[i].slotOutline.enabled)
+                    {
+                        if (equipWeapon != weapons[9])
+                        {
+                            Debug.Log("아이템 버림");
+
+                            weaponInventory.abandonedItem = itemQuickSlots.GetComponent<Inventory>().slots[i].item;
+                            itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
+                            itemQuickSlots.GetComponent<Inventory>().FreshSlot();
+                            RpcEquip(9);
+                            equipWeapon = weapons[9];
+                            movementStateManager.anim.SetTrigger("doSwap");
+                            isSwap = true;
+                            Invoke("SwapOut", 0.3f);
+
+                            movementStateManager.anim.SetBool(Armed, false);
+                            movementStateManager.anim.SetLayerWeight(1, 0);
+                            movementStateManager.anim.SetLayerWeight(2, 0);
+                            Armed = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void AbandonedItem()
+    {
+        pv.RPC("RpcAbandonedItem", RpcTarget.All);
+    }
+
+    
+
 
     void PillTaked(){
         if (movementStateManager.pillTaked == true)
@@ -388,6 +405,23 @@ public class AttackManager : MonoBehaviour
                 }
             }
         }
+    }
+    [PunRPC]
+    void RPCOnLightening(bool isLightening)
+    {
+        if (isLightening == true) // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+        {
+            equipWeapon.transform.GetChild(0).gameObject.SetActive(true); // 착용된 장비가 크래프팅된 아이템이면 번개 효과 on
+        }
+        else if (isLightening == false)
+        {
+            equipWeapon.transform.GetChild(0).gameObject.SetActive(false); // 착용된 장비가 일반 아이템이면 번개 효과 off
+        }
+    }
+
+    public void OnLightening(bool isLightening)
+    {
+        pv.RPC("RPCOnLightening", RpcTarget.All, isLightening);
     }
 
     [PunRPC]

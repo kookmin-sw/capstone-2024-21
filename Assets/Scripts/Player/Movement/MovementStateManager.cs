@@ -88,8 +88,9 @@ public class MovementStateManager : MonoBehaviour
         {
             if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
             {
-                DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
-                if(attackManager.weaponInventory.abandonedItem.ItemType < 11)
+                // DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
+                DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + attackManager.weaponInventory.abandonedItem.itemName, transform.position, transform.rotation);
+                if (attackManager.weaponInventory.abandonedItem.ItemType < 11)
                 {
                     if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
                     {
@@ -99,9 +100,9 @@ public class MovementStateManager : MonoBehaviour
                     {
                         DroppedItem.GetComponent<Weapon>().settedLightning = false;
                     }
+                    attackManager.weaponInventory.abandonedItem.craftCompleted = false;
                 }
-
-                DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
+                // DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
                 attackManager.weaponInventory.abandonedItem = null;
             }
             if (GameManager.Instance.isPlaying == true && attackManager.isAttack == false)

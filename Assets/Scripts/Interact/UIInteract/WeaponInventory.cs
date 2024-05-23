@@ -43,6 +43,7 @@ public class WeaponInventory : MonoBehaviour
                         weaponSlot.item.ItemDamage *= 2;
                         craftCompletedMark.SetActive(true);
                         craftGauge.SetGaugeZero();
+                        isCrafted = true;
                     }
                 }
                 else
@@ -61,7 +62,6 @@ public class WeaponInventory : MonoBehaviour
         if(weaponSlot.item == null)
         {
             weaponSlot.item = _item;
-            isWeaponAdded = true;
             return 1;
         }
         else
