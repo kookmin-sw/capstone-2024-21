@@ -290,20 +290,23 @@ public class AttackManager : MonoBehaviour
                 }
             }
 
-            if (equipWeapon != weapons[9]) // 착용된 장비가 있고
+            if(weaponInventory.isWeaponAdded == true || weaponInventory.isCrafted == true)
             {
-                if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
+                if (equipWeapon != weapons[9]) // 착용된 장비가 있고
                 {
-                    if (weaponInventory.weaponSlot.item.craftCompleted == true)
+                    if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
                     {
-                        OnLightening(true);
-                        equipWeaponGameobject.damage *= 2;
+                        if (weaponInventory.weaponSlot.item.craftCompleted == true)
+                        {
+                            OnLightening(true);
+                            equipWeaponGameobject.damage *= 2;
+                        }
+                        else
+                        {
+                            OnLightening(false);
+                        }
+                        weaponInventory.isCrafted = false;
                     }
-                    else
-                    {
-                        OnLightening(false);
-                    }
-                    weaponInventory.isCrafted = false;
                 }
             }
         }
@@ -318,12 +321,12 @@ public class AttackManager : MonoBehaviour
             {
                 if (equipWeapon != weapons[9])
                 {
-                    equipWeaponGameobject.damage /= 2;
+                    
                     equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
                     weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
                     if (weaponInventory.abandonedItem.craftCompleted == true)
                     {
-                        weaponInventory.abandonedItem.ItemDamage /= 2;
+                        equipWeaponGameobject.damage /= 2;
                     }
                     weaponInventory.weaponSlot.item = null;
                     weaponInventory.craftCompletedMark.SetActive(false);
