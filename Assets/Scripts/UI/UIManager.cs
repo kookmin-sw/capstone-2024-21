@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
         gameTime = 0;
         selectSlot = 0;
         elapsedTime = 0f;
-        interval = 10f;
+        interval = 30f;
         ChangeSlot(0);
 
         statePlayerName.text = GameManager.Instance.UserId;
@@ -87,7 +87,6 @@ public class UIManager : MonoBehaviour
             countDownNumObj.SetActive(false);
             // Debug.Log(gameTime);
             gameTime += Time.deltaTime;
-            elapsedTime += Time.deltaTime;
 
             isFirst = true;
             if (isFirst == true)
@@ -97,14 +96,20 @@ public class UIManager : MonoBehaviour
             }
             currentPlayers.text = curPlayers.ToString();
 
-            if (elapsedTime >= interval)
+            if(PhotonNetwork.IsMasterClient)
             {
-                elapsedTime = 0f;
+                elapsedTime += Time.deltaTime;
 
-                Transform monSpawn = Monpoints[Random.Range(1, Monpoints.Length)];
+                if (elapsedTime >= interval)
+                {
+                    elapsedTime = 0f;
 
-                Robo = PhotonNetwork.Instantiate("Prefabs/HelperRobot", monSpawn.position, Quaternion.identity);
+                    Transform monSpawn = Monpoints[Random.Range(1, Monpoints.Length)];
+
+                    Robo = PhotonNetwork.Instantiate("Prefabs/HelperRobot", monSpawn.position, Quaternion.identity);
+                }
             }
+
 
             if (curPlayers == 1 && totalPlayers != 1)
             {

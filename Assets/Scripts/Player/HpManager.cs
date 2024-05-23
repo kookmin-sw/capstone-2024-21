@@ -177,6 +177,22 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
+                WeaponInventory weaponInventory = GameObject.Find("WeaponSlot").GetComponent<WeaponInventory>();
+                Inventory inventory = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
+                if (weaponInventory.weaponSlot.item != null)
+                {
+                    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                    weaponInventory.weaponSlot.item = null;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (inventory.slots[i].item != null)
+                    {
+                        weaponInventory.abandonedItem = inventory.slots[i].item;
+                        inventory.slots[i].item = null;
+                        inventory.FreshSlot();
+                    }
+                }
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
