@@ -5,6 +5,7 @@ using System;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 
@@ -25,6 +26,8 @@ public class HpManager : MonoBehaviour
     [SerializeField] private TMP_Text healthPointCount;
     [SerializeField] private UIManager uiManager;
     private MovementStateManager movementStateManager;
+    [SerializeField] private GameObject quickSlot;
+    [SerializeField] private GameObject weaponSlot;
 
     // 죽었을 때 작동할 함수들을 저장하는 변수
     // onDeath += 함수이름; 이렇게 이벤트 등록 가능
@@ -40,6 +43,9 @@ public class HpManager : MonoBehaviour
         {
             attackManager = GetComponent<AttackManager>();
             uiManager = FindObjectOfType<UIManager>();
+            quickSlot = GameObject.Find("ItemQuickSlots");
+            weaponSlot = GameObject.Find("WeaponSlot");
+
             healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
             healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
             movementStateManager = GetComponent<MovementStateManager>();
@@ -171,6 +177,22 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
+                WeaponInventory weaponInventory = weaponSlot.GetComponent<WeaponInventory>();
+                Inventory inventory = quickSlot.GetComponent<Inventory>();
+                if(weaponInventory.weaponSlot.item != null)
+                {
+                    attackManager.weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                    weaponInventory.weaponSlot.item = null;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (inventory.slots[i].item != null)
+                    {
+                        attackManager.weaponInventory.abandonedItem = inventory.slots[i].item;
+                        inventory.slots[i].item = null;
+                        inventory.FreshSlot();
+                    }
+                }
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
@@ -184,8 +206,7 @@ public class HpManager : MonoBehaviour
 
         if (gameObject.tag == "Monster")
         {
-            DroppedItem = Instantiate(Resources.Load<GameObject>("Prefabs/battery")); //프리펩 생성
-            DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            DroppedItem = PhotonNetwork.Instantiate("Prefabs/battery", new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),Quaternion.identity); //프리펩 생성
             Destroy(gameObject);
         }
     }

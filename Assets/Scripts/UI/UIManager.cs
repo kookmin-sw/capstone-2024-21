@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
         gameTime = 0;
         selectSlot = 0;
         elapsedTime = 0f;
-        interval = 180f;
+        interval = 10f;
         ChangeSlot(0);
 
         statePlayerName.text = GameManager.Instance.UserId;
@@ -97,7 +97,7 @@ public class UIManager : MonoBehaviour
 
                 Transform monSpawn = Monpoints[Random.Range(1, Monpoints.Length)];
 
-                Robo = Instantiate(Resources.Load("Prefabs/HelperRobot") as GameObject, monSpawn.position, Quaternion.identity);
+                Robo = PhotonNetwork.Instantiate("Prefabs/HelperRobot", monSpawn.position, Quaternion.identity);
             }
 
             if (curPlayers == 1 && totalPlayers != 1)
