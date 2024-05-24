@@ -1,11 +1,11 @@
 
 # 볼타 Volta
 
-![Poster](https://ibb.co/VpYwVPr)
+![Poster](images/poster.jpg)
 ### 1. 프로젝트 소개
   - 참가자들은 죽음의 레이스에서 서로를 물리치기 위해 최선을 다해야 한다. 대회의 승자에게는 자유와 새로운 삶이 기약되어 있지만, 모든 참가자는 단 한 명만이 살아남을 수 있기에 치열한 전투가 벌어진다.
   
-  - 개발 현황 : https://www.notion.so/57a591a23c7d48179644f7f44228c5ec?pvs=4
+  - 개발 현황 : [Team Notion Link](https://www.notion.so/57a591a23c7d48179644f7f44228c5ec?pvs=4) 에서 자세한 개발 진행 과정을 살펴보실 수 있습니다.
 
 
 ### 2. Abstract
@@ -15,11 +15,12 @@
 
 
 ### 3. 소개 영상
-  - <iframe width="560" height="315" src="https://www.youtube.com/watch?v=lmEUsBYXI-g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+![Example Image](images/exampleimage.png)
+  - [Youtube Video Link](https://www.youtube.com/watch?v=arr2do402LA)
 
 
 ### 4. 팀 소개 
-![Team Image](https://ibb.co/x5DwSsR)
+![Team image](images/teamphoto.jpeg)
   - ****2805 장원재 bryanwonjaejang@gmail.com
   - ****1822 심현우 shware10@gmail.com
   - ****1907 김유진 wlwlfdl3324@naver.com
