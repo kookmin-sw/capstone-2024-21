@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOLTA</title>
+    <link rel="stylesheet" href="index_styles.css">
+</head>
+<body>
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="background_music.mp3" type="audio/mpeg">
+        음악 파일이 정상적으로 재생되지 않습니다.
+    </audio>
+
+    <header>
+        <img src="logo.png" alt="로고 이미지"> <!-- 이미지로 대체 -->
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#" onclick="openModal('howToPlay')">How to play</a>
+            <a href="https://drive.google.com/drive/folders/13k938S1p3nB8t1DjHm9g_Xez4tzkowME?usp=sharing" target="_blank">Download</a>
+            <a href="#" onclick="openModal('login')">Login</a>
+        </nav>
+    </header>
+    <img src="poster.jpg" alt="이미지" />
+
+    <!-- 모달 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 모달 열기
+        function openModal(type) {
+            // 배경 음악 일시정지
+            document.getElementById("backgroundMusic").pause();
+            // 모달 표시
+            document.getElementById("myModal").style.display = "block";
+            // 모달 내용 설정
+            var modalContent = document.getElementById("modalContent");
+            if (type === 'howToPlay') {
+                modalContent.innerHTML = '<iframe width="100%" height="450" src="https://www.youtube.com/embed/arr2do402LA?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+            } else if (type === 'login') {
+                modalContent.innerHTML = '<form action="login.php" method="post"> \
+                                          <h2>Login</h2> \
+                                          <label for="username">Username:</label> \
+                                          <input type="text" id="username" name="username" required> \
+                                          <label for="password">Password:</label> \
+                                          <input type="password" id="password" name="password" required> \
+                                          <button type="submit">Login</button> \
+                                          </form>';
+            }
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            // 배경 음악 재생
+            document.getElementById("backgroundMusic").play();
+            // 모달 닫기
+            document.getElementById("myModal").style.display = "none";
+            // 모달 내용 초기화
+            document.getElementById("modalContent").innerHTML = '';
+        }
+    </script>
+</body>
+</html>
