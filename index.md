@@ -29,9 +29,12 @@
 
 
 ### 5. 사용법
-  - 홈페이지의 드라이브 링크에 접속하여, 빌드 파일을 다운로드 받는다.
+  - 하단 구글 드라이브 링크에 접속하여, 빌드 파일 폴더에 들어가 폴더 전체를 다운로드 받는다.
   - .exe 파일을 실행하면, 별도의 unity 설치 등의 과정을 생략한 채 게임을 플레이할 수 있다.
 
 
 ### 6. 기타
-  - 1234
+  - [VOLTA 포스터 다운로드](images/poster.jpg)
+  - [VOLTA 중간발표 PPT 다운로드](images/midppt.pptx)
+  - [VOLTA 최종발표 PPT 다운로드](images/finalppt.pptx)
+  - ### [GOOGLE DRIVE link](https://drive.google.com/drive/folders/1Ro8SXzZw2-ILFIKVOtMGpgtni7_hYMm5?usp=drive_link)
