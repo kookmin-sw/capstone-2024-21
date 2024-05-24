@@ -1,36 +1,37 @@
+## Welcome to GitHub Pages
 
-# 볼타 Volta
+You can use the [editor on GitHub](https://github.com/kookmin-sw/cap-template/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
-![Poster](https://ibb.co/VpYwVPr)
-### 1. 프로젝트 소개
-  - 참가자들은 죽음의 레이스에서 서로를 물리치기 위해 최선을 다해야 한다. 대회의 승자에게는 자유와 새로운 삶이 기약되어 있지만, 모든 참가자는 단 한 명만이 살아남을 수 있기에 치열한 전투가 벌어진다.
-  
-  - 개발 현황 : https://www.notion.so/57a591a23c7d48179644f7f44228c5ec?pvs=4
+Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
+### Markdown
 
-### 2. Abstract
-  - In Volta, death row inmates awaken in a mysterious, unfamiliar setting, pushed to fight each other until the last one stands. Players confront various tactical scenarios including scattered batteries, monsters, and special outcomes of digital craftsmanship, whilst their attack and defense.
-  Be the last man standing, and be granted with the prize of new life,
-  VOLTA.
+Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
+```markdown
+Syntax highlighted code block
 
-### 3. 소개 영상
-  - <iframe width="560" height="315" src="https://www.youtube.com/watch?v=lmEUsBYXI-g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+# Header 1
+## Header 2
+### Header 3
 
+- Bulleted
+- List
 
-### 4. 팀 소개 
-![Team Image](https://ibb.co/x5DwSsR)
-  - ****2805 장원재 bryanwonjaejang@gmail.com
-  - ****1822 심현우 shware10@gmail.com
-  - ****1907 김유진 wlwlfdl3324@naver.com
-  - ****2959 권용재 dydwo0809@naver.com
-  - ****5214 최재원 dnjs4475@naver.com
+1. Numbered
+2. List
 
+**Bold** and _Italic_ and `Code` text
 
-### 5. 사용법
-  - 홈페이지의 드라이브 링크에 접속하여, 빌드 파일을 다운로드 받는다.
-  - .exe 파일을 실행하면, 별도의 unity 설치 등의 과정을 생략한 채 게임을 플레이할 수 있다.
+[Link](url) and ![Image](src)
+```
 
+For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### 6. 기타
-  - 1234
+### Jekyll Themes
+
+Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kookmin-sw/cap-template/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+
+### Support or Contact
+
+Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
