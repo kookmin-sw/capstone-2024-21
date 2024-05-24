@@ -6,6 +6,8 @@ public class RunState : MovementBaseState
 {
     public override void EnterState(MovementStateManager movement)
     {
+        movement.audioState((int)AudioManager.Sfx.SFX_move_run);      
+
         movement.anim.SetBool("Running", true);
     }
 
@@ -39,6 +41,8 @@ public class RunState : MovementBaseState
 
     public void ExitState(MovementStateManager movement, MovementBaseState state)
     {
+        AudioManager.instance.StopSfx(AudioManager.Sfx.SFX_move_run);
+
         movement.anim.SetBool("Running", false);
         movement.SwitchState(state);
     }

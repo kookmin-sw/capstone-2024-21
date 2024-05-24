@@ -5,6 +5,7 @@ using System;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 
@@ -24,6 +25,9 @@ public class HpManager : MonoBehaviour
     [SerializeField] private Slider healthPointBar;
     [SerializeField] private TMP_Text healthPointCount;
     [SerializeField] private UIManager uiManager;
+    private MovementStateManager movementStateManager;
+    [SerializeField] private GameObject quickSlot;
+    [SerializeField] private GameObject weaponSlot;
 
     // 죽었을 때 작동할 함수들을 저장하는 변수
     // onDeath += 함수이름; 이렇게 이벤트 등록 가능
@@ -39,19 +43,23 @@ public class HpManager : MonoBehaviour
         {
             attackManager = GetComponent<AttackManager>();
             uiManager = FindObjectOfType<UIManager>();
+            quickSlot = GameObject.Find("ItemQuickSlots");
+            weaponSlot = GameObject.Find("WeaponSlot");
+
             healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
             healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
+            movementStateManager = GetComponent<MovementStateManager>();
         }
     }
 
     private void Update()
     {
-        if(pv.IsMine)
+        if (pv.IsMine)
         {
-            if(GameManager.Instance.isEscape == true)
+            if (GameManager.Instance.isEscape == true)
             {
-                AllDie();
                 EscapeWin();
+                Debug.Log("탈출 성공공");
             }
         }
     }
@@ -87,6 +95,8 @@ public class HpManager : MonoBehaviour
         {
             if (pv.IsMine && GameManager.Instance.UserId != playerId)
             {
+                movementStateManager.audioState((int)AudioManager.Sfx.SFX_tempgethit); 
+
                 attackManager.OnDamaged();
                 Debug.Log("데미지 입음");
                 Debug.Log("내 이름: " + GameManager.Instance.UserId);
@@ -167,6 +177,22 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
+                //WeaponInventory weaponInventory = GameObject.Find("WeaponSlot").GetComponent<WeaponInventory>();
+                //Inventory inventory = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
+                //if (weaponInventory.weaponSlot.item != null)
+                //{
+                //    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                //    weaponInventory.weaponSlot.item = null;
+                //}
+                //for (int i = 0; i < 4; i++)
+                //{
+                //    if (inventory.slots[i].item != null)
+                //    {
+                //        weaponInventory.abandonedItem = inventory.slots[i].item;
+                //        inventory.slots[i].item = null;
+                //        inventory.FreshSlot();
+                //    }
+                //}
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
@@ -180,8 +206,10 @@ public class HpManager : MonoBehaviour
 
         if (gameObject.tag == "Monster")
         {
-            DroppedItem = Instantiate(Resources.Load<GameObject>("Prefabs/battery")); //프리펩 생성
-            DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            if(pv.IsMine)
+            {
+                DroppedItem = PhotonNetwork.Instantiate("Prefabs/battery", new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity); //프리펩 생성
+            }
             Destroy(gameObject);
         }
     }
@@ -219,6 +247,7 @@ public class HpManager : MonoBehaviour
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
+            AllDie();
             isDead = true;
             gameObject.SetActive(false);
         }
@@ -228,16 +257,19 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void RpcAllDie()
     {
-        GameObject[] playerObjects = GameManager.Instance.playerObjects;
-
-
         Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
-            uiManager.isGameOver = true;
             uiManager.isUIActivate = true;
             isDead = true;
             GameManager.Instance.GameOver();
+
+            GameObject[] playerObjects = GameManager.Instance.playerObjects;
+
+            for (int i = 0; i < playerObjects.Length; i++)
+            {
+                playerObjects[i].SetActive(false);
+            }
         }
     }
 

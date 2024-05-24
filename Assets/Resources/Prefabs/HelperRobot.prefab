@@ -1340,6 +1340,8 @@ GameObject:
   - component: {fileID: 5905065481503223889}
   - component: {fileID: 3674671499493534157}
   - component: {fileID: 1845304577344872242}
+  - component: {fileID: -3296640824927990262}
+  - component: {fileID: -1298448580709310849}
   m_Layer: 0
   m_Name: HelperRobot
   m_TagString: Monster
@@ -1497,6 +1499,8 @@ MonoBehaviour:
   healthPointBar: {fileID: 0}
   healthPointCount: {fileID: 0}
   uiManager: {fileID: 0}
+  quickSlot: {fileID: 0}
+  weaponSlot: {fileID: 0}
 --- !u!54 &3674671499493534157
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1522,7 +1526,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 94
+  m_Constraints: 90
   m_CollisionDetection: 1
 --- !u!136 &1845304577344872242
 CapsuleCollider:
@@ -1547,6 +1551,35 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &-3296640824927990262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478873387277266331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80e033942c551a4babe71a83e98f77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1298448580709310849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478873387277266331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b9bcae4b7d32b4ea18b83c0932fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: -9.81
+  groundYOffset: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8831359430549197857
 GameObject:
   m_ObjectHideFlags: 0

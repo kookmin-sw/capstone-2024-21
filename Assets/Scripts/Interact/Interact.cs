@@ -89,8 +89,8 @@ public class Interact : MonoBehaviour
                         selectedTarget.GetComponent<ExitCupOpen>().ChangeDoorStateRPC();
                     }
                     //Debug.Log("문 상호작용 ");
-                    else if(selectedTarget.GetComponent<DoorRight>())
-                    {   
+                    else if (selectedTarget.GetComponent<DoorRight>())
+                    {
                         selectedTarget.GetComponent<DoorRight>().ChangeDoorStateRPC();
                     }
                     else
@@ -100,10 +100,10 @@ public class Interact : MonoBehaviour
 
                 }
                 else if (selectedTarget.CompareTag("Exit"))
-                {   
+                {
                     Debug.Log("Exit 문 상호작용 ");
                     FindMovedir();
-                    if(PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
+                    if (PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
                     {
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
@@ -131,17 +131,19 @@ public class Interact : MonoBehaviour
                     }
                     else
                     {
-                        if(WeaponQuickslot.AddWeapon(item) == 1)
+                        if (WeaponQuickslot.AddWeapon(item) == 1)
                         {
                             if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == true) //습득하는 무기가 조합무기면 
                             {
-                                item.craftCompleted = true; //아이템 정보도 조합무기로
-                                item.ItemDamage *= 2; //아이템 데미지도 조합무기 데미지로
+                                WeaponQuickslot.weaponSlot.item.craftCompleted = true; //아이템 정보도 조합무기로
                                 WeaponQuickslot.craftCompletedMark.SetActive(true);
+                                WeaponQuickslot.isWeaponAdded = true;
+                                WeaponQuickslot.isCrafted = true;
                             }
                             else if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == false) //습득하는 무기가 일반무기면 
                             {
-                                item.craftCompleted = false;  //아이템 정보도 일반무기로
+                                WeaponQuickslot.weaponSlot.item.craftCompleted = false;
+                                WeaponQuickslot.isWeaponAdded = true; //아이템 정보도 일반무기로
                             }
                             //무기 넣기에 성공할때만 디스트로이
                             itemdata.DestroyItemRPC();
@@ -149,9 +151,7 @@ public class Interact : MonoBehaviour
                         }
                     }
                 }
-
             }
-
         }
         else  //레이캐스트가 Interactable 오브젝트와 충돌하지 않고 있다면
         {

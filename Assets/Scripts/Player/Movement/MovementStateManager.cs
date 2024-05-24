@@ -3,7 +3,6 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
-using System;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -89,20 +88,24 @@ public class MovementStateManager : MonoBehaviour
         {
             if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
             {
-                DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
-                if(attackManager.weaponInventory.abandonedItem.ItemType < 11)
+                // DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
+                Debug.Log("아이템 버림");
+                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z + 1);
+
+                DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + attackManager.weaponInventory.abandonedItem.itemName, SpawnPos, transform.rotation);
+                if (attackManager.weaponInventory.abandonedItem.ItemType < 11)
                 {
                     if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
                     {
                         DroppedItem.GetComponent<Weapon>().settedLightning = true;
+                        DroppedItem.GetComponent<ItemData>().itemData.ItemDamage *= 2;
                     }
                     else if (attackManager.weaponInventory.abandonedItem.craftCompleted == false)
                     {
                         DroppedItem.GetComponent<Weapon>().settedLightning = false;
                     }
+                    attackManager.weaponInventory.abandonedItem.craftCompleted = false;
                 }
-
-                DroppedItem.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
                 attackManager.weaponInventory.abandonedItem = null;
             }
             if (GameManager.Instance.isPlaying == true && attackManager.isAttack == false)
@@ -126,19 +129,25 @@ public class MovementStateManager : MonoBehaviour
             else if(wasExiting && (moveDir.magnitude > 0.1f || !interact.isExiting))
                 ExitStateCancle();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LogWithTimestamp("Space key pressed");
+    }
+    
+    [PunRPC]
+    void RpcAudio(int idx){   
+        if(pv.IsMine){
+            if(idx == 1) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpend);
+            if(idx == 2) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_jumpstart);
+            if(idx == 3) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_run);
+            if(idx == 4) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_move_walk);
+            if(idx == 5) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_tempgethit);
+            if(idx == 6) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift)){
-            LogWithTimestamp("Shift key pressed");
-        }
+        
     }
 
-    void LogWithTimestamp(string message)
+    public void audioState(int idx)
     {
-        string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
-        Debug.Log($"[{timestamp}] {message}");
+        Debug.Log("RpcAudio 실행됨");
+        pv.RPC("RpcAudio", RpcTarget.All, idx);
     }
 
     [PunRPC]

@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("내가 마스터 클라이언트의 상인가? :" + PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
         {
+            MapManager.Instance.SpawndItemInMapRPC();//일단 여기는 잘 실행됨 ! 
             Go2Map();
         }
     }
@@ -95,9 +96,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameOver 실행");
         uiManager = GameObject.FindObjectOfType<UIManager>();
-        isPlaying = false;
-        uiManager.isGameOver = true;
-        AllDie();
+        if (uiManager.isGameOver == false)
+        {
+            isPlaying = false;
+            uiManager.isGameOver = true;
+        }
     }
 
     public void Go2Map()
@@ -120,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Shuffle(int[] deck)
+    public void Shuffle(int[] deck)
     {
         for (int i = 0; i < deck.Length; i++)
         {
@@ -128,14 +131,6 @@ public class GameManager : MonoBehaviour
             int randomIndex = Random.Range(0, deck.Length);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
-        }
-    }
-
-    void AllDie()
-    {
-        for (int i = 0; i < playerObjects.Length; i++)
-        {
-            playerObjects[i].SetActive(false);
         }
     }
 }

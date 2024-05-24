@@ -5,11 +5,13 @@ using Photon.Pun;
 
 public class Timer : MonoBehaviour
 {
-    int time;
+    public int time;
     private PhotonView pv;
+    UIManager uiManager;
 
     private void Awake()
     {
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         pv = GetComponent<PhotonView>();
         GameManager.Instance.timer = this;
     }
@@ -41,6 +43,12 @@ public class Timer : MonoBehaviour
     [PunRPC]
     void ShowTimer(int time)
     {
+
+        if (time != 0)
+        {
+            uiManager.countDownNum.text = time.ToString();
+        }
+        
         Debug.Log(time);
     }
 

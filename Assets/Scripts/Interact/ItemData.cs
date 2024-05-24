@@ -12,9 +12,12 @@ public class ItemData : MonoBehaviour
 
     void Start()
     {
-        pv = gameObject.AddComponent<PhotonView>();
-        pv.ViewID = PhotonNetwork.AllocateViewID(0);
-
+        pv = GetComponent<PhotonView>();
+        if (pv == null)
+        {
+            pv = gameObject.AddComponent<PhotonView>();
+            pv.ViewID = PhotonNetwork.AllocateViewID(0);
+        }
     }
 
     Item getItemData()
@@ -30,6 +33,7 @@ public class ItemData : MonoBehaviour
 
     public void DestroyItemRPC()
     {
+        Debug.Log("디스트로이 실행됌");
         pv.RPC("DestroyItem", RpcTarget.AllBuffered);
     }
 }
