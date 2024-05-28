@@ -181,13 +181,15 @@ public class HpManager : MonoBehaviour
                 if (uiManager.weaponInventory.weaponSlot.item != null)
                 {
                     DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.weaponInventory.weaponSlot.item.itemName, SpawnPos, transform.rotation);
+                    Debug.Log("무기 버려짐");
                     uiManager.weaponInventory.weaponSlot.item = null;
                 }
                 for (int i = 0; i < 4; i++)
                 {
                     if (uiManager.inventory.slots[i].item != null)
                     {
-                        DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.inventory.slots[i].item.itemName, SpawnPos, transform.rotation); 
+                        DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.inventory.slots[i].item.itemName, SpawnPos, transform.rotation);
+                        Debug.Log("아이템 버려짐");
                         uiManager.inventory.slots[i].item = null;
                         uiManager.inventory.FreshSlot();
                     }
