@@ -177,7 +177,7 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
-                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z + 1);
+                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 1);
                 if (uiManager.weaponInventory.weaponSlot.item != null)
                 {
                     DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.weaponInventory.weaponSlot.item.itemName, SpawnPos, transform.rotation);
