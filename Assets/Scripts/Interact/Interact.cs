@@ -105,6 +105,7 @@ public class Interact : MonoBehaviour
                     FindMovedir();
                     if (PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
                     {
+                        quicSlot.isSlotChanged = true;
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
                     }

@@ -22,7 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentPlayers;
     [SerializeField] private TextMeshProUGUI allPlayers;
 
-
+    public WeaponInventory weaponInventory;
+    public Inventory inventory;
 
     [SerializeField] private TextMeshProUGUI killPoint;
     [SerializeField] private TextMeshProUGUI rankPoint;
