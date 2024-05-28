@@ -133,12 +133,4 @@ public class GameManager : MonoBehaviour
             deck[randomIndex] = temp;
         }
     }
-
-    void AllDie()
-    {
-        for (int i = 0; i < playerObjects.Length; i++)
-        {
-            playerObjects[i].SetActive(false);
-        }
-    }
 }
