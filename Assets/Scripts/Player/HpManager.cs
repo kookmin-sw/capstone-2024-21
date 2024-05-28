@@ -177,22 +177,21 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
-                //WeaponInventory weaponInventory = GameObject.Find("WeaponSlot").GetComponent<WeaponInventory>();
-                //Inventory inventory = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
-                //if (weaponInventory.weaponSlot.item != null)
-                //{
-                //    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
-                //    weaponInventory.weaponSlot.item = null;
-                //}
-                //for (int i = 0; i < 4; i++)
-                //{
-                //    if (inventory.slots[i].item != null)
-                //    {
-                //        weaponInventory.abandonedItem = inventory.slots[i].item;
-                //        inventory.slots[i].item = null;
-                //        inventory.FreshSlot();
-                //    }
-                //}
+                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z + 1);
+                if (uiManager.weaponInventory.weaponSlot.item != null)
+                {
+                    DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.weaponInventory.weaponSlot.item.itemName, SpawnPos, transform.rotation);
+                    uiManager.weaponInventory.weaponSlot.item = null;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (uiManager.inventory.slots[i].item != null)
+                    {
+                        DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.inventory.slots[i].item.itemName, SpawnPos, transform.rotation); 
+                        uiManager.inventory.slots[i].item = null;
+                        uiManager.inventory.FreshSlot();
+                    }
+                }
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
