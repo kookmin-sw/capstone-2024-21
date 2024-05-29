@@ -18,6 +18,7 @@
             <a href="index.html">Home</a>
             <a href="#" onclick="openModal('howToPlay')">How to play</a>
             <a href="https://drive.google.com/drive/folders/13k938S1p3nB8t1DjHm9g_Xez4tzkowME?usp=sharing" target="_blank">Download</a>
+            <a href="https://github.com/kookmin-sw/capstone-2024-21">Github</a>
             <a href="#" onclick="openModal('login')">Login</a>
         </nav>
     </header>
@@ -31,8 +32,19 @@
         </div>
     </div>
 
+    <!-- 2차 팝업 -->
+    <div id="maintenancePopup" class="popup">
+        <div class="popup-content">
+            <p>현재 점검중인 기능입니다</p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script>
+        // 배경음악 볼륨 조절
+        document.getElementById("backgroundMusic").volume = 0.2;
+
         // 모달 열기
         function openModal(type) {
             // 배경 음악 일시정지
@@ -44,7 +56,7 @@
             if (type === 'howToPlay') {
                 modalContent.innerHTML = '<iframe width="100%" height="450" src="https://www.youtube.com/embed/arr2do402LA?autoplay=1" frameborder="0" allowfullscreen></iframe>';
             } else if (type === 'login') {
-                modalContent.innerHTML = '<form action="login.php" method="post"> \
+                modalContent.innerHTML = '<form id="loginForm"> \
                                           <h2>Login</h2> \
                                           <label for="username">Username:</label> \
                                           <input type="text" id="username" name="username" required> \
@@ -64,6 +76,20 @@
             // 모달 내용 초기화
             document.getElementById("modalContent").innerHTML = '';
         }
+
+        // 2차 팝업 닫기
+        function closePopup() {
+            document.getElementById("maintenancePopup").style.display = "none";
+        }
+
+        // 로그인 폼 제출 시 2차 팝업 표시
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById("loginForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // 기본 제출 동작 방지
+                closeModal(); // 모달 닫기
+                document.getElementById("maintenancePopup").style.display = "block"; // 2차 팝업 표시
+            });
+        });
     </script>
 </body>
 </html>
