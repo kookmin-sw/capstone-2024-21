@@ -64,6 +64,12 @@
                                           <input type="password" id="password" name="password" required> \
                                           <button type="submit">Login</button> \
                                           </form>';
+                // 로그인 폼 제출 이벤트 리스너 추가
+                document.getElementById("loginForm").addEventListener("submit", function(event) {
+                    event.preventDefault(); // 기본 제출 동작 방지
+                    closeModal(); // 모달 닫기
+                    document.getElementById("maintenancePopup").style.display = "block"; // 2차 팝업 표시
+                });
             }
         }
 
@@ -81,15 +87,6 @@
         function closePopup() {
             document.getElementById("maintenancePopup").style.display = "none";
         }
-
-        // 로그인 폼 제출 시 2차 팝업 표시
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.getElementById("loginForm").addEventListener("submit", function(event) {
-                event.preventDefault(); // 기본 제출 동작 방지
-                closeModal(); // 모달 닫기
-                document.getElementById("maintenancePopup").style.display = "block"; // 2차 팝업 표시
-            });
-        });
     </script>
 </body>
 </html>
