@@ -1,0 +1,29 @@
+/* 팀 페이지 스타일 */
+.team-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.team-member {
+    background-color: #282828;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    flex: 0 1 calc(45% - 20px); /* 두 개의 박스가 한 줄에 오도록 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.team-member h3 {
+    margin-top: 0;
+}
+
+.team-photo {
+    display: block;
+    margin: 20px auto;
+    max-width: 80%;
+    height: auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}

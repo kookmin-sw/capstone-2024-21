@@ -100,34 +100,3 @@ button[type="submit"] {
     color: white;
     cursor: pointer;
 }
-
-/* 2차 팝업 */
-.popup {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid #888;
-    width: 300px;
-    text-align: center;
-    padding: 20px;
-    background-color: #171717;
-    color: white;
-    border-radius: 10px;
-}
-.popup-content {
-    padding: 10px;
-}
-
-.popup button {
-    margin-top: 10px;
-    padding: 10px;
-    border: none;
-    background-color: #333;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}

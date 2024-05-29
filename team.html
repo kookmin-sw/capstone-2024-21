@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOLTA</title>
+    <title>VOLTA - Team</title>
     <link rel="stylesheet" href="index_styles.css">
+    <link rel="stylesheet" href="team_styles.css">
 </head>
 <body>
-    <audio id="backgroundMusic" autoplay loop>
-        <source src="background_music.mp3" type="audio/mpeg">
-        음악 파일이 정상적으로 재생되지 않습니다.
-    </audio>
-
     <header>
         <img src="logo.png" alt="로고 이미지"> <!-- 이미지로 대체 -->
         <nav>
@@ -19,34 +15,42 @@
             <a href="#" onclick="openModal('howToPlay')">How to play</a>
             <a href="https://drive.google.com/drive/folders/13k938S1p3nB8t1DjHm9g_Xez4tzkowME?usp=sharing" target="_blank">Download</a>
             <a href="https://github.com/kookmin-sw/capstone-2024-21">Github</a>
-            <a href="team.html">Team</a> <!-- Team 버튼 추가 -->
+            <a href="team.html">Team</a>
             <a href="#" onclick="openModal('login')">Login</a>
         </nav>
     </header>
-    <img src="poster.jpg" alt="이미지" />
+    <img src="teamphoto.jpeg" alt="팀 사진" class="team-photo" />
 
-    <!-- 모달 -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalContent"></div>
+    <div class="team-container">
+        <div class="team-member">
+            <h3>장원재</h3>
+            <p>20**2805 / bryanwonjaejang@gmail.com</p>
+            <p>팀장, 기획, PM, 사운드</p>
         </div>
-    </div>
-
-    <!-- 2차 팝업 -->
-    <div id="maintenancePopup" class="popup">
-        <div class="popup-content">
-            <p>현재 점검중인 기능입니다</p>
-            <button onclick="closePopup()">Close</button>
+        <div class="team-member">
+            <h3>권용재</h3>
+            <p>20**2959 / dydwo0809@naver.com</p>
+            <p>개발 리드, 네트워크, 서버</p>
+        </div>
+        <div class="team-member">
+            <h3>심현우</h3>
+            <p>20**1822 / vermr10@naver.com</p>
+            <p>UI/UX, 디자인, 몬스터</p>
+        </div>
+        <div class="team-member">
+            <h3>김유진</h3>
+            <p>20**1907 / wlwlfdl3324@naver.com</p>
+            <p>아이템, 맵</p>
+        </div>
+        <div class="team-member">
+            <h3>최재원</h3>
+            <p>20**5214 / dnjs4475@kookmin.ac.kr</p>
+            <p>캐릭터 모델링, 전투</p>
         </div>
     </div>
 
     <!-- JavaScript -->
     <script>
-        // 배경음악 볼륨 조절
-        document.getElementById("backgroundMusic").volume = 0.2;
-
-        // 모달 열기
         function openModal(type) {
             // 배경 음악 일시정지
             document.getElementById("backgroundMusic").pause();
@@ -74,7 +78,6 @@
             }
         }
 
-        // 모달 닫기
         function closeModal() {
             // 배경 음악 재생
             document.getElementById("backgroundMusic").play();
@@ -84,7 +87,6 @@
             document.getElementById("modalContent").innerHTML = '';
         }
 
-        // 2차 팝업 닫기
         function closePopup() {
             document.getElementById("maintenancePopup").style.display = "none";
         }
