@@ -116,7 +116,7 @@ public class Interact : MonoBehaviour
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
                     }
-                    else
+                    else if (Time.time >= lastExitBatteryTime + exitTerm)
                     {
                         float remainingTime = lastExitBatteryTime + exitTerm - Time.time;
                         remainTimeTextObj.SetActive(true);
@@ -260,7 +260,7 @@ public class Interact : MonoBehaviour
         }
         quicSlot.FreshSlot();
         isExiting = false; 
-        Debug.Log("배터리를 사용했습니닫.");
+        Debug.Log("배터리를 사용했습니다.");
     }
 
     //얻은 아이템 디스트로이
