@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 //Virtual Camera에 들어가 있음 
 public class Interact : MonoBehaviour
@@ -16,6 +17,8 @@ public class Interact : MonoBehaviour
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
     public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     public WeaponInventory WeaponQuickslot;
+    public TextMeshProUGUI remainTimeText;
+    public GameObject remainTimeTextObj;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
@@ -48,6 +51,9 @@ public class Interact : MonoBehaviour
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
+        remainTimeTextObj = canvas.Find("RemainTimeText").gameObject;
+        remainTimeText = remainTimeTextObj.GetComponent<TextMeshProUGUI>();
+        remainTimeTextObj.SetActive(false);
 
         ExitDoor = GameObject.Find("exit");
 }
@@ -117,6 +123,9 @@ public class Interact : MonoBehaviour
                     else
                     {
                         float remainingTime = lastExitBatteryTime + exitTerm - Time.time;
+                        remainTimeTextObj.SetActive(true);
+                        remainTimeText.text = Mathf.FloorToInt(remainingTime).ToString() + " seconds remained";
+                        Invoke("InactivateText", 2f);
                         Debug.Log(remainingTime);
                     }
                 }
@@ -321,6 +330,9 @@ public class Interact : MonoBehaviour
         }
     }
 
-
+    void InactivateText()
+    {
+        remainTimeTextObj.SetActive(false);
+    }
 }
 
