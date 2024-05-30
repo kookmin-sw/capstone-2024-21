@@ -23,7 +23,7 @@ public class Interact : MonoBehaviour
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
 
-    private float lastExitBatteryTime;
+    public float lastExitBatteryTime;
     private float exitTerm = 60.0f;
 
     GameObject ExitDoor;
@@ -43,10 +43,7 @@ public class Interact : MonoBehaviour
         pv = gameObject.GetComponent<PhotonView>();
 
         canvas = GameObject.Find("Canvas").transform;
-
-        lastExitBatteryTime = Time.time;
-
-        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
+        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반환
         image_F = canvas.Find("image_F").gameObject;
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
         quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
