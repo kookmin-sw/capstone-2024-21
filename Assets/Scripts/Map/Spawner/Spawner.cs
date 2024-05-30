@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] protected List<Item> items; //상속받은 스포너들에서 객체 생성해서 할당해줘야함 
     //[SerializeField] protected bool isSpawned = false; // 아이템이 하나 이상 나오지 않도록 하기위해
 
-    [SerializeField] protected bool working = false; // 스포너 기능을 하는지 -> MapManager에서 이 변수를 이용해 스포너로 쓸지 않쓸지 지정하고(true로 변환 ), 아이템이 스폰되면 false로 바뀜 
+    [SerializeField] public bool working = false; // 스포너 기능을 하는지 -> MapManager에서 이 변수를 이용해 스포너로 쓸지 않쓸지 지정하고(true로 변환 ), 아이템이 스폰되면 false로 바뀜 
 
     GameObject ItemPrefab; //items중 생성될 아이템 
     float maxDistance = 1f; // 아이템이 스폰될 최대 반경

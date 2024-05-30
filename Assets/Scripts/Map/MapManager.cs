@@ -41,7 +41,7 @@ public class MapManager : MonoBehaviour
     //일시적으로 웨폰 스포너에서 아이템도 나오도록 함. 우선 아이템 스포너는 없다고 생각해도 무관 
     [Header("WeaponSpawner")]
     [SerializeField] List<GameObject> WeaponSpawnerTargets = new List<GameObject>();//스포너 후보들
-    [SerializeField] int WeaponSpawnerCount = 5;
+    [SerializeField] int WeaponSpawnerCount = 10;
     [SerializeField] List<GameObject> WorkingWeaponSpawners = new List<GameObject>();//스포너들 
 
     //[Header("ItemSpawner")]

@@ -186,15 +186,15 @@ public class Interact : MonoBehaviour
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().FillCircle())
             {
                 //수색을 성공적으로 마쳤다면 스폰
-                if(selectedTarget.gameObject.GetComponent<BatterySpawner>() != null)
+                if(selectedTarget.gameObject.GetComponent<BatterySpawner>() != null && selectedTarget.gameObject.GetComponent<BatterySpawner>().working)
                 {
                     selectedTarget.GetComponent<BatterySpawner>().SpawnItem();
                 }
-                else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null)
+                else if (selectedTarget.gameObject.GetComponent<WeaponSpawner>() != null && selectedTarget.gameObject.GetComponent<WeaponSpawner>().working)
                 {
                     selectedTarget.GetComponent<WeaponSpawner>().SpawnItem();
                 }
-                else if (selectedTarget.gameObject.GetComponent<ItemSpawner>() != null)
+                else if (selectedTarget.gameObject.GetComponent<ItemSpawner>() != null && selectedTarget.gameObject.GetComponent<ItemSpawner>().working)
                 {
                     selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
                 }
