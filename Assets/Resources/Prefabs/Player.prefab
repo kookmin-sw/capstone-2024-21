@@ -10811,7 +10811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 13
+  damage: 18
   rate: 1.1
   colliderOn: 0.55
   colliderOff: 0.28
@@ -10979,10 +10979,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  damage: 0
-  rate: 0
-  colliderOn: 0
-  colliderOff: 0
+  damage: 5
+  rate: 1.1
+  colliderOn: 0.46
+  colliderOff: 0.24
   meleeArea: {fileID: 293755722812349590}
   attackManager: {fileID: 0}
   killManager: {fileID: 0}
@@ -11250,7 +11250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 12
+  damage: 10
   rate: 1.1
   colliderOn: 0.46
   colliderOff: 0.24
@@ -26352,7 +26352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 18
+  damage: 14
   rate: 1.1
   colliderOn: 0.46
   colliderOff: 0.24
@@ -26599,7 +26599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 17
+  damage: 15
   rate: 1.1
   colliderOn: 0.55
   colliderOff: 0.28
@@ -37372,7 +37372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 10
+  damage: 5
   rate: 1.1
   colliderOn: 0.46
   colliderOff: 0.24
@@ -42961,7 +42961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 14
+  damage: 13
   rate: 1.1
   colliderOn: 0.46
   colliderOff: 0.24
@@ -68114,7 +68114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 16
+  damage: 12
   rate: 1.1
   colliderOn: 0.46
   colliderOff: 0.24
@@ -78518,7 +78518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 19
+  damage: 17
   rate: 1.1
   colliderOn: 0.55
   colliderOff: 0.28
@@ -93930,7 +93930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage: 10
+  damage: 5
   rate: 1.1
   colliderOn: 0.16
   colliderOff: 0.34
