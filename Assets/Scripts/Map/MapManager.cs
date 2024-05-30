@@ -367,7 +367,7 @@ public class MapManager : MonoBehaviour
                 // pv.RPC("SpawnItemSmall", RpcTarget.AllBuffered, itemNum, idx);
 
                 Transform idxTransform = hiddenItemPosSmall[idx].transform;
-                PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
+                PhotonNetwork.Instantiate("Prefabs/" + itemsSmall[itemNum].itemName, idxTransform.position, idxTransform.rotation);
             }
         }
     }
