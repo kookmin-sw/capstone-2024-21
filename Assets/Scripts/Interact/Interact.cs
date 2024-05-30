@@ -116,7 +116,7 @@ public class Interact : MonoBehaviour
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
                     }
-                    else if (Time.time >= lastExitBatteryTime + exitTerm)
+                    else if (Time.time < lastExitBatteryTime + exitTerm)
                     {
                         float remainingTime = lastExitBatteryTime + exitTerm - Time.time;
                         remainTimeTextObj.SetActive(true);
