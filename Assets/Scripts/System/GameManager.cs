@@ -49,6 +49,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TimerStart();
+        }
+    }
+
     public void TimerStart()
     {
         timer.StartTimer(10);
