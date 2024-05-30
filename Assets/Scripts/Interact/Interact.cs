@@ -116,7 +116,7 @@ public class Interact : MonoBehaviour
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
                     }
-                    else if (Time.time < lastExitBatteryTime + exitTerm)
+                    if (Time.time < lastExitBatteryTime + exitTerm)
                     {
                         float remainingTime = lastExitBatteryTime + exitTerm - Time.time;
                         remainTimeTextObj.SetActive(true);
@@ -208,7 +208,7 @@ public class Interact : MonoBehaviour
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
             {
                 // 성공적으로 게이지가 다 찼다면
-                lastExitBatteryTime = Time.time;
+                pv.RPC("ModyfiLastExitTime", RpcTarget.AllBuffered);
                 isExiting = false;
                 EraseInventoryBattery(); //인벤토리에서 배터리 하나 지우고 
                 MapManager.Instance.AddChargeBatteryRPC(); // 차지한 배터리 하나 증가
@@ -261,6 +261,12 @@ public class Interact : MonoBehaviour
         quicSlot.FreshSlot();
         isExiting = false; 
         Debug.Log("배터리를 사용했습니다.");
+    }
+
+    [PunRPC]
+    void ModyfiLastExitTime()
+    {
+        lastExitBatteryTime = Time.time;
     }
 
     //얻은 아이템 디스트로이
