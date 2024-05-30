@@ -113,7 +113,6 @@ public class Interact : MonoBehaviour
                     FindMovedir();
                     if (Time.time >= lastExitBatteryTime + exitTerm && PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
                     {
-                        lastExitBatteryTime = Time.time;
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
                     }
@@ -209,6 +208,7 @@ public class Interact : MonoBehaviour
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
             {
                 // 성공적으로 게이지가 다 찼다면
+                lastExitBatteryTime = Time.time;
                 isExiting = false;
                 EraseInventoryBattery(); //인벤토리에서 배터리 하나 지우고 
                 MapManager.Instance.AddChargeBatteryRPC(); // 차지한 배터리 하나 증가
