@@ -177,23 +177,22 @@ public class HpManager : MonoBehaviour
             if (pv.IsMine)
             {
                 Debug.Log("사망");
-                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 1);
-                if (uiManager.weaponInventory.weaponSlot.item != null)
-                {
-                    DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.weaponInventory.weaponSlot.item.itemName, SpawnPos, transform.rotation);
-                    Debug.Log("무기 버려짐");
-                    uiManager.weaponInventory.weaponSlot.item = null;
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    if (uiManager.inventory.slots[i].item != null)
-                    {
-                        DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + uiManager.inventory.slots[i].item.itemName, SpawnPos, transform.rotation);
-                        Debug.Log("아이템 버려짐");
-                        uiManager.inventory.slots[i].item = null;
-                        uiManager.inventory.FreshSlot();
-                    }
-                }
+                //WeaponInventory weaponInventory = GameObject.Find("WeaponSlot").GetComponent<WeaponInventory>();
+                //Inventory inventory = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
+                //if (weaponInventory.weaponSlot.item != null)
+                //{
+                //    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                //    weaponInventory.weaponSlot.item = null;
+                //}
+                //for (int i = 0; i < 4; i++)
+                //{
+                //    if (inventory.slots[i].item != null)
+                //    {
+                //        weaponInventory.abandonedItem = inventory.slots[i].item;
+                //        inventory.slots[i].item = null;
+                //        inventory.FreshSlot();
+                //    }
+                //}
                 GameManager.Instance.GameOver();
                 uiManager.isUIActivate = true;
             }
