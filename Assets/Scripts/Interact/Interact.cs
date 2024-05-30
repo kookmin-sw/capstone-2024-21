@@ -20,6 +20,9 @@ public class Interact : MonoBehaviour
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
 
+    private float lastExitBatteryTime;
+    private float exitTerm = 60.0f;
+
     GameObject ExitDoor;
     public string playerId;
     Vector3 PlayerMoveDir;
@@ -37,6 +40,8 @@ public class Interact : MonoBehaviour
         pv = gameObject.GetComponent<PhotonView>();
 
         canvas = GameObject.Find("Canvas").transform;
+
+        lastExitBatteryTime = Time.time;
 
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
         image_F = canvas.Find("image_F").gameObject;
@@ -103,10 +108,16 @@ public class Interact : MonoBehaviour
                 {
                     Debug.Log("Exit 문 상호작용 ");
                     FindMovedir();
-                    if (PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
+                    if (Time.time >= lastExitBatteryTime + exitTerm && PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
                     {
+                        lastExitBatteryTime = Time.time;
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
+                    }
+                    else
+                    {
+                        float remainingTime = lastExitBatteryTime + exitTerm - Time.time;
+                        Debug.Log(remainingTime);
                     }
                 }
                 else if (selectedTarget.CompareTag("ItemSpawner"))
