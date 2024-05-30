@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
         itemRigidbody.velocity = velocity;
 
         Debug.Log("item is spawned");
-        working = true;
+        working = false;
     }
 
     //public void SpawnItem_tmpRPC(int itemNum, float x, float y, float z)
