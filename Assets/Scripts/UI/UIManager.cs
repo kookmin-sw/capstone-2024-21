@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
         gameTime = 0;
         selectSlot = 0;
         elapsedTime = 0f;
-        interval = 30f;
+        interval = 180f;
         ChangeSlot(0);
 
         statePlayerName.text = GameManager.Instance.UserId;
