@@ -79,6 +79,7 @@ MonoBehaviour:
   - SpawnItemSmall
   - RpcAudio
   - RpcHit
+  - ModyfiLastExitTime
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
