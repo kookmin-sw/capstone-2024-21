@@ -335,58 +335,67 @@ public class MapManager : MonoBehaviour
 
     public void SpawndItemInMapRPC()
     {
-        //All
-        int[] idx_all = new int[hiddenItemPosAll.Count];
-        for (int i = 0; i < hiddenItemPosAll.Count; i++) idx_all[i] = i;
-        GameManager.Instance.Shuffle(idx_all);
+        if (PhotonNetwork.IsMasterClient)
+            {
+            //All
+            int[] idx_all = new int[hiddenItemPosAll.Count];
+            for (int i = 0; i < hiddenItemPosAll.Count; i++) idx_all[i] = i;
+            GameManager.Instance.Shuffle(idx_all);
 
-        for (int i = 0; i < hiddenItemCntAll; i++)
-        {
-            int itemNum = Random.Range(0, itemsAll.Count);
-            int idx = idx_all[i];
+            for (int i = 0; i < hiddenItemCntAll; i++)
+            {
+                int itemNum = Random.Range(0, itemsAll.Count);
+                int idx = idx_all[i];
 
-            pv.RPC("SpawnItemAll", RpcTarget.AllBuffered, itemNum, idx);
+                // pv.RPC("SpawnItemAll", RpcTarget.AllBuffered, itemNum, idx);
+
+                Transform idxTransform = hiddenItemPosAll[idx].transform;
+                PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
+            }
+
+
+            //Small
+            int[] idx_small = new int[hiddenItemPosSmall.Count];
+            for (int i = 0; i < hiddenItemPosSmall.Count; i++) idx_small[i] = i;
+            GameManager.Instance.Shuffle(idx_small);
+
+            for (int i = 0; i < hiddenItemCntSmall; i++)
+            {
+                int itemNum = Random.Range(0, itemsSmall.Count);
+                int idx = idx_small[i];
+
+                // pv.RPC("SpawnItemSmall", RpcTarget.AllBuffered, itemNum, idx);
+
+                Transform idxTransform = hiddenItemPosSmall[idx].transform;
+                PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
+            }
         }
-
-
-        //Small
-        int[] idx_small = new int[hiddenItemPosSmall.Count];
-        for (int i = 0; i < hiddenItemPosSmall.Count; i++) idx_small[i] = i;
-        GameManager.Instance.Shuffle(idx_small);
-
-        for (int i = 0; i < hiddenItemCntSmall; i++)
-        {
-            int itemNum = Random.Range(0, itemsSmall.Count);
-            int idx = idx_small[i];
-
-            pv.RPC("SpawnItemSmall", RpcTarget.AllBuffered, itemNum, idx);
-        }
     }
 
 
-    [PunRPC]
-    public void SpawnItemAll(int itemNum, int idx)
-    {
-        //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
+    //[PunRPC]
+    //public void SpawnItemAll(int itemNum, int idx)
+    //{
+    //    //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
-        // GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
-        Transform idxTransform = hiddenItemPosAll[idx].transform;
+    //    // GameObject ItemPrefab = itemsAll[itemNum].itemPrefab;
+    //    Transform idxTransform = hiddenItemPosAll[idx].transform;
 
-        // Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
-        PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
-    }
+    //    // Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+    //    PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
+    //}
 
-    [PunRPC]
-    public void SpawnItemSmall(int itemNum, int idx)
-    {
-        //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
+    //[PunRPC]
+    //public void SpawnItemSmall(int itemNum, int idx)
+    //{
+    //    //Debug.Log("SpawnItem 실행 " + "view ID : " + GetComponent<PhotonView>().ViewID);
 
-        // GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
-        Transform idxTransform = hiddenItemPosSmall[idx].transform;
+    //    // GameObject ItemPrefab = itemsSmall[itemNum].itemPrefab;
+    //    Transform idxTransform = hiddenItemPosSmall[idx].transform;
 
-        // Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
-        PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
-    }
+    //    // Instantiate(ItemPrefab, idxTransform.position, idxTransform.rotation);
+    //    PhotonNetwork.Instantiate("Prefabs/" + itemsAll[itemNum].itemName, idxTransform.position, idxTransform.rotation);
+    //}
 
 
 
