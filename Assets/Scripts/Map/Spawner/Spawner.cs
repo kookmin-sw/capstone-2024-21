@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
     public void SpawnItem()
     {
         //아이템이 전에 스폰되지 않았을 경우에만 스폰. 
-        if (working==true)
+        if (!working)
         {
             Vector3 spawnPosition = GetRandomPosition();
             // SpawnItem_tmpRPC(GetRandomItemNumber(), spawnPosition.x, spawnPosition.y, spawnPosition.z);
@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
         itemRigidbody.velocity = velocity;
 
         Debug.Log("item is spawned");
-        working = false;
+        working = true;
     }
 
     //public void SpawnItem_tmpRPC(int itemNum, float x, float y, float z)
