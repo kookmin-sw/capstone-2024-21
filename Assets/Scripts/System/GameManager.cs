@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public UIManager uiManager;
 
+    public Interact interact;
+
     public Timer timer;
     public GameObject[] playerObjects;
     Player[] players;
@@ -47,14 +49,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TimerStart();
-        }
-    }
-
     public void TimerStart()
     {
         timer.StartTimer(10);
@@ -68,6 +62,9 @@ public class GameManager : MonoBehaviour
         uiManager.isGameStart = true;
         uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
         uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        interact = GameObject.FindObjectOfType<Interact>();
+        interact.lastExitBatteryTime = Time.time;
 
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
