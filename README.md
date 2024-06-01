@@ -37,4 +37,4 @@
   - [VOLTA 포스터 다운로드](images/poster.jpg)
   - [VOLTA 중간발표 PPT 다운로드](images/midppt.pptx)
   - [VOLTA 최종발표 PPT 다운로드](images/finalppt.pptx)
-  - ### [GOOGLE DRIVE link](https://drive.google.com/drive/folders/1Ro8SXzZw2-ILFIKVOtMGpgtni7_hYMm5?usp=drive_link)
+  - ### [GOOGLE DRIVE link](https://drive.google.com/file/d/1pyTVlCy_j1QPuflIN8oVaLFeH23Rsjoe/view?usp=sharing)
