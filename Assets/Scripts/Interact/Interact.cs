@@ -7,7 +7,7 @@ using Photon.Pun;
 using TMPro;
 
 //Virtual Camera에 들어가 있음 
-public class Interact : MonoBehaviour
+public class Interact : MonoBehaviour, IUIStateListener
 {
     public PhotonView pv;
 
@@ -15,7 +15,7 @@ public class Interact : MonoBehaviour
 
     public GameObject image_F;//껐다 켰다 할 F UI. 
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
-    public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
+    public QuickslotManager quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     public WeaponInventory WeaponQuickslot;
     public TextMeshProUGUI remainTimeText;
     public GameObject remainTimeTextObj;
@@ -38,6 +38,15 @@ public class Interact : MonoBehaviour
     Transform selectedTarget;
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
+    public void OnStateChanged(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.InGame:
+                lastExitBatteryTime = Time.time;
+                break;
+        }
+    }
     private void Start()
     {
         pv = gameObject.GetComponent<PhotonView>();
@@ -46,7 +55,7 @@ public class Interact : MonoBehaviour
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반환
         image_F = canvas.Find("image_F").gameObject;
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
-        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
+        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<QuickslotManager>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
         remainTimeTextObj = canvas.Find("RemainTimeText").gameObject;
         remainTimeText = remainTimeTextObj.GetComponent<TextMeshProUGUI>();
@@ -337,5 +346,6 @@ public class Interact : MonoBehaviour
     {
         remainTimeTextObj.SetActive(false);
     }
+
 }
 

@@ -53,18 +53,4 @@ public class StaminaManager : MonoBehaviour
             staminaBar.value += 15f * Time.deltaTime;
         }
     }
-
-    //void ManageHealthPointBar()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.H))
-    //    {
-    //        healthPointBar.value -= 5;
-    //        healthPointCount.text = healthPointBar.value.ToString();
-    //        if(healthPointBar.value == 0)
-    //        {
-    //            uiManager.isGameOver = true;
-    //            uiManager.isUIActivate = true;
-    //        }
-    //    }
-    //}
 }

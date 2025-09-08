@@ -10,11 +10,7 @@ using System.Linq;
 
 public class LobbyPagePlayfab : MonoBehaviour
 {
-    public string playFabId;
-    public string userName;
-    public string playerLocation;
-    public string playerRank;
-    public string playerScore;
+    public PlayerData playerData = new PlayerData();
     public TextMeshProUGUI playerName;
     public GameObject rowPrefab;
     public Transform rowsParent;
@@ -56,9 +52,10 @@ public class LobbyPagePlayfab : MonoBehaviour
 
     public void OnPlayerCountryGet(GetPlayerProfileResult result)
     {
-        playerLocation = result.PlayerProfile.Locations[0].CountryCode.Value.ToString();
-        lobbyUIManager.locationText.text = playerLocation;
+        playerData.playerLocation = result.PlayerProfile.Locations[0].CountryCode.Value.ToString();
+        lobbyUIManager.locationText.text = playerData.playerLocation;
     }
+
     public void GetLeaderboard()
     {
         var request = new GetLeaderboardRequest

@@ -86,32 +86,7 @@ public class MovementStateManager : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            if (attackManager.weaponInventory.abandonedItem != null) //버릴 무기가 있으면
-            {
-                // DroppedItem = Instantiate(attackManager.weaponInventory.abandonedItem.itemPrefab); //프리펩 생성
-                Debug.Log("아이템 버림");
-                Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z + 1);
 
-                DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + attackManager.weaponInventory.abandonedItem.itemName, SpawnPos, transform.rotation);
-                if (attackManager.weaponInventory.abandonedItem.ItemType < 11)
-                {
-                    if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
-                    {
-                        DroppedItem.GetComponent<Weapon>().settedLightning = true;
-                        DroppedItem.GetComponent<ItemData>().itemData.ItemDamage *= 2;
-                    }
-                    else if (attackManager.weaponInventory.abandonedItem.craftCompleted == false)
-                    {
-                        DroppedItem.GetComponent<Weapon>().settedLightning = false;
-                    }
-                    attackManager.weaponInventory.abandonedItem.craftCompleted = false;
-                }
-                attackManager.weaponInventory.abandonedItem = null;
-            }
-            if (GameManager.Instance.isPlaying == true && attackManager.isAttack == false)
-            {
-                uiManager.SelectQuickSlot();
-            }
             GetDirectionAndMove();
             Gravity();
 

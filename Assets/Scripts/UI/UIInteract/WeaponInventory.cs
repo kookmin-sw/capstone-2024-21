@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class WeaponInventory : MonoBehaviour
 {
 
-    public WeaponSlot weaponSlot;
+    public WeaponSlotData weaponSlot;
     public bool isWeaponAdded;
     public bool isCrafted;
     public Item abandonedItem;
@@ -22,7 +22,7 @@ public class WeaponInventory : MonoBehaviour
     void Awake()
     { 
         isCrafted = false;
-        batterySlot.GetComponentInChildren<Slot>().item = null;
+        batterySlot.GetComponentInChildren<SlotData>().item = null;
         weaponSlot.item = null;
         isWeaponAdded = false;
         abandonedItem = null;
@@ -32,13 +32,13 @@ public class WeaponInventory : MonoBehaviour
     {
         if (weaponSlot.item != null && batterySlot.transform.childCount > 0 && weaponSlot.item.craftCompleted == false)
         {
-            if(batterySlot.GetComponentInChildren<Slot>().item != null)
+            if(batterySlot.GetComponentInChildren<SlotData>().item != null)
             {
-                if (batterySlot.GetComponentInChildren<Slot>().item.ItemType == 11)
+                if (batterySlot.GetComponentInChildren<SlotData>().item.ItemType == 11)
                 {
                     if (craftGauge.FillBolt())
                     {
-                        batterySlot.GetComponentInChildren<Slot>().item = null;
+                        batterySlot.GetComponentInChildren<SlotData>().item = null;
                         weaponSlot.item.craftCompleted = true;
                         weaponSlot.item.ItemDamage *= 2;
                         craftCompletedMark.SetActive(true);

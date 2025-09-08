@@ -3,7 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+
+public enum GameState
+{
+    Lobby,
+    Ready,
+    InGame,
+    GameOver
+}
+public class GameManager : MonoBehaviourPun
 {
     private static GameManager _instance;
     public static GameManager Instance
@@ -23,18 +31,33 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+    public GameState CurrentState { get; private set; }
 
     public string UserId { get; set; } = "soldier";
-    public bool isPlaying { get; set; } = false;
-    public bool isEscape { get; set; } = false;
 
-    public UIManager uiManager;
-
-    public Interact interact;
-
-    public Timer timer;
     public GameObject[] playerObjects;
     Player[] players;
+
+    public int totalPlayers { get; private set; }
+
+    private int _curPlayers;
+    public int curPlayers 
+    {
+        get { return _curPlayers; } 
+        set 
+        { 
+            _curPlayers = value;
+            OnPlayerCountChanged?.Invoke();
+
+            if (_curPlayers == 1) SetState(GameState.GameOver);
+        }
+    }
+
+    public delegate void GameStateChanged(GameState newState);
+    public event GameStateChanged OnStateChanged;
+
+    public delegate void PlayerCountChanged();
+    public event PlayerCountChanged OnPlayerCountChanged;
 
     void Awake()
     {
@@ -49,30 +72,37 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        Timer.OnZero += GameStart;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            TimerStart();
+            SetState(GameState.Ready);
         }
     }
 
-    public void TimerStart()
+    public void SetState(GameState state)
     {
-        timer.StartTimer(10);
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        photonView.RPC(nameof(ApplyStateRPC), RpcTarget.All, state);
+    }
+
+    [PunRPC]
+    void ApplyStateRPC(GameState state)
+    {
+        CurrentState = state;
+        OnStateChanged.Invoke(CurrentState);
     }
 
     public void GameStart()
     {
-        isPlaying = true;
-
-        uiManager = GameObject.FindObjectOfType<UIManager>();
-        uiManager.isGameStart = true;
-        uiManager.totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        uiManager.curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        interact = GameObject.FindObjectOfType<Interact>();
-        interact.lastExitBatteryTime = Time.time;
+        totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        curPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
 
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new Player[playerObjects.Length];
@@ -82,30 +112,18 @@ public class GameManager : MonoBehaviour
             players[i] = playerObjects[i].GetComponent<Player>();
         }
 
-        Debug.Log("일단 GameStart 함수는 실행");
-        Debug.Log("내가 마스터 클라이언트의 상인가? :" + PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
         {
             MapManager.Instance.SpawndItemInMapRPC();//일단 여기는 잘 실행됨 ! 
             Go2Map();
         }
+
+        SetState(GameState.InGame);
     }
 
     public void Escape()
     {
-        Debug.Log("Escape 실행");
-        isEscape = true;
-    }
-
-    public void GameOver()
-    {
-        Debug.Log("GameOver 실행");
-        uiManager = GameObject.FindObjectOfType<UIManager>();
-        if (uiManager.isGameOver == false)
-        {
-            isPlaying = false;
-            uiManager.isGameOver = true;
-        }
+        SetState(GameState.GameOver);
     }
 
     public void Go2Map()
@@ -125,7 +143,6 @@ public class GameManager : MonoBehaviour
             Vector3 pos = points[idx[i]].position;
             players[i].Go2Map(pos);
         }
-
     }
 
     public void Shuffle(int[] deck)
@@ -133,7 +150,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < deck.Length; i++)
         {
             int temp = deck[i];
-            int randomIndex = Random.Range(0, deck.Length);
+            int randomIndex = Random.Range(i, deck.Length);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
         }

@@ -16,7 +16,7 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     private RectTransform slotRect;
 
     [SerializeField] private Transform batterySlot;
-    [SerializeField] private Inventory itemSlots;
+    [SerializeField] private QuickslotManager itemSlots;
     void Awake()
     {
         slotImage = GetComponent<Image>();
@@ -42,7 +42,7 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     public void OnDrop(PointerEventData eventData)
     {
         // pointerDrag = 드래그중인 아이콘 / 드래그하고있는 아이콘이 있으면
-        if(eventData.pointerDrag.GetComponent<Slot>().item != null)
+        if(eventData.pointerDrag.GetComponent<SlotData>().item != null)
         {
             DraggableUI draggedUI = eventData.pointerDrag.GetComponent<DraggableUI>();
             if (transform.childCount > 0) //드롭한 슬롯이 아이템을 가지고 있으면

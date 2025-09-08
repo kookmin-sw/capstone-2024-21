@@ -2,60 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviour, IUIStateListener
 {
-    public int time;
     private PhotonView pv;
-    UIManager uiManager;
+
+    public int time;
+    TextMeshProUGUI countDownTMP;
+
+    public delegate void OnZeroEvent();
+    public static event OnZeroEvent OnZero;
+
+    public void OnStateChanged(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.Ready:
+                StartCoroutine(CountDown());
+                break;
+        }
+    }
 
     private void Awake()
     {
-        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         pv = GetComponent<PhotonView>();
-        GameManager.Instance.timer = this;
+        countDownTMP = GetComponent<TextMeshProUGUI>();
     }
 
-    public void StartTimer(int timerTime)
+    IEnumerator CountDown()
     {
-        time = timerTime;
-        StartCoroutine(TimerCoroution());
-    }
-
-    IEnumerator TimerCoroution()
-    {
-        if (time > 0)
+        time = 10;
+        while(time > 0)
         {
-            time -= 1;
+            pv.RPC("ShowTimer", RpcTarget.All, time);
+            yield return new WaitForSeconds(1f);
+            --time;
         }
-        else
-        {
-            pv.RPC("GameStart", RpcTarget.All);
-            yield break;
-        }
-
-        pv.RPC("ShowTimer", RpcTarget.All, time); //1초 마다 방 모두에게 전달
-
-        yield return new WaitForSeconds(1);
-        StartCoroutine(TimerCoroution());
+        OnZero?.Invoke();
     }
 
     [PunRPC]
     void ShowTimer(int time)
     {
-
         if (time != 0)
         {
-            uiManager.countDownNum.text = time.ToString();
+            countDownTMP.SetText($"{time}");
         }
-        
-        Debug.Log(time);
-    }
-
-    [PunRPC]
-    void GameStart()
-    {
-        Debug.Log("타이머 종료");
-        GameManager.Instance.GameStart();
     }
 }
