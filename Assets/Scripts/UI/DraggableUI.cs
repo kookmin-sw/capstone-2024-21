@@ -23,7 +23,7 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     // 현재 오브젝트 드래그 시작 시 1회 호출
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (eventData.pointerDrag.GetComponent<SlotData>().item != null)
+        if (eventData.pointerDrag.GetComponent<Slot>().item != null)
         {
             //드래그 직전에 소속되어 있던 부모Slot Transform 정보 저장
             preSlot = transform.parent;
@@ -44,7 +44,7 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnDrag(PointerEventData eventData)
     {
         // 드래그 중인 아이콘 위치를 마우스 위치로 설정
-        if(eventData.pointerDrag.GetComponent<SlotData>().item != null)
+        if(eventData.pointerDrag.GetComponent<Slot>().item != null)
         {
             itemIconRect.position = eventData.position;
         }
@@ -53,7 +53,7 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     //현재 오브젝트의 드래그를 종료할 때 1회 호출
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (eventData.pointerDrag.GetComponent<SlotData>().item != null)
+        if (eventData.pointerDrag.GetComponent<Slot>().item != null)
         {
             // 드래그 종료시에도 부모가 canvas이면 slot창 외에 드롭된 것이어서 원래자리로
             if (transform.parent == canvas)

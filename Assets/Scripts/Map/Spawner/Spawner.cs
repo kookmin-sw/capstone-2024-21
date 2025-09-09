@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] protected List<Item> items; //상속받은 스포너들에서 객체 생성해서 할당해줘야함 
     //[SerializeField] protected bool isSpawned = false; // 아이템이 하나 이상 나오지 않도록 하기위해
 
-    [SerializeField] public bool working = false; // 스포너 기능을 하는지 -> MapManager에서 이 변수를 이용해 스포너로 쓸지 않쓸지 지정하고(true로 변환 ), 아이템이 스폰되면 false로 바뀜 
+    [SerializeField] protected bool working = false; // 스포너 기능을 하는지 -> MapManager에서 이 변수를 이용해 스포너로 쓸지 않쓸지 지정하고(true로 변환 ), 아이템이 스폰되면 false로 바뀜 
 
     GameObject ItemPrefab; //items중 생성될 아이템 
     float maxDistance = 1f; // 아이템이 스폰될 최대 반경
@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
     public void SpawnItem()
     {
         //아이템이 전에 스폰되지 않았을 경우에만 스폰. 
-        if (working==true)
+        if (!working)
         {
             Vector3 spawnPosition = GetRandomPosition();
             // SpawnItem_tmpRPC(GetRandomItemNumber(), spawnPosition.x, spawnPosition.y, spawnPosition.z);
@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
         itemRigidbody.velocity = velocity;
 
         Debug.Log("item is spawned");
-        working = false;
+        working = true;
     }
 
     //public void SpawnItem_tmpRPC(int itemNum, float x, float y, float z)

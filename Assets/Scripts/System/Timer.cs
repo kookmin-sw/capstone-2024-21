@@ -4,12 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 
-public class Timer : MonoBehaviour, IUIStateListener
+public class Timer : MonoBehaviour,IGameStateListener
 {
     private PhotonView pv;
 
-    public int time;
-    TextMeshProUGUI countDownTMP;
+    public int startTime = 10;
+    [SerializeField] private TextMeshProUGUI countDownTMP;
 
     public delegate void OnZeroEvent();
     public static event OnZeroEvent OnZero;
@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour, IUIStateListener
         switch (state)
         {
             case GameState.Ready:
-                StartCoroutine(CountDown());
+                StartCountDown();
                 break;
         }
     }
@@ -30,24 +30,31 @@ public class Timer : MonoBehaviour, IUIStateListener
         countDownTMP = GetComponent<TextMeshProUGUI>();
     }
 
-    IEnumerator CountDown()
+    public void StartCountDown()
     {
-        time = 10;
-        while(time > 0)
+        if (PhotonNetwork.IsMasterClient)
         {
-            pv.RPC("ShowTimer", RpcTarget.All, time);
-            yield return new WaitForSeconds(1f);
-            --time;
+            pv.RPC(nameof(CountDown), RpcTarget.All, startTime);
         }
-        OnZero?.Invoke();
     }
 
     [PunRPC]
-    void ShowTimer(int time)
+    void CountDown(int startTime)
     {
-        if (time != 0)
+        StartCoroutine(ShowLoop(startTime));
+    }
+    IEnumerator ShowLoop(int startTime)
+    {
+        int time = startTime;
+        while (time > 0)
         {
             countDownTMP.SetText($"{time}");
+            yield return new WaitForSeconds(1f);
+            --time;
         }
+        gameObject.SetActive(false);
+        OnZero?.Invoke();
     }
+
+
 }

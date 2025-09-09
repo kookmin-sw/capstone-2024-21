@@ -5,7 +5,7 @@ using Cinemachine;
 using Photon.Pun;
 using Unity.VisualScripting;
 
-public class AimStateManager : MonoBehaviourPun, IUIStateListener
+public class AimStateManager : MonoBehaviourPun
 {
     public Cinemachine.AxisState xAxis, yAxis;
     [SerializeField] Transform camFollowPos;
@@ -14,8 +14,7 @@ public class AimStateManager : MonoBehaviourPun, IUIStateListener
 
     private PhotonView pv;
 
-    Coroutine UpdateRoutine;
-
+    // Start is called before the first frame update
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -28,25 +27,15 @@ public class AimStateManager : MonoBehaviourPun, IUIStateListener
         }
     }
 
-    public void OnUIStateChanged(UIState state)
+    // Update is called once per frame
+    void Update()
     {
-        throw new System.NotImplementedException();
-    }
-
-    IEnumerator UpdateAxis()
-    {
-        while(true)
+        if (pv.IsMine && uiManager.isUIActivate == false)
         {
-            if (pv.IsMine)
-            {
-                xAxis.Update(Time.deltaTime);
-                yAxis.Update(Time.deltaTime);
-            }
-
-            yield return null;
+            xAxis.Update(Time.deltaTime);
+            yAxis.Update(Time.deltaTime);
         }
     }
-
 
     private void LateUpdate()
     {
@@ -56,6 +45,4 @@ public class AimStateManager : MonoBehaviourPun, IUIStateListener
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, xAxis.Value, transform.eulerAngles.z);
         }
     }
-
-
 }

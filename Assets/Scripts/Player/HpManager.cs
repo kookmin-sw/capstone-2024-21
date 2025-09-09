@@ -9,39 +9,18 @@ using Unity.VisualScripting;
 
 
 
-public class HpManager : MonoBehaviour, IUIStateListener
+public class HpManager : MonoBehaviour
 {
-    public delegate void OnDeathEvent(Vector3 deathPos);
-    public static event OnDeathEvent OnDeath;
-
-    public delegate void OnHPChangedEvent(float curHP);
-    public static event OnHPChangedEvent OnDamaged;
-    public static event OnHPChangedEvent OnHealed;
-
     public float maxHp { get; set; } = 100;
 
-    private float _hp;
-    public float hp 
-    {
-        get { return _hp; } 
-        set {
-                if (_hp > value)
-                {
-                    _hp = value;
-                    OnHealed?.Invoke(_hp);
-                }
-                if (_hp < value)
-                {
-                    _hp = value;
-                    OnDamaged?.Invoke(_hp);
-                }
-            }
-    }
+    public float monMaxHp { get; set; } = 50;
 
+    public float hp;
     public bool isDead { get; set; } // 죽었는지 확인
 
     public AttackManager attackManager;
     public GameObject DroppedItem;
+
 
     [SerializeField] private Slider healthPointBar;
     [SerializeField] private TMP_Text healthPointCount;
@@ -50,17 +29,12 @@ public class HpManager : MonoBehaviour, IUIStateListener
     [SerializeField] private GameObject quickSlot;
     [SerializeField] private GameObject weaponSlot;
 
+    // 죽었을 때 작동할 함수들을 저장하는 변수
+    // onDeath += 함수이름; 이렇게 이벤트 등록 가능
+    // 함수 이름에 () 안붙여야함
+    public event Action onDeath;
+
     private PhotonView pv;
-
-    public void OnStateChanged(GameState state)
-    {
-        
-    }
-
-    void Init()
-    {
-
-    }
 
     void Awake()
     {
@@ -78,9 +52,25 @@ public class HpManager : MonoBehaviour, IUIStateListener
         }
     }
 
+    private void Update()
+    {
+        if (pv.IsMine)
+        {
+            if (GameManager.Instance.isEscape == true)
+            {
+                EscapeWin();
+                Debug.Log("탈출 성공공");
+            }
+        }
+    }
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {
+        if (gameObject.tag == "Monster")
+        {
+            hp = monMaxHp;
+        }
+
         if (gameObject.tag == "Player")
         {
             hp = maxHp;
@@ -180,9 +170,36 @@ public class HpManager : MonoBehaviour, IUIStateListener
         // 사망 이벤트 있으면 실행
         if (gameObject.tag == "Player")
         {
-            Vector3 SpawnPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 1);
-            GameManager.Instance.curPlayers -= 1;
-            OnDeath?.Invoke(SpawnPos);
+            if (onDeath != null)
+            {
+                onDeath();
+            }
+            if (pv.IsMine)
+            {
+                Debug.Log("사망");
+                //WeaponInventory weaponInventory = GameObject.Find("WeaponSlot").GetComponent<WeaponInventory>();
+                //Inventory inventory = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
+                //if (weaponInventory.weaponSlot.item != null)
+                //{
+                //    weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
+                //    weaponInventory.weaponSlot.item = null;
+                //}
+                //for (int i = 0; i < 4; i++)
+                //{
+                //    if (inventory.slots[i].item != null)
+                //    {
+                //        weaponInventory.abandonedItem = inventory.slots[i].item;
+                //        inventory.slots[i].item = null;
+                //        inventory.FreshSlot();
+                //    }
+                //}
+                GameManager.Instance.GameOver();
+                uiManager.isUIActivate = true;
+            }
+            else
+            {
+                GameManager.Instance.curPlayers -= 1;
+            }
             isDead = true;
             gameObject.SetActive(false);
         }
@@ -227,6 +244,8 @@ public class HpManager : MonoBehaviour, IUIStateListener
         {
             if (pv.IsMine)
             {
+                GameManager.Instance.GameOver();
+                uiManager.isUIActivate = true;
             }
             AllDie();
             isDead = true;
@@ -241,7 +260,9 @@ public class HpManager : MonoBehaviour, IUIStateListener
         Debug.Log("RpcAllDie() 실행");
         if (gameObject.tag == "Player")
         {
+            uiManager.isUIActivate = true;
             isDead = true;
+            GameManager.Instance.GameOver();
 
             GameObject[] playerObjects = GameManager.Instance.playerObjects;
 
@@ -258,6 +279,5 @@ public class HpManager : MonoBehaviour, IUIStateListener
         Debug.Log("AllDie() 실행");
         pv.RPC("RpcAllDie", RpcTarget.Others);
     }
-
 
 }

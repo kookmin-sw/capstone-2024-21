@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using System.Linq;
 
 public enum GameState
 {
@@ -11,7 +11,7 @@ public enum GameState
     InGame,
     GameOver
 }
-public class GameManager : MonoBehaviourPun
+public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     public static GameManager Instance
@@ -31,23 +31,25 @@ public class GameManager : MonoBehaviourPun
             return _instance;
         }
     }
-    public GameState CurrentState { get; private set; }
 
     public string UserId { get; set; } = "soldier";
+    public bool isPlaying { get; set; } = false;
+    public bool isEscape { get; set; } = false;
 
-    public GameObject[] playerObjects;
-    Player[] players;
+    public UIManager uiManager;
 
     public int totalPlayers { get; private set; }
-
     private int _curPlayers;
-    public int curPlayers 
+
+    PhotonView pv;
+
+    public int curPlayers
     {
-        get { return _curPlayers; } 
-        set 
-        { 
+        get { return _curPlayers; }
+        set
+        {
             _curPlayers = value;
-            OnPlayerCountChanged?.Invoke();
+            OnPlayerCountChanged?.Invoke(_curPlayers, totalPlayers);
 
             if (_curPlayers == 1) SetState(GameState.GameOver);
         }
@@ -56,8 +58,14 @@ public class GameManager : MonoBehaviourPun
     public delegate void GameStateChanged(GameState newState);
     public event GameStateChanged OnStateChanged;
 
-    public delegate void PlayerCountChanged();
+    public delegate void PlayerCountChanged(int curPlayer, int totalPlayer);
     public event PlayerCountChanged OnPlayerCountChanged;
+
+    public GameObject[] playerObjects;
+    Player[] players;
+
+    public GameState CurrentState { get; private set; } = GameState.Lobby;
+
 
     void Awake()
     {
@@ -71,9 +79,37 @@ public class GameManager : MonoBehaviourPun
         }
         DontDestroyOnLoad(gameObject);
     }
-
     void Start()
     {
+        pv = GetComponent<PhotonView>();
+        Init();
+    }
+    public void SetState(GameState state)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        pv.RPC(nameof(ApplyStateRPC), RpcTarget.All, state);
+    }
+
+    [PunRPC]
+    void ApplyStateRPC(GameState state)
+    {
+        CurrentState = state;
+        OnStateChanged?.Invoke(CurrentState);
+    }
+    void Init()
+    {
+        //게임 상태 구독자 구독
+        IEnumerable<IGameStateListener> gsListeners = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                                                      .OfType<IGameStateListener>();
+        foreach (IGameStateListener listener in gsListeners) OnStateChanged += listener.OnStateChanged;
+
+        //플레이어 카운트 구독자 구독
+        IEnumerable<IPlayerCountListener> pcListeners = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                                                        .OfType<IPlayerCountListener>();
+        foreach (IPlayerCountListener listener in pcListeners) OnPlayerCountChanged += listener.OnPlayerCountChanged;
+
+        //타이머 구독
         Timer.OnZero += GameStart;
     }
 
@@ -83,20 +119,6 @@ public class GameManager : MonoBehaviourPun
         {
             SetState(GameState.Ready);
         }
-    }
-
-    public void SetState(GameState state)
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        photonView.RPC(nameof(ApplyStateRPC), RpcTarget.All, state);
-    }
-
-    [PunRPC]
-    void ApplyStateRPC(GameState state)
-    {
-        CurrentState = state;
-        OnStateChanged.Invoke(CurrentState);
     }
 
     public void GameStart()
@@ -123,7 +145,19 @@ public class GameManager : MonoBehaviourPun
 
     public void Escape()
     {
-        SetState(GameState.GameOver);
+        Debug.Log("Escape 실행");
+        isEscape = true;
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("GameOver 실행");
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+        if (uiManager.isGameOver == false)
+        {
+            isPlaying = false;
+            uiManager.isGameOver = true;
+        }
     }
 
     public void Go2Map()

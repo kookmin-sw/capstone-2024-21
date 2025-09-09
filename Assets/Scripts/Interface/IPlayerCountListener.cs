@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPlayerCountListener
 {
-    public void OnPlayerCountChanged();
+    public void OnPlayerCountChanged(int curPlayer, int totalPlayer);
 }

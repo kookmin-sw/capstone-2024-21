@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
-using TMPro;
 
 //Virtual Camera에 들어가 있음 
-public class Interact : MonoBehaviour, IUIStateListener
+public class Interact : MonoBehaviour
 {
     public PhotonView pv;
 
@@ -15,16 +14,11 @@ public class Interact : MonoBehaviour, IUIStateListener
 
     public GameObject image_F;//껐다 켰다 할 F UI. 
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
-    public QuickslotManager quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
+    public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
     public WeaponInventory WeaponQuickslot;
-    public TextMeshProUGUI remainTimeText;
-    public GameObject remainTimeTextObj;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
-
-    public float lastExitBatteryTime;
-    private float exitTerm = 60.0f;
 
     GameObject ExitDoor;
     public string playerId;
@@ -38,28 +32,17 @@ public class Interact : MonoBehaviour, IUIStateListener
     Transform selectedTarget;
     Vector3 raycastOffset = new Vector3(0f, -0.1f, 1.2f);
 
-    public void OnStateChanged(GameState state)
-    {
-        switch (state)
-        {
-            case GameState.InGame:
-                lastExitBatteryTime = Time.time;
-                break;
-        }
-    }
     private void Start()
     {
         pv = gameObject.GetComponent<PhotonView>();
 
         canvas = GameObject.Find("Canvas").transform;
-        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반환
+
+        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
         image_F = canvas.Find("image_F").gameObject;
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
-        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<QuickslotManager>();
+        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
         WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
-        remainTimeTextObj = canvas.Find("RemainTimeText").gameObject;
-        remainTimeText = remainTimeTextObj.GetComponent<TextMeshProUGUI>();
-        remainTimeTextObj.SetActive(false);
 
         ExitDoor = GameObject.Find("exit");
 }
@@ -120,18 +103,10 @@ public class Interact : MonoBehaviour, IUIStateListener
                 {
                     Debug.Log("Exit 문 상호작용 ");
                     FindMovedir();
-                    if (Time.time >= lastExitBatteryTime + exitTerm && PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
+                    if (PlayerMoveDir.magnitude < 0.1f && CheckInventoryBattery())
                     {
                         circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화
                         isExiting = true;
-                    }
-                    if (Time.time < lastExitBatteryTime + exitTerm)
-                    {
-                        float remainingTime = lastExitBatteryTime + exitTerm - Time.time;
-                        remainTimeTextObj.SetActive(true);
-                        remainTimeText.text = Mathf.FloorToInt(remainingTime).ToString() + " seconds remained";
-                        Invoke("InactivateText", 2f);
-                        Debug.Log(remainingTime);
                     }
                 }
                 else if (selectedTarget.CompareTag("ItemSpawner"))
@@ -217,7 +192,6 @@ public class Interact : MonoBehaviour, IUIStateListener
             if (circleGaugeControler.GetComponent<InteractGaugeControler>().ExitFillCircle())
             {
                 // 성공적으로 게이지가 다 찼다면
-                pv.RPC("ModyfiLastExitTime", RpcTarget.AllBuffered);
                 isExiting = false;
                 EraseInventoryBattery(); //인벤토리에서 배터리 하나 지우고 
                 MapManager.Instance.AddChargeBatteryRPC(); // 차지한 배터리 하나 증가
@@ -269,13 +243,7 @@ public class Interact : MonoBehaviour, IUIStateListener
         }
         quicSlot.FreshSlot();
         isExiting = false; 
-        Debug.Log("배터리를 사용했습니다.");
-    }
-
-    [PunRPC]
-    void ModyfiLastExitTime()
-    {
-        lastExitBatteryTime = Time.time;
+        Debug.Log("배터리를 사용했습니닫.");
     }
 
     //얻은 아이템 디스트로이
@@ -342,10 +310,6 @@ public class Interact : MonoBehaviour, IUIStateListener
         }
     }
 
-    void InactivateText()
-    {
-        remainTimeTextObj.SetActive(false);
-    }
 
 }
 
