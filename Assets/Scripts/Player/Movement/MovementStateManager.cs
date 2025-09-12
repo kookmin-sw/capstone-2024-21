@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
 
-public class MovementStateManager : MonoBehaviour
+public class MovementStateManager : MonoBehaviour, IDamageListener
 {
     [SerializeField] Interact interact;
     [SerializeField] bool isExiting = false;
@@ -141,7 +141,6 @@ public class MovementStateManager : MonoBehaviour
             if(idx == 5) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_tempgethit);
             if(idx == 6) AudioManager.instance.PlaySfx(AudioManager.Sfx.SFX_temphit);
         }
-        
     }
 
     public void audioState(int idx)
@@ -183,13 +182,6 @@ public class MovementStateManager : MonoBehaviour
         Debug.Log("RpcExitStateCancle 실행됨");
         pv.RPC("RpcExitStateCancle", RpcTarget.All);
     }
-
-    public void OnDamage(float damage, string playerId)
-    {
-        Debug.Log("OnDamage는 실행됨");
-        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, playerId);
-    }
-
 
     public void SwitchState(MovementBaseState state)
     {
@@ -242,10 +234,16 @@ public class MovementStateManager : MonoBehaviour
 
     public void PillTaked() => pillTaked = true;
 
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
-    // }
+    public void OnDamaged()
+    {
+        pv.RPC("RpcDamaged", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RpcDamaged()
+    {
+        anim.SetTrigger("Hit");
+        audioState((int)AudioManager.Sfx.SFX_tempgethit);
+    }
 
 }

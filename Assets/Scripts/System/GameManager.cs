@@ -149,16 +149,6 @@ public class GameManager : MonoBehaviour
         isEscape = true;
     }
 
-    public void GameOver()
-    {
-        Debug.Log("GameOver 실행");
-        uiManager = GameObject.FindObjectOfType<UIManager>();
-        if (uiManager.isGameOver == false)
-        {
-            isPlaying = false;
-            uiManager.isGameOver = true;
-        }
-    }
 
     public void Go2Map()
     {

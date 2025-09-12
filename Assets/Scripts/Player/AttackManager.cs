@@ -392,7 +392,7 @@ public class AttackManager : MonoBehaviour
                     Debug.Log("약먹음");
 
                     movementStateManager.anim.SetLayerWeight(8, 0);
-                    hpManager.OnRecovery(itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemRecovery);
+                    hpManager.Recover(itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemRecovery);
                     itemQuickSlots.GetComponent<Inventory>().slots[i].item = null;
                     itemQuickSlots.GetComponent<Inventory>().FreshSlot();
                     
@@ -474,19 +474,5 @@ public class AttackManager : MonoBehaviour
         movementStateManager.anim.SetTrigger("HitOut");
         movementStateManager.anim.SetLayerWeight(6, 0);
     }
-    public void OnDamaged()
-    {   
-        Debug.Log("doDamaged");
 
-        //movementStateManager.anim.SetLayerWeight(6, 1);
-        if(pv.IsMine)
-            pv.RPC("RpcHit", RpcTarget.All);
-        
-        //Invoke("hitOut", 1.16f);
-    }
-
-    [PunRPC]
-    void RpcHit(){
-        movementStateManager.anim.SetTrigger("Hit");
-    }
 }

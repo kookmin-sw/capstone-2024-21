@@ -81,6 +81,9 @@ MonoBehaviour:
   - RpcHit
   - ApplyStateRPC
   - CountDown
+  - RpcDamaged
+  - RpcEscape
+  - RpcRecover
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
