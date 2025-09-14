@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
+using System.Linq;
 
 public class MovementStateManager : MonoBehaviour, IDamageListener
 {
@@ -65,7 +63,11 @@ public class MovementStateManager : MonoBehaviour, IDamageListener
 
     private PhotonView pv;
 
-    void Start()
+    public delegate void OnPlayerStateChangedEvent(MovementBaseState curState);
+    public event OnPlayerStateChangedEvent OnPlayerStateChanged;
+
+
+    void Awake()
     {
         interact = GameObject.Find("Virtual Camera").GetComponent<Interact>();
 
@@ -78,7 +80,14 @@ public class MovementStateManager : MonoBehaviour, IDamageListener
         // FlashLight
         spotLightObject = transform.Find("CameraFollowPos").gameObject;
         lightComponent = spotLightObject.GetComponentInChildren<Light>();
-
+    }
+    void Start()
+    {
+        if(pv.IsMine)
+        {
+            var StateListeners = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IPlayerStateListener>();
+            foreach (var listener in StateListeners) OnPlayerStateChanged += listener.OnPlayerStateChanged;
+        }
         SwitchState(Idle);
     }
 
@@ -95,16 +104,16 @@ public class MovementStateManager : MonoBehaviour, IDamageListener
                 DroppedItem = PhotonNetwork.Instantiate("Prefabs/" + attackManager.weaponInventory.abandonedItem.itemName, SpawnPos, transform.rotation);
                 if (attackManager.weaponInventory.abandonedItem.ItemType < 11)
                 {
-                    if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
-                    {
-                        DroppedItem.GetComponent<Weapon>().settedLightning = true;
-                        DroppedItem.GetComponent<ItemData>().itemData.ItemDamage *= 2;
-                    }
-                    else if (attackManager.weaponInventory.abandonedItem.craftCompleted == false)
-                    {
-                        DroppedItem.GetComponent<Weapon>().settedLightning = false;
-                    }
-                    attackManager.weaponInventory.abandonedItem.craftCompleted = false;
+                    //if (attackManager.weaponInventory.abandonedItem.craftCompleted == true)
+                    //{
+                    //    DroppedItem.GetComponent<Weapon>().settedLightning = true;
+                    //    DroppedItem.GetComponent<Item>().itemData.ItemDamage *= 2;
+                    //}
+                    //else if (attackManager.weaponInventory.abandonedItem.craftCompleted == false)
+                    //{
+                    //    DroppedItem.GetComponent<Weapon>().settedLightning = false;
+                    //}
+                    //attackManager.weaponInventory.abandonedItem.craftCompleted = false;
                 }
                 attackManager.weaponInventory.abandonedItem = null;
             }
@@ -186,6 +195,7 @@ public class MovementStateManager : MonoBehaviour, IDamageListener
     public void SwitchState(MovementBaseState state)
     {
         currentState = state;
+        OnPlayerStateChanged?.Invoke(currentState);
         currentState.EnterState(this);
     }
 
@@ -207,7 +217,6 @@ public class MovementStateManager : MonoBehaviour, IDamageListener
         }
         return false;
     }
-
     
     void Gravity()
     {
@@ -245,5 +254,4 @@ public class MovementStateManager : MonoBehaviour, IDamageListener
         anim.SetTrigger("Hit");
         audioState((int)AudioManager.Sfx.SFX_tempgethit);
     }
-
 }

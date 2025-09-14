@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EventSystemSpawner.cs" company="Exit Games GmbH">
 // </copyright>
 // <summary>
@@ -27,7 +27,7 @@ namespace Photon.Chat.UtilityScripts
             return;
             #endif
 
-            EventSystem sceneEventSystem = FindObjectOfType<EventSystem>();
+            EventSystem sceneEventSystem = FindFirstObjectByType<EventSystem>();
             if (sceneEventSystem == null)
             {
                 GameObject eventSystem = new GameObject("EventSystem");

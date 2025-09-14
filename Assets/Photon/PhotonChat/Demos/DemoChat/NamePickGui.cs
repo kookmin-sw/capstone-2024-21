@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Exit Games GmbH"/>
 // <summary>Demo code for Photon Chat in Unity.</summary>
 // <author>developer@exitgames.com</author>
@@ -22,7 +22,7 @@ namespace Photon.Chat.Demo
 
         public void Start()
         {
-            this.chatNewComponent = FindObjectOfType<ChatGui>();
+            this.chatNewComponent = FindFirstObjectByType<ChatGui>();
 
 
             string prefsName = PlayerPrefs.GetString(UserNamePlayerPref);
@@ -44,7 +44,7 @@ namespace Photon.Chat.Demo
 
         public void StartChat()
         {
-            ChatGui chatNewComponent = FindObjectOfType<ChatGui>();
+            ChatGui chatNewComponent = FindFirstObjectByType<ChatGui>();
             chatNewComponent.UserName = this.idInput.text.Trim();
             chatNewComponent.Connect();
             this.enabled = false;

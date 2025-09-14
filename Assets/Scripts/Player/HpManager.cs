@@ -18,25 +18,17 @@ public class HpManager : MonoBehaviour
         get { return _hp; }
         set
         {
-            _hp = Mathf.Min(value, maxHp);
-            if (_hp <= 0)
-            {
-                _hp = Mathf.Max(_hp, 0);
-                Die();
-            }
-            else OnHpChanged(_hp, maxHp);
+            _hp = Mathf.Clamp(value, 0f, maxHp);
+            if (_hp <= 0) Die();
+            else OnHpChanged?.Invoke(_hp, maxHp);
         }
     }
 
-    public AttackManager attackManager;
-    public GameObject DroppedItem;
-
-    [SerializeField] private UIManager uiManager;
     private MovementStateManager movementStateManager;
+    private KillManager killManager;
 
     public event Action OnDeath;
     public event Action OnDamaged;
-    public event Action OnRecoverd;
 
     public delegate void OnHpChangedEvent(float hp, float maxhp);
     public event OnHpChangedEvent OnHpChanged;
@@ -46,8 +38,8 @@ public class HpManager : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-        hp = maxHp;
         movementStateManager = GetComponent<MovementStateManager>();
+        killManager = GetComponent<KillManager>();
     }
 
     void Start()
@@ -60,7 +52,9 @@ public class HpManager : MonoBehaviour
             var DeathListeners = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDeathListener>();
             foreach (var listener in DeathListeners) OnDeath += listener.OnDeath;
         }
+
         OnDamaged += movementStateManager.OnDamaged; //애니메이션이랑 사운드는 나를 포함한 모두
+        hp = maxHp;
     }
 
     private void Update()
@@ -75,42 +69,40 @@ public class HpManager : MonoBehaviour
         }
     }
 
-    public void AddKillCount(string playerId)
+    [PunRPC]
+    public void RPCAddKillCount()
     {
-        GameObject obj = GameObject.Find(playerId);
-        KillManager killer = obj.GetComponent<KillManager>();
-        killer.AddKillCount();
+        if (pv.IsMine)
+        {
+            killManager.killCount++;
+        }
     }
 
     // 데미지 처리하는 함수
     [PunRPC]
-    public void RpcOnDamage(float damage, string playerId)
+    public void RpcOnDamage(float damage, int attakActorNum)
     {
-        if (pv.IsMine && GameManager.Instance.UserId != playerId)
+
+        if (pv.IsMine)
         {
-            
-            Debug.Log("데미지 입음");
-            Debug.Log("내 이름: " + GameManager.Instance.UserId);
-            Debug.Log("나를 때린 사람 이름: " + playerId);
-
-            Debug.Log("받은 데미지: " + damage);
-            OnDamaged.Invoke();
             hp -= damage;
-            Debug.Log("남은 hp: " + hp);
+            OnDamaged.Invoke();
 
-            // 체력이 0 이하이고 살아있으면 사망
+            //날 죽인 사람의 킬카운트 높이기
             if (hp <= 0)
             {
-                hp = 0;
-                Debug.Log("나를 죽인 사람: " + playerId);
-                AddKillCount(playerId);
+                KillManager attakerKM = GameManager.Instance.ActorDict[attakActorNum].GetComponent<KillManager>();
+                attakerKM.AddKillCount();
             }
         }
     }
-    public void OnDamage(float damage, string playerId)
+    /// <summary>
+    /// 때린 쪽에서 가져가서 데미지와 자기 정보를 넘겨주는 함수
+    /// </summary>
+    /// <param name="damage"></param>
+    public void OnDamage(float damage, int attakActorNum)
     {
-        //Debug.Log("OnDamage는 실행됨");
-        pv.RPC("RpcOnDamage", RpcTarget.Others, damage, playerId);
+        pv.RPC(nameof(RpcOnDamage), RpcTarget.All, damage, attakActorNum);
     }
 
 
@@ -122,7 +114,7 @@ public class HpManager : MonoBehaviour
     /// <summary>
     /// 회복함수
     /// </summary>
-    public void Recover(float recovery) => pv.RPC("RpcRecover", RpcTarget.All, recovery);
+    public void Recover(float recovery) => pv.RPC(nameof(RpcRecover), RpcTarget.AllViaServer, recovery);
 
 
     [PunRPC]
@@ -138,7 +130,7 @@ public class HpManager : MonoBehaviour
     /// <summary>
     /// 사망 함수
     /// </summary>
-    public void Die() => pv.RPC("RpcDie", RpcTarget.All);
+    public void Die() => pv.RPC(nameof(RpcDie), RpcTarget.AllViaServer);
 
     [PunRPC]
     public void RpcEscape()
@@ -154,5 +146,5 @@ public class HpManager : MonoBehaviour
     /// <summary>
     /// 탈출 시 나 빼고 다죽는 함수
     /// </summary>
-    public void Escape() => pv.RPC("RpcAllDie", RpcTarget.All);
+    public void Escape() => pv.RPC(nameof(RpcEscape), RpcTarget.AllViaServer);
 }

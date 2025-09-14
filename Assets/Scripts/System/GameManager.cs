@@ -9,6 +9,7 @@ public enum GameState
     Lobby,
     Ready,
     InGame,
+    Escape,
     GameOver
 }
 public class GameManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
         {
             if (!_instance)
             {
-                _instance = FindObjectOfType<GameManager>();
+                _instance = FindFirstObjectByType<GameManager>();
                 if (!_instance)
                 {
                     GameObject obj = new GameObject();
@@ -38,10 +39,10 @@ public class GameManager : MonoBehaviour
 
     public UIManager uiManager;
 
+    private PhotonView pv;
+
     public int totalPlayers { get; private set; }
     private int _curPlayers;
-
-    PhotonView pv;
 
     public int curPlayers
     {
@@ -61,11 +62,12 @@ public class GameManager : MonoBehaviour
     public delegate void PlayerCountChanged(int curPlayer, int totalPlayer);
     public event PlayerCountChanged OnPlayerCountChanged;
 
+
+    public Dictionary<int, GameObject> ActorDict; //ActorNum에 맞는 오브젝트 캐싱
     public GameObject[] playerObjects;
     Player[] players;
 
     public GameState CurrentState { get; private set; } = GameState.Lobby;
-
 
     void Awake()
     {
@@ -131,6 +133,9 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < playerObjects.Length; i++)
         {
+            int ActorNum = playerObjects[i].GetPhotonView().OwnerActorNr;
+            ActorDict[ActorNum] = playerObjects[i];
+
             players[i] = playerObjects[i].GetComponent<Player>();
         }
 

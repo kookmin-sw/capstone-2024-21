@@ -13,14 +13,13 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     private Image slotImage;
     private Color preColor;
     private Color hoverColor;
-    private RectTransform slotRect;
 
-    [SerializeField] private Transform batterySlot;
-    [SerializeField] private Inventory itemSlots;
+    public delegate void OnDropEvent(int idx1, int idx2);
+    public event OnDropEvent OnSwap;
+
     void Awake()
     {
         slotImage = GetComponent<Image>();
-        slotRect = GetComponent<RectTransform>();
         preColor = slotImage.color;
     }
 
@@ -42,44 +41,23 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     public void OnDrop(PointerEventData eventData)
     {
         // pointerDrag = 드래그중인 아이콘 / 드래그하고있는 아이콘이 있으면
-        if(eventData.pointerDrag.GetComponent<Slot>().item != null)
+        if(eventData.pointerDrag.GetComponent<Image>().sprite != null)
         {
-            DraggableUI draggedUI = eventData.pointerDrag.GetComponent<DraggableUI>();
-            if (transform.childCount > 0) //드롭한 슬롯이 아이템을 가지고 있으면
-            {
-                Transform existingIcon = transform.GetChild(0);
-                existingIcon.SetParent(draggedUI.preSlot);
-                if (existingIcon.transform.parent == batterySlot)
-                {
-                    itemSlots.FreshSlot();                    //옮겨지는 곳이 배터리 슬롯이면 슬롯리스트에서 삭제
-                    existingIcon.position = draggedUI.preSlot.position; //옮겨진 슬롯의 아이템이 옴기는 슬롯의 위치로
-                    itemSlots.isSlotChanged = true;
-                }
-                else
-                {
-                    existingIcon.position = draggedUI.preSlot.position;
-                    itemSlots.FreshSlot();
-                    itemSlots.isSlotChanged = true;
-                }
-            }
-            eventData.pointerDrag.transform.SetParent(transform);
+            Transform droppedIcon = transform.GetChild(0);
+            Transform draggedIcon = eventData.pointerDrag.transform;
 
-            if (eventData.pointerDrag.transform.parent == batterySlot) //드롭한 슬롯으로 드래그한 아이템 위치 변경
-            {
-                eventData.pointerDrag.transform.SetParent(batterySlot);
-                itemSlots.FreshSlot();
-                eventData.pointerDrag.GetComponent<RectTransform>().position = batterySlot.GetComponent<RectTransform>().position;
-                itemSlots.isSlotChanged = true;
-            }
-            else
-            {
-                eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
-                itemSlots.FreshSlot();
-                itemSlots.isSlotChanged = true;
-            }
+            Transform dragParent = draggedIcon.GetComponent<DraggableUI>().preSlot;
 
+            int idx1 = (int)dragParent.GetComponent<SlotView>().slot;
+            int idx2 = (int)transform.GetComponent<SlotView>().slot;
+
+            draggedIcon.SetParent(transform);
+            draggedIcon.position = Vector3.zero;
+
+            droppedIcon.SetParent(dragParent);
+            droppedIcon.position = Vector3.zero;
+
+            OnSwap?.Invoke(idx1, idx2);
         }
     }
-
-
 }

@@ -18,10 +18,10 @@ public class AimStateManager : MonoBehaviourPun
     void Start()
     {
         pv = GetComponent<PhotonView>();
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
         if (pv.IsMine)
         {
-            var followCam = FindObjectOfType<CinemachineVirtualCamera>();
+            var followCam = FindFirstObjectByType<CinemachineVirtualCamera>();
             followCam.Follow = this.camFollowPos.transform;
             followCam.LookAt = this.camFollowPos.transform;
         }

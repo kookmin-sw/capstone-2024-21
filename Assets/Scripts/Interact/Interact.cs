@@ -1,7 +1,3 @@
-using ExitGames.Client.Photon.StructWrapping;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
 
@@ -14,8 +10,6 @@ public class Interact : MonoBehaviour
 
     public GameObject image_F;//껐다 켰다 할 F UI. 
     public GameObject circleGaugeControler; //껐다 켰다 할 게이지 컨트롤러 
-    public Inventory quicSlot; //아이템먹으면 나타나는 퀵슬롯 UI.  
-    public WeaponInventory WeaponQuickslot;
 
     public bool isInvetigating = false; //수색중인가? -> update문에서 상태를 체크하여 게이지 UI 뜨고 지우고 함 
     public bool isExiting = false;
@@ -25,7 +19,6 @@ public class Interact : MonoBehaviour
     Vector3 PlayerMoveDir;
 
     //[HideInInspector] public Animator anim;
-
 
     RaycastHit hit;
     float interactDiastance = 4.0f;
@@ -41,8 +34,6 @@ public class Interact : MonoBehaviour
         //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반
         image_F = canvas.Find("image_F").gameObject;
         circleGaugeControler = canvas.Find("GaugeController").gameObject;
-        quicSlot = canvas.Find("ItemQuickSlots").GetComponent<Inventory>();
-        WeaponQuickslot = canvas.Find("WeaponSlot").GetComponent<WeaponInventory>();
 
         ExitDoor = GameObject.Find("exit");
 }
@@ -117,8 +108,8 @@ public class Interact : MonoBehaviour
                 else if (selectedTarget.CompareTag("Item"))
                 {
                     //Debug.Log(hit.collider.gameObject.name + " item과 상호작용");
-                    ItemData itemdata = hit.collider.gameObject.GetComponent<ItemData>();
-                    Item item = itemdata.itemData;
+                    Item itemdata = hit.collider.gameObject.GetComponent<Item>();
+                    ItemData item = itemdata.itemData;
                     if (item.ItemType > 10)
                     {
                         // AddItem은 성공하면 1 실패하면 0반환
@@ -135,14 +126,14 @@ public class Interact : MonoBehaviour
                         {
                             if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == true) //습득하는 무기가 조합무기면 
                             {
-                                WeaponQuickslot.weaponSlot.item.craftCompleted = true; //아이템 정보도 조합무기로
+                                //WeaponQuickslot.weaponSlot.item.itemData.craftCompleted = true; //아이템 정보도 조합무기로
                                 WeaponQuickslot.craftCompletedMark.SetActive(true);
                                 WeaponQuickslot.isWeaponAdded = true;
                                 WeaponQuickslot.isCrafted = true;
                             }
                             else if (hit.collider.gameObject.GetComponent<Weapon>().settedLightning == false) //습득하는 무기가 일반무기면 
                             {
-                                WeaponQuickslot.weaponSlot.item.craftCompleted = false;
+                                //WeaponQuickslot.weaponSlot.item.craftCompleted = false;
                                 WeaponQuickslot.isWeaponAdded = true; //아이템 정보도 일반무기로
                             }
                             //무기 넣기에 성공할때만 디스트로이
@@ -257,8 +248,6 @@ public class Interact : MonoBehaviour
     {
         pv.RPC("DestroyItem", RpcTarget.AllBuffered, target);
     }
-
-
 
     void clearTarget(Transform obj)
     {

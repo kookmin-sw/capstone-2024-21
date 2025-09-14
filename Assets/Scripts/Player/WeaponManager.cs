@@ -62,14 +62,14 @@ public class WeaponManager : MonoBehaviour
                 if (other.gameObject.tag == "Monster")
                 {
                     Debug.Log("Hit : " + damage);
-                    hpManager.OnDamage(damage, killManager.playerId);
+                    hpManager.OnDamage(damage, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 else
                 {
                     if (pv.Owner.NickName != GameManager.Instance.UserId)
                     {
                         Debug.Log("Hit : " + damage);
-                        hpManager.OnDamage(damage, killManager.playerId);
+                        hpManager.OnDamage(damage, PhotonNetwork.LocalPlayer.ActorNumber);
                     }
                 }
             }

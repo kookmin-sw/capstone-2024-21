@@ -12,7 +12,7 @@ public class IdleState : MovementBaseState
     public override void UpdateState(MovementStateManager movement)
     {
         if(!movement.jumped){
-            if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.staminaBar.value >= movement.staminaManager.jumpValue)
+            if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.stamina >= movement.staminaManager.jumpAmount)
             {
                 movement.previousState = this;
                 ExitState(movement, movement.Jump);

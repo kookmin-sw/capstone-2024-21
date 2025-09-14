@@ -13,8 +13,7 @@ public class AttackManager : MonoBehaviour
     public int equipItemIndex;
     public bool isSwap; // 스왑 상태
     public bool isAttack; // 공격 상태
-    public WeaponInventory weaponInventory; // 가지고 있는 무기
-    public Inventory itemInventory; //가지고 있는 아이템
+
     public Transform RightHand;
     ///////Attack
     [SerializeField] float fireDelay;
@@ -47,8 +46,6 @@ public class AttackManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         itemQuickSlots = GameObject.Find("ItemQuickSlots");
         weaponQuickSlot = GameObject.Find("WeaponSlot");
-        itemInventory = itemQuickSlots.GetComponent<Inventory>();
-        weaponInventory = weaponQuickSlot.GetComponent<WeaponInventory>();
         equipWeaponGameobject = RightHand.GetChild(1).gameObject.GetComponent<WeaponManager>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
         equipWeapon = weapons[9];
         colliderHand = RightHand.GetChild(1).GetComponent<BoxCollider>();
@@ -61,7 +58,7 @@ public class AttackManager : MonoBehaviour
         if (qDown)
             if(pv.IsMine)
                 FlashLight();
-        if ((sDown1 || weaponInventory.isWeaponAdded == true || weaponInventory.isCrafted == true) || (sDown2 || sDown3 || sDown4 || sDown5 || ((itemInventory.isItemAdded == true || itemInventory.isSlotChanged == true) && !weaponQuickSlot.GetComponentInChildren<SelectedSlot>().slotOutline.enabled)) || gDown || eDown)
+        if (sDown1 || sDown2 || sDown3 || sDown4 || sDown5 || gDown || eDown)
         {
             RpcSwap();
         }
@@ -133,7 +130,7 @@ public class AttackManager : MonoBehaviour
 
             if(eDown)
             {
-                if (equipWeapon.GetComponent<ItemData>().itemData.ItemType == 12)
+                if (equipWeapon.GetComponent<Item>().itemData.ItemType == 12)
                 {
                     RpcPill();
                 }
@@ -145,7 +142,7 @@ public class AttackManager : MonoBehaviour
                 AbandonedItem();
             }
             // 무기 슬롯 스왑/습득 시 애니메이션 처리 
-            if (sDown1 || weaponInventory.isWeaponAdded == true)
+            if (sDown1)
             {
                 equipWeaponIndex = -1;
 
@@ -153,7 +150,7 @@ public class AttackManager : MonoBehaviour
                 {
                     for (int i = 0; i < weapons.Length; i++)
                     {
-                        if (weaponInventory.weaponSlot.item.ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType)
+                        if (weaponInventory.weaponSlot.item.ItemType == weapons[i].GetComponent<Item>().itemData.ItemType)
                         {
                             equipWeaponIndex = i;
                             weaponInventory.isWeaponAdded = false;
@@ -166,10 +163,10 @@ public class AttackManager : MonoBehaviour
                 {
                     equipWeaponGameobject = weapons[equipWeaponIndex].GetComponent<WeaponManager>();
 
-                    if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 10)
+                    if (equipWeaponGameobject.GetComponent<Item>().itemData.ItemType <= 10)
                     {
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
-                        if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType <= 3)
+                        if (equipWeaponGameobject.GetComponent<Item>().itemData.ItemType <= 3)
                         {
                             if(movementStateManager.anim.GetLayerWeight(2) != 1){
                                 movementStateManager.anim.SetBool(Armed, false);
@@ -229,7 +226,7 @@ public class AttackManager : MonoBehaviour
                         {
                             for (int j = weapons.Length - 1; j >= 0; j--)
                             {
-                                if (itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemType == weapons[j].GetComponent<ItemData>().itemData.ItemType)
+                                if (itemQuickSlots.GetComponent<Inventory>().slots[i].item.ItemType == weapons[j].GetComponent<Item>().itemData.ItemType)
                                 {   
                                     equipItemIndex = j;
                                     itemInventory.isItemAdded = false;
@@ -249,7 +246,7 @@ public class AttackManager : MonoBehaviour
                 {
                     equipWeaponGameobject = weapons[equipItemIndex].GetComponent<WeaponManager>();
                     Debug.Log(equipWeaponGameobject);
-                    if (equipWeaponGameobject.GetComponent<ItemData>().itemData.ItemType > 10)
+                    if (equipWeaponGameobject.GetComponent<Item>().itemData.ItemType > 10)
                     {
                         colliderWeapon = equipWeaponGameobject.GetComponent<BoxCollider>();
                         
@@ -294,18 +291,18 @@ public class AttackManager : MonoBehaviour
             {
                 if (equipWeapon != weapons[9]) // 착용된 장비가 있고
                 {
-                    if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<ItemData>().itemData.ItemType != 12)
+                    if (equipWeapon.transform.childCount > 0 && equipWeapon.GetComponent<Item>().itemData.ItemType != 12)
                     {
-                        if (weaponInventory.weaponSlot.item.craftCompleted == true)
-                        {
-                            OnLightening(true);
-                            equipWeaponGameobject.damage *= 2;
-                        }
-                        else
-                        {
-                            OnLightening(false);
-                        }
-                        weaponInventory.isCrafted = false;
+                        //if (weaponInventory.weaponSlot.item.craftCompleted == true)
+                        //{
+                        //    OnLightening(true);
+                        //    equipWeaponGameobject.damage *= 2;
+                        //}
+                        //else
+                        //{
+                        //    OnLightening(false);
+                        //}
+                        //weaponInventory.isCrafted = false;
                     }
                 }
             }
@@ -324,10 +321,10 @@ public class AttackManager : MonoBehaviour
                     
                     equipWeapon.transform.GetChild(0).gameObject.SetActive(false);
                     weaponInventory.abandonedItem = weaponInventory.weaponSlot.item;
-                    if (weaponInventory.abandonedItem.craftCompleted == true)
-                    {
-                        equipWeaponGameobject.damage /= 2;
-                    }
+                    //if (weaponInventory.abandonedItem.craftCompleted == true)
+                    //{
+                    //    equipWeaponGameobject.damage /= 2;
+                    //}
                     weaponInventory.weaponSlot.item = null;
                     weaponInventory.craftCompletedMark.SetActive(false);
 

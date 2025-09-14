@@ -11,10 +11,6 @@ public class CraftGaugeController : MonoBehaviour
 
     [SerializeField] private float craftGaugeFillSpeed = 4.0f;
 
-    private void Awake()
-    {
-    }
-
     public void SetGaugeZero()
     {
         craftGaugeImage.fillAmount = 0;
@@ -23,7 +19,6 @@ public class CraftGaugeController : MonoBehaviour
     public bool FillBolt()
     {
         craftGaugeImage.fillAmount += craftGaugeFillSpeed / 10.0f * Time.deltaTime; ;
-
 
         if (craftGaugeImage.fillAmount == 1)
         {

@@ -63,7 +63,6 @@ public class UIManager : MonoBehaviour
 
         statePlayerName.text = GameManager.Instance.UserId;
         gameOverPlayerName.text = GameManager.Instance.UserId;
-        timer = GameObject.Find("Timer").GetComponent<Timer>();
         Monpoints = GameObject.Find("MonsterSpawns").GetComponentsInChildren<Transform>();
 
 

@@ -1,70 +1,77 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Photon.Pun;
+using System.Linq;
 
-public class StaminaManager : MonoBehaviour
+public class StaminaManager : MonoBehaviour, IPlayerStateListener
 {
-    [SerializeField] private UIManager uiManager;
-    public Slider staminaBar;
-    public float jumpValue = 20f;
+    [Header("스테미너 증가/감소 량")]
+    public float jumpAmount = 20f;
+    [SerializeField] private float runAmount = -15f;
+    [SerializeField] private float recoverAmount = 15f;
+
+    private float maxStamina = 100f;
+    private float _stamina;
+    public float stamina
+    {
+        get { return _stamina; }
+        set
+        {
+            _stamina = value;
+            _stamina = Mathf.Clamp(value, 0f, maxStamina);
+            OnStaminaChanged?.Invoke(_stamina, maxStamina); //for UI
+        }
+    }
+
+    public delegate void OnStaminaChangedEvent(float stamina, float maxStamina);
+    public event OnStaminaChangedEvent OnStaminaChanged;
+
+    private Coroutine ChangeRoutine;
+
     private MovementStateManager movement;
     private PhotonView pv;
+
     void Awake()
     {
-        uiManager = FindObjectOfType<UIManager>();
-        staminaBar = GameObject.Find("StaminaBar").GetComponent<Slider>();
-        //healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
-        //healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
         pv = GetComponent<PhotonView>();
         movement = GetComponent<MovementStateManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if (pv.IsMine)
+        if (pv.IsMine) //ui는 로컬에만 반영되면 됨
         {
-            ManageStaminaBar();
-            //ManageHealthPointBar();
+            var SListeners = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IStaminaListener>();
+            foreach (var listener in SListeners) OnStaminaChanged += listener.OnStaminaChanged;
         }
+        stamina = maxStamina;
     }
 
-    void ManageStaminaBar()
+    public void OnPlayerStateChanged(MovementBaseState curState)
     {
-        if(movement.isJumpStart == true)
+        if (ChangeRoutine != null) StopCoroutine(ChangeRoutine);
+
+        if (curState == movement.Run)
         {
-            staminaBar.value -= jumpValue;
-            movement.isJumpStart = false;
+            ChangeRoutine = StartCoroutine(ChangeStamina(runAmount));
         }
-        if (movement.currentState == movement.Run)
+        else if (curState == movement.Jump)
         {
-            staminaBar.value -= 15f * Time.deltaTime;
-            if(staminaBar.value == 0)
-            {
-                movement.Run.ExitState(movement, movement.Walk);
-                movement.currentState = movement.Walk;
-            }
+            stamina -= jumpAmount;
+            ChangeRoutine = StartCoroutine(ChangeStamina(recoverAmount));
         }
         else
-        { 
-            staminaBar.value += 15f * Time.deltaTime;
+        {
+            ChangeRoutine = StartCoroutine(ChangeStamina(recoverAmount));
         }
     }
 
-    //void ManageHealthPointBar()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.H))
-    //    {
-    //        healthPointBar.value -= 5;
-    //        healthPointCount.text = healthPointBar.value.ToString();
-    //        if(healthPointBar.value == 0)
-    //        {
-    //            uiManager.isGameOver = true;
-    //            uiManager.isUIActivate = true;
-    //        }
-    //    }
-    //}
+    IEnumerator ChangeStamina(float amount)
+    {
+        while(stamina != maxStamina)
+        {
+            stamina += amount * Time.deltaTime;
+            yield return null;
+        }
+    }
 }

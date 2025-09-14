@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour
         {
             if (!_instance)
             {
-                _instance = FindObjectOfType<MapManager>();
+                _instance = FindFirstObjectByType<MapManager>();
                 if (!_instance)
                 {
                     GameObject obj = new GameObject();
@@ -55,13 +55,13 @@ public class MapManager : MonoBehaviour
     GameObject posPrefeb; //hiddenItem이 스폰될 pos
     [Header("hiddenItemAll")] // 맵에 미리 스폰돼있는 아이템
     [SerializeField] List<GameObject> hiddenItemTargetObjAll = new List<GameObject>();
-    [SerializeField] public List<Item> itemsAll = new List<Item>();//스폰될 아이템 후보들. 아이템 버릴때에도 가져다 쓰신댔음 
+    [SerializeField] public List<ItemData> itemsAll = new List<ItemData>();//스폰될 아이템 후보들. 아이템 버릴때에도 가져다 쓰신댔음 
                      List<GameObject> hiddenItemPosAll = new List<GameObject>();
     [SerializeField] int hiddenItemCntAll = 5;
 
     [Header("hiddenItemSmall")] // 맵에 미리 스폰돼있는 아이템
     [SerializeField] List<GameObject> hiddenItemTargetObjSmall = new List<GameObject>();
-    [SerializeField] List<Item> itemsSmall = new List<Item>();//스폰될 아이템 후보들
+    [SerializeField] List<ItemData> itemsSmall = new List<ItemData>();//스폰될 아이템 후보들
                      List<GameObject> hiddenItemPosSmall = new List<GameObject>();
     [SerializeField] int hiddenItemCntSmall = 5;
 
@@ -90,24 +90,24 @@ public class MapManager : MonoBehaviour
         posPrefeb = (GameObject)Resources.Load("Prefabs/Point");
 
         //itemsAll
-        itemsAll.Add((Item)Resources.Load("Item/Axe"));
-        itemsAll.Add((Item)Resources.Load("Item/BaseballBat"));
-        itemsAll.Add((Item)Resources.Load("Item/Butcher Knife"));
-        itemsAll.Add((Item)Resources.Load("Item/Crowbar"));
-        itemsAll.Add((Item)Resources.Load("Item/Hammer"));
-        itemsAll.Add((Item)Resources.Load("Item/HeavyWrench"));
-        itemsAll.Add((Item)Resources.Load("Item/Machete"));
-        itemsAll.Add((Item)Resources.Load("Item/Shovel"));
-        itemsAll.Add((Item)Resources.Load("Item/TacticalKnife"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Axe"));
+        itemsAll.Add((ItemData)Resources.Load("Item/BaseballBat"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Butcher Knife"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Crowbar"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Hammer"));
+        itemsAll.Add((ItemData)Resources.Load("Item/HeavyWrench"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Machete"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Shovel"));
+        itemsAll.Add((ItemData)Resources.Load("Item/TacticalKnife"));
 
-        itemsAll.Add((Item)Resources.Load("Item/Painkiller"));
+        itemsAll.Add((ItemData)Resources.Load("Item/Painkiller"));
 
 
         //itemsSmall
-        itemsSmall.Add((Item)Resources.Load("Item/Painkiller"));
+        itemsSmall.Add((ItemData)Resources.Load("Item/Painkiller"));
 
 
-        gameObjs = FindObjectsOfType<GameObject>();
+        gameObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
 
         for(int i = 0; i < gameObjs.Length; i++)
         {

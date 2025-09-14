@@ -7,14 +7,14 @@ using Photon.Pun;
 public class BatterySpawner : Spawner
 {
 
-    [SerializeField] Item battery;
+    [SerializeField] ItemData battery;
 
     void Start()
     {
         pv = gameObject.GetComponent<PhotonView>();
 
-        battery = (Item)Resources.Load("Item/Battery"); 
-        items = new List<Item>();
+        battery = (ItemData)Resources.Load("Item/Battery"); 
+        items = new List<ItemData>();
         items.Add(battery);
 
 

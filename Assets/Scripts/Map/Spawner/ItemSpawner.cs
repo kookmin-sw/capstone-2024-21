@@ -4,15 +4,15 @@ using UnityEngine;
 using Photon.Pun;
 public class ItemSpawner : Spawner
 {
-    Item painkiller;
+    ItemData painkiller;
 
     void Start()
     {
         pv = gameObject.GetComponent<PhotonView>();
 
-        painkiller = (Item)Resources.Load("Item/Painkiller");
+        painkiller = (ItemData)Resources.Load("Item/Painkiller");
 
-        items = new List<Item>();
+        items = new List<ItemData>();
 
         items.Add(painkiller);
     }

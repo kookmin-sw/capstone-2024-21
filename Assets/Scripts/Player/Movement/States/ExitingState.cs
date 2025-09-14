@@ -15,7 +15,7 @@ public class ExitingState : MovementBaseState
             if (Input.GetKey(KeyCode.LeftShift)) ExitState(movement, movement.Run);
             else ExitState(movement, movement.Walk);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.staminaBar.value >= movement.staminaManager.jumpValue)
+        if (Input.GetKeyDown(KeyCode.Space) && movement.staminaManager.stamina >= movement.staminaManager.jumpAmount)
         {
             movement.previousState = this;
             ExitState(movement, movement.Jump);
